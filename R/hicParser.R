@@ -120,7 +120,7 @@ parseHic <- function(paths, binSize, replicates, conditions) {
     )
 
     mergedinteractionSet <- Reduce(
-        f = .mergeInteractionSet,
+        f = mergeInteractionSet,
         x = interactionSet
     )
     mergedinteractionSet <- .sortHiCData(mergedinteractionSet)

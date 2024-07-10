@@ -154,7 +154,7 @@ parseCool <- function(paths, binSize=NA, replicates, conditions) {
     )
 
     mergedinteractionSetCool <- Reduce(
-        f = .mergeInteractionSet,
+        f = mergeInteractionSet,
         x = interactionSetCool
     )
     mergedinteractionSetCool <- .sortHiCData(mergedinteractionSetCool)

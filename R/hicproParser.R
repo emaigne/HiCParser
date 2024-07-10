@@ -173,7 +173,7 @@ parseHiCPro <- function(matrixPaths, bedPaths, replicates, conditions) {
         conditions
     )
 
-    mergedinteractionSet <- Reduce(f = .mergeInteractionSet, x = interactionSet)
+    mergedinteractionSet <- Reduce(f = mergeInteractionSet, x = interactionSet)
     mergedinteractionSet <- .sortHiCData(mergedinteractionSet)
 
     return(mergedinteractionSet)
