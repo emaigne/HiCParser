@@ -2,6 +2,6 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 parseHiCFile <- function(fname, resolution) {
-    .Call(`_HiCParser_parseHiCFile`, fname, resolution)
+    .Call('_HiCParser_parseHiCFile', PACKAGE = 'HiCParser', fname, resolution)
 }
 

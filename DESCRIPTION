@@ -14,11 +14,21 @@ Description: Parser for HiC data in R.
 License: GPL (>= 2)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1
 LazyData: true
 biocViews: 
     Software, HiC
-Imports: Rcpp (>= 1.0.12)
+Imports: 
+    data.table,
+    InteractionSet,
+    GenomicRanges,
+    SummarizedExperiment,
+    Rcpp (>= 1.0.12),
+    methods,
+    S4Vectors,
+    gtools,
+    pbapply,
+    BiocGenerics
 LinkingTo: Rcpp
 Suggests: 
     BiocStyle,

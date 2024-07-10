@@ -1,3 +1,4 @@
+#' @title Initialize an InteractionSet object from tabular data
 #' @description
 #' Parses interactions in tabular format and fills the conditions, replicates,
 #' and interactions slots of the provided \code{\link{InteractionSet}}.
@@ -18,6 +19,9 @@
 #'
 #' @keywords internal
 #' @noRd
+#' @importFrom data.table setorder setnames shift merge.data.table
+#' @importFrom gtools mixedsort
+#' @importFrom GenomicRanges GRanges
 .setFromTabular <- function(tabular, conditions = NULL, replicates = NULL) {
 
     if (colnames(tabular)[1] != "chromosome") {
@@ -160,20 +164,28 @@
     return(interactionSet)
 }
 
+#' @title Parser for tabular data
 #' @description
 #' Read the file, and fills it using \code{\link{.setFromTabular}}.
 #'
-#' @param object
-#' A \code{\link{HiCDOCDataSet}}.
+#' @param path
+#' A path to a tabular file.
 #' @param sep
-#' The separator of the tabular file.
+#' The separator of the tabular file. Default to tabulation.
 #'
 #' @return
-#' A filled \code{\link{HiCDOCDataSet}}.
+#' An InteractionSet object.
 #'
-#' @keywords internal
-#' @noRd
-.parseTabular <- function(input, sep = "\t") {
+#' @examples
+#' path <- system.file("extdata", "liver_18_10M_500000.tsv", package = "HiCDOC")
+#' object <- HiCDOCDataSetFromTabular(path, sep = '\t')
+#'
+#' @usage
+#' HiCDOCDataSetFromTabular(path, sep = '\t')
+#'
+#' @importFrom data.table fread
+#' @export
+parseTabular <- function(input, sep = "\t") {
 
     message("Parsing '", input, "'.")
 
@@ -188,7 +200,7 @@
     )
 
     interactionSet <- .setFromTabular(interactions)
-    object <- new("HiCDOCDataSet", interactionSet, input = input)
+    interactionSet <- .sortHiCData(interactionSet)
 
-    return(object)
+    return(interactionSet)
 }

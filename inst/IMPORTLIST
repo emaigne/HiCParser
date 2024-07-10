@@ -1,0 +1,16 @@
+as.matrix = base
+colnames = base
+format = base
+grepl = base
+gsub = base
+lapply = base
+match = base
+ncol = base
+nrow = base
+order = base
+paste = base
+rbind = base
+Reduce = base
+setdiff = base
+shift = data.table
+unique = base

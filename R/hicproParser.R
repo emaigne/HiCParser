@@ -12,6 +12,9 @@
 #'
 #' @keywords internal
 #' @noRd
+#' @importFrom InteractionSet GInteractions
+#' @importFrom GenomicRanges GRanges
+#' @importFrom data.table setorder
 .parseOneHiCPro <- function(matrixPath, bedPath, replicate, condition) {
 
     message("\nParsing '", matrixPath, "' and '", bedPath, "'.")
@@ -58,22 +61,109 @@
     return(interactionSet)
 }
 
+#' @title Parser for HiCPro data
 #' @description
 #' Parses interactions in pairs of \code{.matrix} and \code{.bed} files and
-#' fills the interactions slots of the provided \code{\link{HiCDOCDataSet}}.
+#' returns an InteractionSet object.
 #'
-#' @param object
-#' A \code{\link{HiCDOCDataSet}}.
+#' @param matrixPaths
+#' A vector of paths to HiC-Pro matrix files.
+#' @param bedPaths
+#' A vector of paths to HiC-Pro bed files.
+#' @param replicates
+#' A vector of replicate names repeated along the conditions.
+#' @param conditions
+#' A vector of condition names repeated along the replicates.
 #'
 #' @return
-#' A filled \code{\link{HiCDOCDataSet}}.
+#' An InteractionSet.
 #'
-#' @keywords internal
-#' @noRd
-.parseHiCPro <- function(object, replicates, conditions) {
+#' @examples
+#' \dontrun{
+#'     # Path to each matrix file
+#'     matrixPaths = c(
+#'       'path/to/condition-1.replicate-1.matrix',
+#'       'path/to/condition-1.replicate-2.matrix',
+#'       'path/to/condition-2.replicate-1.matrix',
+#'       'path/to/condition-2.replicate-2.matrix',
+#'       'path/to/condition-3.replicate-1.matrix'
+#'     )
+#'
+#'     # Path to each bed file
+#'     bedPaths = c(
+#'       'path/to/condition-1.replicate-1.bed',
+#'       'path/to/condition-1.replicate-2.bed',
+#'       'path/to/condition-2.replicate-1.bed',
+#'       'path/to/condition-2.replicate-2.bed',
+#'       'path/to/condition-3.replicate-1.bed'
+#'     )
+#'
+#'     # Replicate and condition of each file. Can be names instead of numbers.
+#'     replicates <- c(1, 2, 1, 2, 1)
+#'     conditions <- c(1, 1, 2, 2, 3)
+#'
+#'     # Instantiation of data set
+#'     hic.experiment <- HiCDOCDataSetFromHiCPro(
+#'       matrixPaths = matrixPaths,
+#'       bedPaths = bedPaths,
+#'       replicates = replicates,
+#'       conditions = conditions
+#'     )
+#' }
+#'
+#' @usage
+#' HiCDOCDataSetFromHiCPro(matrixPaths, bedPaths, replicates, conditions)
+#'
+#' @importFrom pbapply pbmapply
+#' @export
+parseHiCPro <- function(matrixPaths, bedPaths, replicates, conditions) {
 
-    matrixPaths <- lapply(object@input, `[[`, 1)
-    bedPaths <- lapply(object@input, `[[`, 2)
+    if (is.factor(matrixPaths)) {
+        matrixPaths <- as.vector(matrixPaths)
+    }
+    if (!is.character(matrixPaths)) {
+        stop("'matrixPaths' must be a vector of characters.", call. = FALSE)
+    }
+
+    if (is.factor(bedPaths)) {
+        bedPaths <- as.vector(bedPaths)
+    }
+    if (!is.character(bedPaths)) {
+        stop("'bedPaths' must be a vector of characters.", call. = FALSE)
+    }
+
+    if (length(matrixPaths) != length(bedPaths)) {
+        stop(
+            "'matrixPaths' and 'bedPaths' must have the same length.",
+            call. = FALSE
+        )
+    }
+
+    for (path in c(matrixPaths, bedPaths)) {
+        if (!file.exists(path)) {
+            stop("'", path, "' does not exist.", call. = FALSE)
+        }
+    }
+
+    if (is.factor(replicates)) {
+        replicates <- as.vector(replicates)
+    }
+    if (is.null(replicates)) {
+        stop("'replicates' must be a vector of replicates.", call. = FALSE)
+    }
+
+    if (is.factor(conditions))
+        conditions <- as.vector(conditions)
+    if (is.null(conditions)) {
+        stop("'conditions' must be a vector of conditions.", call. = FALSE)
+    }
+
+    if (length(conditions) != length(replicates)) {
+        stop(
+            "'conditions' and 'replicates' must have the same length",
+            call. = FALSE
+        )
+    }
 
     interactionSet <- pbapply::pbmapply(
         .parseOneHiCPro,
@@ -84,12 +174,7 @@
     )
 
     mergedinteractionSet <- Reduce(f = .mergeInteractionSet, x = interactionSet)
+    mergedinteractionSet <- .sortHiCData(mergedinteractionSet)
 
-    object <- new(
-        "HiCDOCDataSet",
-        mergedinteractionSet,
-        input = object@input
-    )
-
-    return(object)
+    return(mergedinteractionSet)
 }

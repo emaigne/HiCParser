@@ -13,10 +13,13 @@
 #'
 #' @keywords internal
 #' @noRd
+#' @importFrom data.table setorder
+#' @importFrom GenomicRanges GRanges
+#' @importFrom rhdf5 h5read
 .parseOneCool <- function(path, binSize = NA, replicate, condition) {
 
     message("\nParsing '", path, "'.")
-
+    # TODO : ici s'il y a un binSize ça marche pas sur les données d'exemples
     uri <- function(path) {
         if (!is.numeric(binSize)) return(path)
         return(
@@ -69,26 +72,83 @@
     return(interactionSet)
 }
 
+#' @title Parser for data in cool format
 #' @description
-#' Parses interactions in \code{.cool} or \code{.mcool} format and fills the
-#' interactions slot of the provided \code{\link{HiCDOCDataSet}}.
-#'
-#' @param object
-#' A \code{\link{HiCDOCDataSet}}.
+#' Parses interactions in \code{.cool} or \code{.mcool} format and returns
+#' an InteractionSet object.
+#' @param paths
+#' A vector of paths to \code{.cool} or \code{.mcool} files.
+#' @param replicates
+#' A vector of replicate names repeated along the conditions.
+#' @param conditions
+#' A vector of condition names repeated along the replicates.
 #' @param binSize
 #' The resolution (span of each position in number of bases). Optionally
 #' provided to select the appropriate resolution in \code{.mcool} files.
 #' Defaults to NULL.
 #'
 #' @return
-#' A filled \code{\link{HiCDOCDataSet}}.
-#'
-#' @keywords internal
-#' @noRd
-.parseCool <- function(object, binSize = NA, replicates, conditions) {
+#' An InteractionSet.
+#' @examples
+#'   \dontrun{
+#'     # Path to each file
+#'     paths = c(
+#'       'path/to/condition-1.replicate-1.cool',
+#'       'path/to/condition-1.replicate-2.cool',
+#'       'path/to/condition-2.replicate-1.cool',
+#'       'path/to/condition-2.replicate-2.cool',
+#'       'path/to/condition-3.replicate-1.cool'
+#'     )
+#'     # Replicate and condition of each file. Can be names instead of numbers.
+#'     replicates <- c(1, 2, 1, 2, 1)
+#'     conditions <- c(1, 1, 2, 2, 3)
+#'     # Resolution to select in .mcool files
+#'     binSize = 500000
+#'     # Instantiation of data set
+#'     object <- HiCDOCDataSetFromCool(
+#'       paths,
+#'       replicates = replicates,
+#'       conditions = conditions,
+#'       binSize = binSize # Specified for .mcool files.
+#'     )
+#'   }
+#' @importFrom pbapply pbmapply
+#' @export
+parseCool <- function(paths, binSize=NA, replicates, conditions) {
+    if(!requireNamespace('rhdf5')) stop("'rhdf5' package is required. Please install it and retry.")
+    if (is.factor(paths)) {
+        paths <- as.vector(paths)
+    }
+    if (!is.character(paths)) {
+        stop("'paths' must be a vector of characters.", call. = FALSE)
+    }
+    for (path in paths) {
+        if (!file.exists(path)) {
+            stop("'", path, "' does not exist.", call. = FALSE)
+        }
+    }
+
+    if (is.factor(replicates)) {
+        conditions <- as.vector(replicates)
+    }
+    if (is.null(replicates)) {
+        stop("'replicates' must be a vector of replicates.", call. = FALSE)
+    }
+
+    if (is.factor(conditions)) {
+        conditions <- as.vector(conditions)
+    }
+    if (is.null(conditions)) {
+        stop("'conditions' must be a vector of conditions.", call. = FALSE)
+    }
+
+    if (!is.na(binSize) && (!is.numeric(binSize) || length(binSize) != 1)) {
+        stop("'binSize' must be an integer.", call. = FALSE)
+    }
+
     interactionSetCool <- pbapply::pbmapply(
         .parseOneCool,
-        path = object@input,
+        path = paths,
         binSize = binSize,
         condition = conditions,
         replicate = replicates
@@ -98,11 +158,7 @@
         f = .mergeInteractionSet,
         x = interactionSetCool
     )
+    mergedinteractionSetCool <- .sortHiCData(mergedinteractionSetCool)
 
-    new(
-        "HiCDOCDataSet",
-        mergedinteractionSetCool,
-        input = object@input
-    )
+    return(mergedinteractionSetCool)
 }
-
