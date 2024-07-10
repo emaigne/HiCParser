@@ -23,6 +23,10 @@
 #' A sorted \code{InteractionSet}.
 #'
 #' @keywords internal
+#' @importFrom GenomeInfoDb seqnames seqlevels
+#' @importFrom InteractionSet reduceRegions regions anchors
+#' @importFrom gtools mixedsort
+#' @importFrom S4Vectors Rle DataFrame
 #' @noRd
 .sortHiCData <- function(object) {
     # Reduce the levels in interaction part
@@ -62,6 +66,7 @@
 #' @keywords internal
 #' @noRd
 #' @importFrom S4Vectors DataFrame
+#' @importFrom InteractionSet anchors GInteractions InteractionSet intrachr
 .createInteractionSet <- function(assay, gi, allRegions, condition, replicate){
     # Add 0 on the diagonal if there is only off diagonal interaction
     ids <- InteractionSet::anchors(gi, id = TRUE)

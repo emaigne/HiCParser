@@ -28,7 +28,8 @@ Imports:
     S4Vectors,
     gtools,
     pbapply,
-    BiocGenerics
+    BiocGenerics,
+    GenomeInfoDb
 LinkingTo: Rcpp
 Suggests: 
     rhdf5,
