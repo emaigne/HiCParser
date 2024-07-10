@@ -31,6 +31,7 @@ Imports:
     BiocGenerics
 LinkingTo: Rcpp
 Suggests: 
+    rhdf5,
     BiocStyle,
     knitr,
     RefManageR,
