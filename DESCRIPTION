@@ -1,13 +1,31 @@
 Package: HiCParser
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Parser for HiC data in R
+Date: 2024-07-10
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+URL: https://github.com/emaigne/HiCParser
+BugReports: https://github.com/emaigne/HiCParser/issues
+Author: Authors@R: c(
+    person("Zytnicki", "Matthias", email = "matthias.zytnicki@inrae.fr", role = c("aut")),
+    person("Maigné", "Élise", email = "elise.maigne@inrae.fr", role = c("aut", "cre")))
+Maintainer: Elise Maigné <elise.maigne@inrae.fr>
+Description: Parser for HiC data in R. 
+    TODO To develop. Use four spaces when indenting paragraphs within the Description.
+License: GPL (>= 2)
 Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
 LazyData: true
+biocViews: 
+    Software, HiC
 Imports: Rcpp (>= 1.0.12)
 LinkingTo: Rcpp
+Suggests: 
+    BiocStyle,
+    knitr,
+    RefManageR,
+    rmarkdown,
+    sessioninfo,
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+VignetteBuilder: knitr

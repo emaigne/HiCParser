@@ -1,0 +1,20 @@
+pkgVer <- function(pkg) {
+    if (!exists("meta") || is.null(meta)) meta <- packageDescription(pkg)
+    ver <- meta$Version
+    paste0('https://github.com/emaigne/HiCParser/', pkg, ' - R package version ', ver)
+}
+
+c(
+
+    bibentry(bibtype="manual",
+        title = "Parse HiC data to import them in R",
+        author = personList(
+            as.person("Elise Maigné"),
+            as.person("Matthias Zytnicki")
+        ),
+        year = format(Sys.Date(), "%Y"),
+        url = "http://www.bioconductor.org/packages/HiCParser",
+        note = pkgVer('HiCParser'),
+        doi = '10.18129/B9.bioc.HiCParser'
+    )
+)
