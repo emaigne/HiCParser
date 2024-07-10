@@ -15,9 +15,8 @@
 #' @noRd
 #' @importFrom data.table setorder
 #' @importFrom GenomicRanges GRanges
-#' @importFrom rhdf5 h5read
 .parseOneCool <- function(path, binSize = NA, replicate, condition) {
-
+    if(!requireNamespace('rhdf5')) stop("'rhdf5' package is required. Please install it and retry.")
     message("\nParsing '", path, "'.")
     # TODO : ici s'il y a un binSize ça marche pas sur les données d'exemples
     uri <- function(path) {
