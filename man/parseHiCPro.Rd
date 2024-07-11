@@ -23,7 +23,6 @@ Parses interactions in pairs of \code{.matrix} and \code{.bed} files and
 returns an InteractionSet object.
 }
 \examples{
-\dontrun{
 # Path to each matrix file
 matrixPaths <- c(
     "path/to/condition-1.replicate-1.matrix",
@@ -46,6 +45,7 @@ bedPaths <- c(
 replicates <- c(1, 2, 1, 2, 1)
 conditions <- c(1, 1, 2, 2, 3)
 
+if(FALSE){
 # Instantiation of data set
 hic.experiment <- parseHiCPro(
     matrixPaths = matrixPaths,

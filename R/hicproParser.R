@@ -78,7 +78,6 @@
 #' An InteractionSet.
 #'
 #' @examples
-#' \dontrun{
 #' # Path to each matrix file
 #' matrixPaths <- c(
 #'     "path/to/condition-1.replicate-1.matrix",
@@ -101,6 +100,7 @@
 #' replicates <- c(1, 2, 1, 2, 1)
 #' conditions <- c(1, 1, 2, 2, 3)
 #'
+#' if(FALSE){
 #' # Instantiation of data set
 #' hic.experiment <- parseHiCPro(
 #'     matrixPaths = matrixPaths,
@@ -116,19 +116,8 @@
 #' @importFrom pbapply pbmapply
 #' @export
 parseHiCPro <- function(matrixPaths, bedPaths, replicates, conditions) {
-    if (is.factor(matrixPaths)) {
-        matrixPaths <- as.vector(matrixPaths)
-    }
-    if (!is.character(matrixPaths)) {
-        stop("'matrixPaths' must be a vector of characters.", call. = FALSE)
-    }
-
-    if (is.factor(bedPaths)) {
-        bedPaths <- as.vector(bedPaths)
-    }
-    if (!is.character(bedPaths)) {
-        stop("'bedPaths' must be a vector of characters.", call. = FALSE)
-    }
+    matrixPaths <- .checkPaths("matrixPaths"=matrixPaths)
+    bedPaths <- .checkPaths("bedPaths"=bedPaths)
 
     if (length(matrixPaths) != length(bedPaths)) {
         stop(
@@ -137,29 +126,11 @@ parseHiCPro <- function(matrixPaths, bedPaths, replicates, conditions) {
         )
     }
 
-    for (path in c(matrixPaths, bedPaths)) {
-        if (!file.exists(path)) {
-            stop("'", path, "' does not exist.", call. = FALSE)
-        }
-    }
-
-    if (is.factor(replicates)) {
-        replicates <- as.vector(replicates)
-    }
-    if (is.null(replicates)) {
-        stop("'replicates' must be a vector of replicates.", call. = FALSE)
-    }
-
-    if (is.factor(conditions)) {
-        conditions <- as.vector(conditions)
-    }
-    if (is.null(conditions)) {
-        stop("'conditions' must be a vector of conditions.", call. = FALSE)
-    }
-
-    if (length(conditions) != length(replicates)) {
+    repCond <- .checkReplicatesConditions(replicates, conditions)
+    if (min(lengths(repCond)) != length(matrixPaths)) {
         stop(
-            "'conditions' and 'replicates' must have the same length",
+            "'conditions/replicates' and 'matrixPaths/bedPaths' ",
+            "must have the same length",
             call. = FALSE
         )
     }
@@ -168,8 +139,8 @@ parseHiCPro <- function(matrixPaths, bedPaths, replicates, conditions) {
         .parseOneHiCPro,
         matrixPaths,
         bedPaths,
-        replicates,
-        conditions
+        repCond[["replicates"]],
+        repCond[["conditions"]]
     )
 
     mergedinteractionSet <- Reduce(f = mergeInteractionSet, x = interactionSet)

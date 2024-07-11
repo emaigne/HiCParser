@@ -17,6 +17,14 @@ An InteractionSet object.
 \description{
 Read the file, produce an \code{InteractionSet} object.
 }
+\details{
+Accepts a tabular file with \code{chromosome}, \code{position 1},
+\code{position 2}, and multiple replicate columns listing interaction counts.
+Null interactions do not have to be listed. Values must be separated by
+tabulations. The header must be
+\code{chromosome position 1 position 2 x.y x.y x.y ...} with \code{x}
+replaced by condition names and \code{y} replaced by replicate names.
+}
 \examples{
 path <- system.file("extdata", "liver_18_10M_500000.tsv", package = "HiCParser")
 object <- parseTabular(path, sep = "\t")

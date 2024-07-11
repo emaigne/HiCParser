@@ -37,3 +37,71 @@ mergeInteractionSet <- function(interactionSet1, interactionSet2, fill = NA) {
     newiset <- BiocGenerics::cbind(interactionSet1, interactionSet2)
     return(newiset)
 }
+
+
+#' Check input paths for parser functions (format and existence)
+#'
+#' @param ... a vector of paths, named, containing input data
+#'
+#' @return a  caracter vector of paths
+#' @noRd
+#'
+#' @examples
+#' .checkPaths("ExamplePaths" = c("input1", "input2"))
+.checkPaths <- function(...){
+    args <- list(...)
+    path <- args[[1]]
+    namePath <- names(sapply(match.call(), deparse))[-1]
+
+    print(path)
+    if (is.factor(path)) {
+        path <- as.vector(path)
+    }
+    if (anyNA(path)) {
+        stop(namePath," can't contain NA values.", call. = FALSE)
+    }
+    if (!is.character(path)) {
+        stop(namePath," must be a non empty vector of characters.", call. = FALSE)
+    }
+    for (p in path) {
+        if (!file.exists(p)) {
+            stop("'", p, "' does not exist.", call. = FALSE)
+        }
+    }
+    return(path)
+}
+
+#' Check replicate and conditions
+#'
+#' @param ... a vector of replicates or conditions
+#'
+#' @return a  caracter vector of paths
+#' @noRd
+#'
+#' @examples
+#' .checkReplicatesConditions(c(1, 2, 3), c(2, 3, 3))
+.checkReplicatesConditions <- function(replicates, conditions){
+    if (is.factor(replicates)) {
+        replicates <- as.vector(replicates)
+    }
+    if (is.factor(conditions)) {
+        conditions <- as.vector(conditions)
+    }
+
+    if (is.null(replicates)) {
+        stop("'replicates' must be a vector of replicates.", call. = FALSE)
+    }
+    if (is.null(conditions)) {
+        stop("'conditions' must be a vector of conditions.", call. = FALSE)
+    }
+    if (anyNA(c(replicates, conditions))) {
+        stop("'replicates' and 'conditions' can't containe NA values", call. = FALSE)
+    }
+    if (length(conditions) != length(replicates)) {
+        stop(
+            "'conditions' and 'replicates' must have the same length",
+            call. = FALSE
+        )
+    }
+    return(list("replicates"=replicates, "conditions"=conditions))
+}

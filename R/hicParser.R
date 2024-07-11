@@ -43,8 +43,7 @@
 #' An InteractionSet.
 #'
 #' @examples
-#' \dontrun{
-#' #' # Path to each file
+#' #Path to each file
 #' paths <- c(
 #'     "path/to/condition-1.replicate-1.hic",
 #'     "path/to/condition-1.replicate-2.hic",
@@ -52,14 +51,12 @@
 #'     "path/to/condition-2.replicate-2.hic",
 #'     "path/to/condition-3.replicate-1.hic"
 #' )
-#'
 #' # Replicate and condition of each file. Can be names instead of numbers.
 #' replicates <- c(1, 2, 1, 2, 1)
 #' conditions <- c(1, 1, 2, 2, 3)
-#'
 #' # Resolution to select
 #' binSize <- 500000
-#'
+#' if(FALSE){
 #' # Instantiation of data set
 #' hic.experiment <- parseHiC(
 #'     paths,
@@ -74,36 +71,14 @@
 #' @importFrom pbapply pbmapply
 #' @export
 parseHiC <- function(paths, binSize, replicates, conditions) {
-    if (is.factor(paths)) {
-        paths <- as.vector(paths)
-    }
-    if (!is.character(paths)) {
-        stop("'paths' must be a vector of characters.", call. = FALSE)
-    }
-    for (path in paths) {
-        if (!file.exists(path)) {
-            stop("'", path, "' does not exist.", call. = FALSE)
-        }
-    }
-
-    if (is.factor(replicates)) {
-        replicates <- as.vector(replicates)
-    }
-    if (is.null(replicates)) {
-        stop("'replicates' must be a vector of replicates.", call. = FALSE)
-    }
-    if (length(replicates) != length(paths)) {
-        stop("'replicates' should have the same length as 'paths'")
-    }
-
-    if (is.factor(conditions)) {
-        conditions <- as.vector(conditions)
-    }
-    if (is.null(conditions)) {
-        stop("'conditions' must be a vector of conditions.", call. = FALSE)
-    }
-    if (length(conditions) != length(paths)) {
-        stop("'conditions' should have the same length as 'paths'")
+    paths <- .checkPaths("paths"=paths)
+    repCond <- .checkReplicatesConditions(replicates, conditions)
+    if (min(lengths(repCond)) != length(paths)) {
+        stop(
+            "'conditions/replicates' and 'paths' ",
+            "must have the same length",
+            call. = FALSE
+        )
     }
 
     if (!is.numeric(binSize) || length(binSize) != 1) {
@@ -115,8 +90,8 @@ parseHiC <- function(paths, binSize, replicates, conditions) {
         .parseOneHiC,
         path      = paths,
         binSize   = binSize,
-        condition = conditions,
-        replicate = replicates
+        condition = repCond[["conditions"]],
+        replicate = repCond[["replicates"]]
     )
 
     mergedinteractionSet <- Reduce(

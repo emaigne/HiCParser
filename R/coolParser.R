@@ -91,9 +91,9 @@
 #' @return
 #' An InteractionSet.
 #' @examples
-#'   \dontrun{
-#'     # Path to each file
-#'     paths = c(
+#'     #EXAMPLE FOR .cool FORMAT
+#'    # Path to each file
+#'    pathsCool = c(
 #'       'path/to/condition-1.replicate-1.cool',
 #'       'path/to/condition-1.replicate-2.cool',
 #'       'path/to/condition-2.replicate-1.cool',
@@ -101,16 +101,37 @@
 #'       'path/to/condition-3.replicate-1.cool'
 #'     )
 #'     # Replicate and condition of each file. Can be names instead of numbers.
-#'     replicates <- c(1, 2, 1, 2, 1)
-#'     conditions <- c(1, 1, 2, 2, 3)
-#'     # Resolution to select in .mcool files
-#'     binSize = 500000
+#'    replicates <- c(1, 2, 1, 2, 1)
+#'    conditions <- c(1, 1, 2, 2, 3)
+#'    if(FALSE) {
+#'     object <- parseCool(
+#'       paths,
+#'       replicates = replicates,
+#'       conditions = conditions
+#'     )
+#'   }
+#'
+#'   # EXAMPLE FOR .mcool FORMAT
+#'   # Resolution
+#'   binSize = 500000
+#'   # Path to each file
+#'     paths = c(
+#'       'path/to/condition-1.replicate-1.mcool',
+#'       'path/to/condition-1.replicate-2.mcool',
+#'       'path/to/condition-2.replicate-1.mcool',
+#'       'path/to/condition-2.replicate-2.mcool',
+#'       'path/to/condition-3.replicate-1.mcool'
+#'     )
+#'   # Replicates and conditions for each file
+#'   replicates <- c(1, 2, 1, 2, 1)
+#'   conditions <- c(1, 1, 2, 2, 3)
+#'   if(FALSE) {
 #'     # Instantiation of data set
 #'     object <- parseCool(
 #'       paths,
 #'       replicates = replicates,
 #'       conditions = conditions,
-#'       # binSize = binSize # To specifie for .mcool files.
+#'       binSize = binSize
 #'     )
 #'   }
 #' @importFrom pbapply pbmapply
@@ -118,34 +139,22 @@
 parseCool <- function(paths, binSize=NA, replicates, conditions) {
     if(!requireNamespace('rhdf5'))
         stop("'rhdf5' package is required. Please install it and retry.")
-    if (is.factor(paths)) {
-        paths <- as.vector(paths)
-    }
-    if (!is.character(paths)) {
-        stop("'paths' must be a vector of characters.", call. = FALSE)
-    }
-    for (path in paths) {
-        if (!file.exists(path)) {
-            stop("'", path, "' does not exist.", call. = FALSE)
-        }
+    paths <- .checkPaths("paths" = paths)
+
+    repCond <- .checkReplicatesConditions(replicates, conditions)
+    if (min(lengths(repCond)) != length(paths)) {
+        stop(
+            "'conditions/replicates' and 'paths' ",
+            "must have the same length",
+            call. = FALSE
+        )
     }
 
-    if (is.factor(replicates)) {
-        conditions <- as.vector(replicates)
+    if(!is.na(binSize) && all(grepl(".cool", paths, fixed=TRUE))){
+        warning("binSize specified but all files are not .cool, ignored")
     }
-    if (is.null(replicates)) {
-        stop("'replicates' must be a vector of replicates.", call. = FALSE)
-    }
-
-    if (is.factor(conditions)) {
-        conditions <- as.vector(conditions)
-    }
-    if (is.null(conditions)) {
-        stop("'conditions' must be a vector of conditions.", call. = FALSE)
-    }
-
-    if(!is.na(binSize) && !all(repl("mcool", paths))){
-        stop("binSize specified but all paths are not mcool")
+    if(is.na(binSize) && any(grepl("mcool", paths, fixed=TRUE))){
+        stop("binSize must be specified fot mcool files")
     }
     if (!is.na(binSize) && (!is.numeric(binSize) || length(binSize) != 1)) {
         stop("'binSize' must be an integer.", call. = FALSE)
@@ -155,8 +164,8 @@ parseCool <- function(paths, binSize=NA, replicates, conditions) {
         .parseOneCool,
         path = paths,
         binSize = binSize,
-        condition = conditions,
-        replicate = replicates
+        condition = repCond[["conditions"]],
+        replicate = repCond[["replicates"]]
     )
 
     mergedinteractionSetCool <- Reduce(

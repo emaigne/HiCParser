@@ -24,8 +24,7 @@ Parses interactions in \code{.hic} format and returns an InteractionSet
 object.
 }
 \examples{
-\dontrun{
-#' # Path to each file
+#Path to each file
 paths <- c(
     "path/to/condition-1.replicate-1.hic",
     "path/to/condition-1.replicate-2.hic",
@@ -33,14 +32,12 @@ paths <- c(
     "path/to/condition-2.replicate-2.hic",
     "path/to/condition-3.replicate-1.hic"
 )
-
 # Replicate and condition of each file. Can be names instead of numbers.
 replicates <- c(1, 2, 1, 2, 1)
 conditions <- c(1, 1, 2, 2, 3)
-
 # Resolution to select
 binSize <- 500000
-
+if(FALSE){
 # Instantiation of data set
 hic.experiment <- parseHiC(
     paths,

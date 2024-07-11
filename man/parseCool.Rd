@@ -25,9 +25,9 @@ Parses interactions in \code{.cool} or \code{.mcool} format and returns
 an InteractionSet object.
 }
 \examples{
-  \dontrun{
-    # Path to each file
-    paths = c(
+    #EXAMPLE FOR .cool FORMAT
+   # Path to each file
+   pathsCool = c(
       'path/to/condition-1.replicate-1.cool',
       'path/to/condition-1.replicate-2.cool',
       'path/to/condition-2.replicate-1.cool',
@@ -35,16 +35,37 @@ an InteractionSet object.
       'path/to/condition-3.replicate-1.cool'
     )
     # Replicate and condition of each file. Can be names instead of numbers.
-    replicates <- c(1, 2, 1, 2, 1)
-    conditions <- c(1, 1, 2, 2, 3)
-    # Resolution to select in .mcool files
-    binSize = 500000
+   replicates <- c(1, 2, 1, 2, 1)
+   conditions <- c(1, 1, 2, 2, 3)
+   if(FALSE) {
+    object <- parseCool(
+      paths,
+      replicates = replicates,
+      conditions = conditions
+    )
+  }
+
+  # EXAMPLE FOR .mcool FORMAT
+  # Resolution
+  binSize = 500000
+  # Path to each file
+    paths = c(
+      'path/to/condition-1.replicate-1.mcool',
+      'path/to/condition-1.replicate-2.mcool',
+      'path/to/condition-2.replicate-1.mcool',
+      'path/to/condition-2.replicate-2.mcool',
+      'path/to/condition-3.replicate-1.mcool'
+    )
+  # Replicates and conditions for each file
+  replicates <- c(1, 2, 1, 2, 1)
+  conditions <- c(1, 1, 2, 2, 3)
+  if(FALSE) {
     # Instantiation of data set
     object <- parseCool(
       paths,
       replicates = replicates,
       conditions = conditions,
-      # binSize = binSize # To specifie for .mcool files.
+      binSize = binSize
     )
   }
 }

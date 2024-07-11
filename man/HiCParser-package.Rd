@@ -6,13 +6,22 @@
 \alias{_PACKAGE}
 \title{Parse HiC data to import them into R}
 \description{
-Parser for HiC data in R. TODO To develop. Use four spaces when indenting paragraphs within the Description.
+This package is a parser to import HiC data into R. It accepts several type of data: tabular files, Cooler `.cool` or `.mcool` files, Juicer `.hic` files or HiC-Pro `.matrix` and `.bed` files. The HiC data can be several files, for several replicates and conditions. The data is formated in an InteractionSet object.
 }
 \seealso{
 Useful links:
 \itemize{
   \item \url{https://github.com/emaigne/HiCParser}
   \item Report bugs at \url{https://github.com/emaigne/HiCParser/issues}
+}
+
+}
+\author{
+\strong{Maintainer}: Maigné Élise \email{elise.maigne@inrae.fr}
+
+Authors:
+\itemize{
+  \item Zytnicki Matthias \email{matthias.zytnicki@inrae.fr}
 }
 
 }

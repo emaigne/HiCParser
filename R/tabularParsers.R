@@ -172,6 +172,14 @@
 #' @param sep
 #' The separator of the tabular file. Default to tabulation.
 #'
+#' @details
+#' Accepts a tabular file with \code{chromosome}, \code{position 1},
+#' \code{position 2}, and multiple replicate columns listing interaction counts.
+#' Null interactions do not have to be listed. Values must be separated by
+#' tabulations. The header must be
+#' \code{chromosome position 1 position 2 x.y x.y x.y ...} with \code{x}
+#' replaced by condition names and \code{y} replaced by replicate names.
+#'
 #' @return
 #' An InteractionSet object.
 #'
@@ -185,6 +193,11 @@
 #' @importFrom data.table fread
 #' @export
 parseTabular <- function(path, sep = "\t") {
+    path <- .checkPaths("path"=path)
+    if (length(path) > 1) {
+        stop("'path' must be 1-lengths character vector.", call. = FALSE)
+    }
+
     message("Parsing '", path, "'.")
 
     interactions <- data.table::fread(
