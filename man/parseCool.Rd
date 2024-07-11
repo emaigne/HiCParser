@@ -40,11 +40,11 @@ an InteractionSet object.
     # Resolution to select in .mcool files
     binSize = 500000
     # Instantiation of data set
-    object <- HiCDOCDataSetFromCool(
+    object <- parseCool(
       paths,
       replicates = replicates,
       conditions = conditions,
-      binSize = binSize # Specified for .mcool files.
+      # binSize = binSize # To specifie for .mcool files.
     )
   }
 }

@@ -14,7 +14,8 @@ test_that("Parser for .cool data works as expected", {
             replicates = replicates,
             conditions = conditions
         ),
-        "liver_18_10M_500000.cool")
+        "liver_18_10M_500000.cool"
+    )
     expect_equal(length(object), 210)
 
     # Interactions

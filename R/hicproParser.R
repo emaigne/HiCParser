@@ -1,4 +1,3 @@
-
 #' @description
 #' Parses a single pair of \code{.matrix} and \code{.bed} files.
 #'
@@ -16,7 +15,6 @@
 #' @importFrom GenomicRanges GRanges
 #' @importFrom data.table setorder
 .parseOneHiCPro <- function(matrixPath, bedPath, replicate, condition) {
-
     message("\nParsing '", matrixPath, "' and '", bedPath, "'.")
 
     interactions <- data.table::fread(
@@ -37,13 +35,14 @@
 
     setorder(bed, chromosome, start, end)
     # Adding 1 to follow Bioconductor GRanges recommended format
-    bed[,start := start+1]
+    bed[, start := start + 1]
     # Keeping only intra-chromosomal interactions
     # Add 1 if BED index start with 0
     allChromosomes <- vector("character", length = max(bed$index) + 1)
-    allChromosomes[bed[,index]+1] <- bed[,chromosome]
+    allChromosomes[bed[, index] + 1] <- bed[, chromosome]
     interactions <- interactions[
-        allChromosomes[startIndex + 1] == allChromosomes[stopIndex + 1]]
+        allChromosomes[startIndex + 1] == allChromosomes[stopIndex + 1]
+    ]
 
     order1 <- match(interactions$startIndex, bed$index)
     order2 <- match(interactions$stopIndex, bed$index)
@@ -53,9 +52,9 @@
         allRegions[order1],
         allRegions[order2],
         regions = allRegions,
-        mode="strict"
+        mode = "strict"
     )
-    assay <- as.matrix(interactions$interaction, ncol=1)
+    assay <- as.matrix(interactions$interaction, ncol = 1)
     interactionSet <- .createInteractionSet(assay, gi, allRegions, condition, replicate)
 
     return(interactionSet)
@@ -80,44 +79,43 @@
 #'
 #' @examples
 #' \dontrun{
-#'     # Path to each matrix file
-#'     matrixPaths = c(
-#'       'path/to/condition-1.replicate-1.matrix',
-#'       'path/to/condition-1.replicate-2.matrix',
-#'       'path/to/condition-2.replicate-1.matrix',
-#'       'path/to/condition-2.replicate-2.matrix',
-#'       'path/to/condition-3.replicate-1.matrix'
-#'     )
+#' # Path to each matrix file
+#' matrixPaths <- c(
+#'     "path/to/condition-1.replicate-1.matrix",
+#'     "path/to/condition-1.replicate-2.matrix",
+#'     "path/to/condition-2.replicate-1.matrix",
+#'     "path/to/condition-2.replicate-2.matrix",
+#'     "path/to/condition-3.replicate-1.matrix"
+#' )
 #'
-#'     # Path to each bed file
-#'     bedPaths = c(
-#'       'path/to/condition-1.replicate-1.bed',
-#'       'path/to/condition-1.replicate-2.bed',
-#'       'path/to/condition-2.replicate-1.bed',
-#'       'path/to/condition-2.replicate-2.bed',
-#'       'path/to/condition-3.replicate-1.bed'
-#'     )
+#' # Path to each bed file
+#' bedPaths <- c(
+#'     "path/to/condition-1.replicate-1.bed",
+#'     "path/to/condition-1.replicate-2.bed",
+#'     "path/to/condition-2.replicate-1.bed",
+#'     "path/to/condition-2.replicate-2.bed",
+#'     "path/to/condition-3.replicate-1.bed"
+#' )
 #'
-#'     # Replicate and condition of each file. Can be names instead of numbers.
-#'     replicates <- c(1, 2, 1, 2, 1)
-#'     conditions <- c(1, 1, 2, 2, 3)
+#' # Replicate and condition of each file. Can be names instead of numbers.
+#' replicates <- c(1, 2, 1, 2, 1)
+#' conditions <- c(1, 1, 2, 2, 3)
 #'
-#'     # Instantiation of data set
-#'     hic.experiment <- HiCDOCDataSetFromHiCPro(
-#'       matrixPaths = matrixPaths,
-#'       bedPaths = bedPaths,
-#'       replicates = replicates,
-#'       conditions = conditions
-#'     )
+#' # Instantiation of data set
+#' hic.experiment <- parseHiCPro(
+#'     matrixPaths = matrixPaths,
+#'     bedPaths = bedPaths,
+#'     replicates = replicates,
+#'     conditions = conditions
+#' )
 #' }
 #'
 #' @usage
-#' HiCDOCDataSetFromHiCPro(matrixPaths, bedPaths, replicates, conditions)
+#' parseHiCPro(matrixPaths, bedPaths, replicates, conditions)
 #'
 #' @importFrom pbapply pbmapply
 #' @export
 parseHiCPro <- function(matrixPaths, bedPaths, replicates, conditions) {
-
     if (is.factor(matrixPaths)) {
         matrixPaths <- as.vector(matrixPaths)
     }
@@ -152,8 +150,9 @@ parseHiCPro <- function(matrixPaths, bedPaths, replicates, conditions) {
         stop("'replicates' must be a vector of replicates.", call. = FALSE)
     }
 
-    if (is.factor(conditions))
+    if (is.factor(conditions)) {
         conditions <- as.vector(conditions)
+    }
     if (is.null(conditions)) {
         stop("'conditions' must be a vector of conditions.", call. = FALSE)
     }

@@ -19,13 +19,7 @@ styler::style_dir(
     transformers = biocthis::bioc_style(),
     filetype = "Rmd"
 )
-styler::style_file(usethis::proj_path("README.Rmd"), transformers = biocthis::bioc_style())
-
 ## Re-make the documentation files
 devtools::document()
-
-## You might also need to update the README.md by re-rendering the README.Rmd
-## file.
-devtools::build_readme()
 
 ## This template was made using https://lcolladotor.github.io/biocthis/

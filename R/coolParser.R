@@ -16,7 +16,8 @@
 #' @importFrom data.table setorder
 #' @importFrom GenomicRanges GRanges
 .parseOneCool <- function(path, binSize = NA, replicate, condition) {
-    if(!requireNamespace('rhdf5')) stop("'rhdf5' package is required. Please install it and retry.")
+    if(!requireNamespace('rhdf5'))
+        stop("'rhdf5' package is required. Please install it and retry.")
     message("\nParsing '", path, "'.")
     # TODO : ici s'il y a un binSize ça marche pas sur les données d'exemples
     uri <- function(path) {
@@ -67,7 +68,8 @@
     )
     assay <- as.matrix(interactions$interaction, ncol = 1)
 
-    interactionSet <- .createInteractionSet(assay, gi, allRegions, condition, replicate)
+    interactionSet <-
+        .createInteractionSet(assay, gi, allRegions, condition, replicate)
     return(interactionSet)
 }
 
@@ -104,17 +106,18 @@
 #'     # Resolution to select in .mcool files
 #'     binSize = 500000
 #'     # Instantiation of data set
-#'     object <- HiCDOCDataSetFromCool(
+#'     object <- parseCool(
 #'       paths,
 #'       replicates = replicates,
 #'       conditions = conditions,
-#'       binSize = binSize # Specified for .mcool files.
+#'       # binSize = binSize # To specifie for .mcool files.
 #'     )
 #'   }
 #' @importFrom pbapply pbmapply
 #' @export
 parseCool <- function(paths, binSize=NA, replicates, conditions) {
-    if(!requireNamespace('rhdf5')) stop("'rhdf5' package is required. Please install it and retry.")
+    if(!requireNamespace('rhdf5'))
+        stop("'rhdf5' package is required. Please install it and retry.")
     if (is.factor(paths)) {
         paths <- as.vector(paths)
     }
@@ -141,6 +144,9 @@ parseCool <- function(paths, binSize=NA, replicates, conditions) {
         stop("'conditions' must be a vector of conditions.", call. = FALSE)
     }
 
+    if(!is.na(binSize) && !all(repl("mcool", paths))){
+        stop("binSize specified but all paths are not mcool")
+    }
     if (!is.na(binSize) && (!is.numeric(binSize) || length(binSize) != 1)) {
         stop("'binSize' must be an integer.", call. = FALSE)
     }

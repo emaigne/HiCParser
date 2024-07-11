@@ -4,7 +4,7 @@
 \alias{parseHiCPro}
 \title{Parser for HiCPro data}
 \usage{
-HiCDOCDataSetFromHiCPro(matrixPaths, bedPaths, replicates, conditions)
+parseHiCPro(matrixPaths, bedPaths, replicates, conditions)
 }
 \arguments{
 \item{matrixPaths}{A vector of paths to HiC-Pro matrix files.}
@@ -24,35 +24,35 @@ returns an InteractionSet object.
 }
 \examples{
 \dontrun{
-    # Path to each matrix file
-    matrixPaths = c(
-      'path/to/condition-1.replicate-1.matrix',
-      'path/to/condition-1.replicate-2.matrix',
-      'path/to/condition-2.replicate-1.matrix',
-      'path/to/condition-2.replicate-2.matrix',
-      'path/to/condition-3.replicate-1.matrix'
-    )
+# Path to each matrix file
+matrixPaths <- c(
+    "path/to/condition-1.replicate-1.matrix",
+    "path/to/condition-1.replicate-2.matrix",
+    "path/to/condition-2.replicate-1.matrix",
+    "path/to/condition-2.replicate-2.matrix",
+    "path/to/condition-3.replicate-1.matrix"
+)
 
-    # Path to each bed file
-    bedPaths = c(
-      'path/to/condition-1.replicate-1.bed',
-      'path/to/condition-1.replicate-2.bed',
-      'path/to/condition-2.replicate-1.bed',
-      'path/to/condition-2.replicate-2.bed',
-      'path/to/condition-3.replicate-1.bed'
-    )
+# Path to each bed file
+bedPaths <- c(
+    "path/to/condition-1.replicate-1.bed",
+    "path/to/condition-1.replicate-2.bed",
+    "path/to/condition-2.replicate-1.bed",
+    "path/to/condition-2.replicate-2.bed",
+    "path/to/condition-3.replicate-1.bed"
+)
 
-    # Replicate and condition of each file. Can be names instead of numbers.
-    replicates <- c(1, 2, 1, 2, 1)
-    conditions <- c(1, 1, 2, 2, 3)
+# Replicate and condition of each file. Can be names instead of numbers.
+replicates <- c(1, 2, 1, 2, 1)
+conditions <- c(1, 1, 2, 2, 3)
 
-    # Instantiation of data set
-    hic.experiment <- HiCDOCDataSetFromHiCPro(
-      matrixPaths = matrixPaths,
-      bedPaths = bedPaths,
-      replicates = replicates,
-      conditions = conditions
-    )
+# Instantiation of data set
+hic.experiment <- parseHiCPro(
+    matrixPaths = matrixPaths,
+    bedPaths = bedPaths,
+    replicates = replicates,
+    conditions = conditions
+)
 }
 
 }

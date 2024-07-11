@@ -19,7 +19,8 @@ test_that("Parser for .hicpro data works as expected", {
             replicates = replicates,
             conditions = conditions
         ),
-        "liver_18_10M_500000.matrix")
+        "liver_18_10M_500000.matrix"
+    )
     expect_equal(length(object), 210)
 
     # Interactions

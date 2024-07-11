@@ -2,8 +2,8 @@
 % Please edit documentation in R/HiCParser-package.R
 \docType{package}
 \name{HiCParser-package}
-\alias{HiCParser}
 \alias{HiCParser-package}
+\alias{_PACKAGE}
 \title{Parse HiC data to import them into R}
 \description{
 Parser for HiC data in R. TODO To develop. Use four spaces when indenting paragraphs within the Description.

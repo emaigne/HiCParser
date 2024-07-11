@@ -2,8 +2,8 @@
 
 export(mergeInteractionSet)
 export(parseCool)
+export(parseHiC)
 export(parseHiCPro)
-export(parseHic)
 export(parseTabular)
 import(data.table)
 importFrom(BiocGenerics,cbind)

@@ -3,8 +3,8 @@
 #' Parses interactions in tabular format and fills the conditions, replicates,
 #' and interactions slots of the provided \code{\link{InteractionSet}}.
 #'
-#' @param object
-#' A \code{\link{HiCDOCDataSet}}.
+#' @param tabular
+#' a path to a tabulated data file
 #' @param input
 #' The name of the input file
 #' @param conditions
@@ -23,7 +23,6 @@
 #' @importFrom gtools mixedsort
 #' @importFrom GenomicRanges GRanges
 .setFromTabular <- function(tabular, conditions = NULL, replicates = NULL) {
-
     if (colnames(tabular)[1] != "chromosome") {
         stop(
             "First column of the input file must be named 'chromosome'.",
@@ -57,16 +56,16 @@
     tabular[, chromosome := as.character(chromosome)]
     tabular[, chromosome := factor(
         chromosome,
-        levels = gtools::mixedsort(unique(chromosome)))
-    ]
+        levels = gtools::mixedsort(unique(chromosome))
+    )]
     setorder(tabular, chromosome, `position 1`, `position 2`)
     # Assays part, fill with NA
-    assays <- as.matrix(tabular[,4:ncol(tabular), drop = FALSE])
+    assays <- as.matrix(tabular[, 4:ncol(tabular), drop = FALSE])
 
     if (!is.null(conditions) | !is.null(replicates)) {
         if (
             (length(conditions) != ncol(assays)) |
-            (length(replicates) != ncol(assays))
+                (length(replicates) != ncol(assays))
         ) {
             stop(
                 "Number of conditions and replicates should match the number ",
@@ -93,11 +92,11 @@
 
     diagonal <- (tabular$bin.1 == tabular$bin.2)
     binSize <- .modeVector(abs(
-        tabular[!diagonal,]$bin.1 - tabular[!diagonal,]$bin.2
+        tabular[!diagonal, ]$bin.1 - tabular[!diagonal, ]$bin.2
     ))
 
-    tabular[, bin.1 := bin.1/binSize]
-    tabular[, bin.2 := bin.2/binSize]
+    tabular[, bin.1 := bin.1 / binSize]
+    tabular[, bin.2 := bin.2 / binSize]
 
     allRegions <- data.table::melt(
         tabular[, .(chromosome, bin.1, bin.2)],
@@ -115,9 +114,9 @@
         index := indexC - data.table::shift(indexC, fill = 0),
         by = .(chromosome)
     ]
-    allRegions[index==0, index:=1]
+    allRegions[index == 0, index := 1]
     allRegions[, index := cumsum(index)]
-    allRegions[, end := (indexC+1) * binSize]
+    allRegions[, end := (indexC + 1) * binSize]
     allRegions[, start := (indexC) * binSize + 1]
     data.table::setcolorder(
         allRegions,
@@ -150,13 +149,13 @@
         allRegions[order1],
         allRegions[order2],
         regions = allRegions,
-        mode="strict"
+        mode = "strict"
     )
 
     if (is.null(conditions)) {
         conditions <- gsub("^(.+?)\\..+$", "\\1", colnames(assays))
     }
-    if(is.null(replicates)) {
+    if (is.null(replicates)) {
         replicates <- gsub("^.+?\\.(.+)$", "\\1", colnames(assays))
     }
 
@@ -178,15 +177,14 @@
 #'
 #' @examples
 #' path <- system.file("extdata", "liver_18_10M_500000.tsv", package = "HiCDOC")
-#' object <- HiCDOCDataSetFromTabular(path, sep = '\t')
+#' object <- parseTabular(path, sep = "\t")
 #'
 #' @usage
-#' HiCDOCDataSetFromTabular(path, sep = '\t')
+#' parseTabular(path, sep = '\t')
 #'
 #' @importFrom data.table fread
 #' @export
 parseTabular <- function(input, sep = "\t") {
-
     message("Parsing '", input, "'.")
 
     interactions <- data.table::fread(

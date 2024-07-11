@@ -44,36 +44,36 @@
 #'
 #' @examples
 #' \dontrun{
-#'     #' # Path to each file
-#'     paths = c(
-#'       'path/to/condition-1.replicate-1.hic',
-#'       'path/to/condition-1.replicate-2.hic',
-#'       'path/to/condition-2.replicate-1.hic',
-#'       'path/to/condition-2.replicate-2.hic',
-#'       'path/to/condition-3.replicate-1.hic'
-#'     )
+#' #' # Path to each file
+#' paths <- c(
+#'     "path/to/condition-1.replicate-1.hic",
+#'     "path/to/condition-1.replicate-2.hic",
+#'     "path/to/condition-2.replicate-1.hic",
+#'     "path/to/condition-2.replicate-2.hic",
+#'     "path/to/condition-3.replicate-1.hic"
+#' )
 #'
-#'     # Replicate and condition of each file. Can be names instead of numbers.
-#'     replicates <- c(1, 2, 1, 2, 1)
-#'     conditions <- c(1, 1, 2, 2, 3)
+#' # Replicate and condition of each file. Can be names instead of numbers.
+#' replicates <- c(1, 2, 1, 2, 1)
+#' conditions <- c(1, 1, 2, 2, 3)
 #'
-#'     # Resolution to select
-#'     binSize <- 500000
+#' # Resolution to select
+#' binSize <- 500000
 #'
-#'     # Instantiation of data set
-#'     hic.experiment <- HiCDOCDataSetFromHiC(
-#'       paths,
-#'       replicates = replicates,
-#'       conditions = conditions,
-#'       binSize = binSize
-#'     )
+#' # Instantiation of data set
+#' hic.experiment <- parseHiC(
+#'     paths,
+#'     replicates = replicates,
+#'     conditions = conditions,
+#'     binSize = binSize
+#' )
 #' }
 #' @usage
-#' HiCDOCDataSetFromHiC(paths, replicates, conditions, binSize)
+#' parseHiC(paths, replicates, conditions, binSize)
 #'
 #' @importFrom pbapply pbmapply
 #' @export
-parseHic <- function(paths, binSize, replicates, conditions) {
+parseHiC <- function(paths, binSize, replicates, conditions) {
     if (is.factor(paths)) {
         paths <- as.vector(paths)
     }

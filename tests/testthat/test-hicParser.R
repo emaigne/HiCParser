@@ -9,13 +9,14 @@ test_that("Parser for .hic data works as expected", {
 
     # Instantiation of data set
     expect_message(
-        object <- parseHic(
+        object <- parseHiC(
             paths,
             binSize = binSize,
             replicates = replicates,
             conditions = conditions
         ),
-        "liver_18_10M.hic")
+        "liver_18_10M.hic"
+    )
     expect_equal(length(object), 210)
 
     # Interactions

@@ -4,7 +4,7 @@
 \alias{parseTabular}
 \title{Parser for tabular data}
 \usage{
-HiCDOCDataSetFromTabular(path, sep = '\t')
+parseTabular(path, sep = '\t')
 }
 \arguments{
 \item{sep}{The separator of the tabular file. Default to tabulation.}
@@ -19,6 +19,6 @@ Read the file, and fills it using \code{\link{.setFromTabular}}.
 }
 \examples{
 path <- system.file("extdata", "liver_18_10M_500000.tsv", package = "HiCDOC")
-object <- HiCDOCDataSetFromTabular(path, sep = '\t')
+object <- parseTabular(path, sep = "\t")
 
 }
