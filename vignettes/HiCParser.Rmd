@@ -271,7 +271,7 @@ The merged object:
 
 ```{r}
 objectMerged <- mergeInteractionSet(object1, object2)
-colData(objectMerged)
+objectMerged@colData
 head(objectMerged@assays@data[[1]])
 ```
 
