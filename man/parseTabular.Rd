@@ -18,7 +18,7 @@ An InteractionSet object.
 Read the file, and fills it using \code{\link{.setFromTabular}}.
 }
 \examples{
-path <- system.file("extdata", "liver_18_10M_500000.tsv", package = "HiCDOC")
+path <- system.file("extdata", "liver_18_10M_500000.tsv", package = "HiCParser")
 object <- parseTabular(path, sep = "\t")
 
 }
