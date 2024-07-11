@@ -65,27 +65,23 @@ Below is the citation output from using `citation('HiCParser')` in R.
 Please run this yourself to check for any updates on how to cite
 **HiCParser**.
 
-``` r
-print(citation('HiCParser'), bibtex = TRUE)
-#> Pour citer le package 'HiCParser' dans une publication, utilisez :
-#> 
-#>   Maigné E, Zytnicki M (2024). _Parse HiC data to import them in R_.
-#>   doi:10.18129/B9.bioc.HiCParser
-#>   <https://doi.org/10.18129/B9.bioc.HiCParser>,
-#>   https://github.com/emaigne/HiCParser/HiCParser - R package version
-#>   0.1.0, <http://www.bioconductor.org/packages/HiCParser>.
-#> 
-#> Une entrée BibTeX pour les utilisateurs LaTeX est
-#> 
-#>   @Manual{,
-#>     title = {Parse HiC data to import them in R},
-#>     author = {Elise Maigné and Matthias Zytnicki},
-#>     year = {2024},
-#>     url = {http://www.bioconductor.org/packages/HiCParser},
-#>     note = {https://github.com/emaigne/HiCParser/HiCParser - R package version 0.1.0},
-#>     doi = {10.18129/B9.bioc.HiCParser},
-#>   }
-```
+To cite the ‘HiCParser’ HiCParser in a publication, use :
+
+  Maigné E, Zytnicki M (2024). _Parse HiC data to import them in R_.
+  doi:10.18129/B9.bioc.HiCParser <https://doi.org/10.18129/B9.bioc.HiCParser>,
+  https://github.com/emaigne/HiCParser/HiCParser - R package version 0.1.0,
+  <http://www.bioconductor.org/packages/HiCParser>.
+
+As a BibTeX entry :
+
+  @Manual{,
+    title = {Parse HiC data to import them in R},
+    author = {Elise Maigné and Matthias Zytnicki},
+    year = {2024},
+    url = {http://www.bioconductor.org/packages/HiCParser},
+    note = {https://github.com/emaigne/HiCParser/HiCParser - R package version 0.1.0},
+    doi = {10.18129/B9.bioc.HiCParser},
+  }
 
 Please note that the `HiCParser` was only made possible thanks to many
 other R and bioinformatics software authors, which are cited either in

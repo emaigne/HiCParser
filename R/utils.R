@@ -15,6 +15,14 @@
 #' @importFrom GenomicRanges union
 #' @importFrom InteractionSet interactions
 #' @importFrom BiocGenerics cbind
+#' @examples
+#' path <- system.file("extdata", "liver_18_10M_500000.tsv", package = "HiCParser")
+#' object1 <- parseTabular(path, sep = "\t")
+#' # Creating an object with a different condition
+#' object2 <- parseTabular(path, sep = "\t")
+#' object2@colData[1,"condition"] <- 2
+#' objectMerged <- mergeInteractionSet(object1, object2)
+#'
 #' @export
 mergeInteractionSet <- function(interactionSet1, interactionSet2, fill = NA) {
     unionInteractions <- GenomicRanges::union(
