@@ -4,7 +4,7 @@
 \alias{parseHiC}
 \title{Parser for data in hic format}
 \usage{
-parseHiC(paths, replicates, conditions, binSize)
+parseHiC(paths, binSize, replicates, conditions)
 }
 \arguments{
 \item{paths}{A vector of paths to \code{.hic} files.}

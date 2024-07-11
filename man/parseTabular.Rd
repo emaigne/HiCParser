@@ -7,15 +7,15 @@
 parseTabular(path, sep = '\t')
 }
 \arguments{
-\item{sep}{The separator of the tabular file. Default to tabulation.}
-
 \item{path}{A path to a tabular file.}
+
+\item{sep}{The separator of the tabular file. Default to tabulation.}
 }
 \value{
 An InteractionSet object.
 }
 \description{
-Read the file, and fills it using \code{\link{.setFromTabular}}.
+Read the file, produce an \code{InteractionSet} object.
 }
 \examples{
 path <- system.file("extdata", "liver_18_10M_500000.tsv", package = "HiCParser")
