@@ -19,7 +19,6 @@
     if(!requireNamespace('rhdf5'))
         stop("'rhdf5' package is required. Please install it and retry.")
     message("\nParsing '", path, "'.")
-    # TODO : ici s'il y a un binSize ça marche pas sur les données d'exemples
     uri <- function(path) {
         if (!is.numeric(binSize)) return(path)
         return(
@@ -152,6 +151,7 @@ parseCool <- function(paths, binSize=NA, replicates, conditions) {
 
     if(!is.na(binSize) && all(grepl(".cool", paths, fixed=TRUE))){
         warning("binSize specified but all files are not .cool, ignored")
+        binSize <- NA
     }
     if(is.na(binSize) && any(grepl("mcool", paths, fixed=TRUE))){
         stop("binSize must be specified fot mcool files")
