@@ -69,7 +69,7 @@
 #' )
 #' }
 #' @usage
-#' parseHiC(paths, replicates, conditions, binSize)
+#' parseHiC(paths, binSize, replicates, conditions)
 #'
 #' @importFrom pbapply pbmapply
 #' @export

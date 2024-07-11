@@ -165,7 +165,7 @@
 
 #' @title Parser for tabular data
 #' @description
-#' Read the file, and fills it using \code{\link{.setFromTabular}}.
+#' Read the file, produce an \code{InteractionSet} object.
 #'
 #' @param path
 #' A path to a tabular file.
@@ -184,11 +184,11 @@
 #'
 #' @importFrom data.table fread
 #' @export
-parseTabular <- function(input, sep = "\t") {
-    message("Parsing '", input, "'.")
+parseTabular <- function(path, sep = "\t") {
+    message("Parsing '", path, "'.")
 
     interactions <- data.table::fread(
-        file = input,
+        file = path,
         sep = sep,
         header = TRUE,
         # comment.char = "#",

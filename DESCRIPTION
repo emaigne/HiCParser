@@ -24,7 +24,6 @@ Imports:
     GenomicRanges,
     SummarizedExperiment,
     Rcpp (>= 1.0.12),
-    methods,
     S4Vectors,
     gtools,
     pbapply,
