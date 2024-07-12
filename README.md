@@ -22,7 +22,6 @@ history](https://bioconductor.org/shields/years-in-bioc/HiCParser.svg)](https://
 commit](https://bioconductor.org/shields/lastcommit/devel/bioc/HiCParser.svg)](http://bioconductor.org/checkResults/devel/bioc-LATEST/HiCParser/)
 [![Bioc
 dependencies](https://bioconductor.org/shields/dependencies/release/HiCParser.svg)](https://bioconductor.org/packages/release/bioc/html/HiCParser.html#since)
-[![R-CMD-check-bioc](https://github.com/emaigne/HiCParser/actions/workflows/R-CMD-check-bioc.yaml/badge.svg)](https://github.com/emaigne/HiCParser/actions/workflows/R-CMD-check-bioc.yaml)
 [![R-CMD-check-bioc](https://github.com/emaigne/HiCParser/actions/workflows/check-bioc.yml/badge.svg)](https://github.com/emaigne/HiCParser/actions/workflows/check-bioc.yml)
 [![Codecov test
 coverage](https://codecov.io/gh/emaigne/HiCParser/branch/devel/graph/badge.svg)](https://app.codecov.io/gh/emaigne/HiCParser?branch=devel)
