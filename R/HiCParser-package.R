@@ -1,5 +1,5 @@
 #' @title
-#' Parse HiC data to import them into R
+#' A multiple format Hi-C data parser
 #' @docType package
 #' @importFrom Rcpp evalCpp sourceCpp
 #' @import data.table
