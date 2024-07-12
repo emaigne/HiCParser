@@ -63,7 +63,8 @@ So far, `HiCParser` supports:
       - the first column is named "chromosome"
       - the second column is named "position 1" or "position.1"
       - the third column is named "position 2" or "position.2"
-      - the fourth column is named "*x*.R*y*", and *x* is the id of the condition ("1", or "2", usually), *y* is the id of the replicate ("1", "2", "3", etc.)
+      - the fourth column is named "*x*.R*y*", and *x* is the id of the condition ("1", or "2", usually), *y* is the id of the replicate ("1", "2", "3", etc.); it should contain matrix counts
+      - the remaining columns are optional, and should be formatted like the fourth column
 
 ## Example
 
