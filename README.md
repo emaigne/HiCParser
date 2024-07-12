@@ -27,7 +27,8 @@ dependencies](https://bioconductor.org/shields/dependencies/release/HiCParser.sv
 coverage](https://codecov.io/gh/emaigne/HiCParser/branch/devel/graph/badge.svg)](https://app.codecov.io/gh/emaigne/HiCParser?branch=devel)
 <!-- badges: end -->
 
-The goal of `HiCParser` is to parse Hi-C data (`HiCParser` supports serveral formats), and import them in R, as an `InteractionSet` object.
+The goal of `HiCParser` is to parse Hi-C data (`HiCParser` supports serveral 
+formats), and import them in R, as an `InteractionSet` object.
 
 ## Installation instructions
 
@@ -73,33 +74,48 @@ We show here how to parse one hic format file.
 ``` r
 library("HiCParser")
 hicFilePath <- system.file("extdata", "liver_18_10M.hic", package="HiCParser")
-data <- parseHiC(paths = hicFilePath, binSize = 100000, replicates = 1, conditions = 1)
+data <- parseHiC(paths = hicFilePath, 
+                 binSize = 100000, 
+                 replicates = 1, 
+                 conditions = 1)
 ```
 Note that a hic file can include several matrices, with different bin sizes.
 This is why the bin size should be provided.
 
-We show here how to parse several files (actually, the same file, several times).
-We suppose here that we have 2 conditions, with 3 replicates for each condition.
+We show here how to parse several files (actually, the same file, 
+several times). We suppose here that we have 2 conditions, with 3 replicates 
+for each condition.
 
 ``` r
-data <- parseHiC(paths = rep(hicFilePath, 6), binSize = 100000, replicates = rep(seq(3), 2), conditions = rep(seq(2), each = 3))
+data <- parseHiC(paths = rep(hicFilePath, 6), 
+                 binSize = 100000, 
+                 replicates = rep(seq(3), 2), 
+                 conditions = rep(seq(2), each = 3))
 ```
 
 ### HiC-Pro format
 
 A HiC-Pro file contains a matrix file, and a bed file.
-A different bed file could be use for each matrix file, but the same can also be used.
+A different bed file could be use for each matrix file, 
+but the same can also be used.
 
 ``` r
 matrixFilePath <- system.file("extdata", "liver_18_10M_500000.matrix", package="HiCParser")
-bedFilePath <- system.file("extdata", "liver_18_10M_500000.bed", package="HiCParser")
-data <- parseHiCPro(matrixPaths = rep(matrixFilePath, 6), bedPaths = bedFilePath, replicates = rep(seq(3), 2), conditions = rep(seq(2), each = 3))
+bedFilePath <- system.file("extdata", 
+                           "liver_18_10M_500000.bed", 
+                           package="HiCParser")
+data <- parseHiCPro(matrixPaths = rep(matrixFilePath, 6), 
+                    bedPaths = bedFilePath, 
+                    replicates = rep(seq(3), 2), 
+                    conditions = rep(seq(2), each = 3))
 ```
 
 ### cool and mcool formats
 
 Please note that the cool and mcool format store data in HDF5 format.
-The [HDF5 package](https://bioconductor.org/packages/release/bioc/html/rhdf5.html) is not included by default, because it requires a substantial time to be compiled, and many users will not need the cool/mcool parser.
+The [HDF5 package](https://bioconductor.org/packages/release/bioc/html/rhdf5.html) 
+is not included by default, because it requires a substantial time to be 
+compiled, and many users will not need the cool/mcool parser.
 So, in order to use the cool/mcool parser, you should install the `rhdf5` package.
 
 The cool format include only one bin size.
@@ -108,8 +124,12 @@ The cool format include only one bin size.
 if (! "rhdf5" %in% installed.packages()) {
     install.packages("rhdf5")
 }
-coolFilePath <- system.file("extdata", "liver_18_10M_500000.cool", package="HiCParser")
-data <- parseCool(matrixPaths = rep(coolFilePath, 6), replicates = rep(seq(3), 2), conditions = rep(seq(2), each = 3))
+coolFilePath <- system.file("extdata",
+                            "liver_18_10M_500000.cool", 
+                            package="HiCParser")
+data <- parseCool(paths = rep(coolFilePath, 6), 
+                  replicates = rep(seq(3), 2), 
+                  conditions = rep(seq(2), each = 3))
 ```
 
 The mcool format may include several bin sizes.
@@ -117,8 +137,13 @@ It is thus compulsory to mention it.
 The same function is used for the cool/mcool formats.
 
 ``` r
-mcoolFilePath <- system.file("extdata", "liver_18_10M.mcool", package="HiCParser")
-data <- parseCool(matrixPaths = rep(mcoolFilePath, 6), binSize = 10000000, replicates = rep(seq(3), 2), conditions = rep(seq(2), each = 3))
+mcoolFilePath <- system.file("extdata", 
+                             "liver_18_10M.mcool", 
+                             package="HiCParser")
+data <- parseCool(paths = rep(mcoolFilePath, 6), 
+                  binSize = 10000000, 
+                  replicates = rep(seq(3), 2), 
+                  conditions = rep(seq(2), each = 3))
 ```
 
 ### Output
@@ -130,7 +155,10 @@ Please read the [corresponding vignette](https://bioconductor.org/packages/devel
 ``` r
 library("HiCParser")
 hicFilePath <- system.file("extdata", "liver_18_10M.hic", package="HiCParser")
-data <- parseHiC(paths = rep(hicFilePath, 6), binSize = 100000, replicates = rep(seq(3), 2), conditions = rep(seq(2), each = 3))
+data <- parseHiC(paths = rep(hicFilePath, 6), 
+                 binSize = 100000, 
+                 replicates = rep(seq(3), 2), 
+                 conditions = rep(seq(2), each = 3))
 data
 ```
 
