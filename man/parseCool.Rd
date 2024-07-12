@@ -24,6 +24,10 @@ An InteractionSet.
 Parses interactions in \code{.cool} or \code{.mcool} format and returns
 an InteractionSet object.
 }
+\details{
+To read \code{.cool} of \code{.mcool} files, the \code{rhdf5} package is required.
+Please install it before running the function.
+}
 \examples{
     #EXAMPLE FOR .cool FORMAT
    # Path to each file
@@ -38,6 +42,7 @@ an InteractionSet object.
    replicates <- c(1, 2, 1, 2, 1)
    conditions <- c(1, 1, 2, 2, 3)
    if(FALSE) {
+    library(rhdf5)
     object <- parseCool(
       paths,
       replicates = replicates,
@@ -61,6 +66,7 @@ an InteractionSet object.
   conditions <- c(1, 1, 2, 2, 3)
   if(FALSE) {
     # Instantiation of data set
+    library(rhdf5)
     object <- parseCool(
       paths,
       replicates = replicates,

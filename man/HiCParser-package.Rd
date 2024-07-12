@@ -2,9 +2,9 @@
 % Please edit documentation in R/HiCParser-package.R
 \docType{package}
 \name{HiCParser-package}
+\alias{HiCParser}
 \alias{HiCParser-package}
-\alias{_PACKAGE}
-\title{Parse HiC data to import them into R}
+\title{A multiple format Hi-C data parser}
 \description{
 This package is a parser to import HiC data into R. It accepts several type of data: tabular files, Cooler `.cool` or `.mcool` files, Juicer `.hic` files or HiC-Pro `.matrix` and `.bed` files. The HiC data can be several files, for several replicates and conditions. The data is formated in an InteractionSet object.
 }
