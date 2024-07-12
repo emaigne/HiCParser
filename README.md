@@ -27,7 +27,7 @@ dependencies](https://bioconductor.org/shields/dependencies/release/HiCParser.sv
 coverage](https://codecov.io/gh/emaigne/HiCParser/branch/devel/graph/badge.svg)](https://app.codecov.io/gh/emaigne/HiCParser?branch=devel)
 <!-- badges: end -->
 
-The goal of `HiCParser` is to parse HiC data in several fromats to import them in R, in InteractionSet objects.
+The goal of `HiCParser` is to parse Hi-C data in several fromats to import them in R, in InteractionSet objects.
 
 ## Installation instructions
 
@@ -67,7 +67,7 @@ Please run this yourself to check for any updates on how to cite
 
 To cite the ‘HiCParser’ HiCParser in a publication, use :
 
-  Maigné E, Zytnicki M (2024). _Parse HiC data to import them in R_.
+  Maigné E, Zytnicki M (2024). _A multiple format Hi-C data parser_.
   doi:10.18129/B9.bioc.HiCParser <https://doi.org/10.18129/B9.bioc.HiCParser>,
   https://github.com/emaigne/HiCParser/HiCParser - R package version 0.1.0,
   <http://www.bioconductor.org/packages/HiCParser>.
@@ -75,7 +75,7 @@ To cite the ‘HiCParser’ HiCParser in a publication, use :
 As a BibTeX entry :
 
     @Manual{hicparser,
-      title = {Parse HiC data to import them in R},
+      title = {A multiple format Hi-C data parser},
       author = {Elise Maigné and Matthias Zytnicki},
       year = {2024},
       url = {http://www.bioconductor.org/packages/HiCParser},
