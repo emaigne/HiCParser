@@ -16,9 +16,9 @@ test_that("mergeInteractionSet works as expected", {
     )
     gi2 <- unique(gi2)
     # Assays
-    assays2 <- assays2[1:length(gi2),, drop=FALSE]
+    assays2 <- matrix(sample(seq_len(2000), length(gi2)), ncol=1)
     # colData
-    colData2[1,"condition"] <- 2
+    colData2 <- DataFrame("condition" = "2", "replicate" = "R2")
     # ISet object
     object2 <- InteractionSet::InteractionSet(assays2, gi2, colData=colData2)
 
@@ -30,7 +30,7 @@ test_that("mergeInteractionSet works as expected", {
     expect_true("InteractionSet" %in% class(objectMerged))
     expect_identical(objectMerged@colData,
                      DataFrame("condition"=c("1","2"),
-                               "replicate"=c("R1", "R1")))
+                               "replicate"=c("R1", "R2")))
     expect_true(length(objectMerged) == 189)
     nbNA <- apply(objectMerged@assays@data[[1]], 2,function(x) sum(is.na(x)))
     expect_identical(nbNA, c(89L, 23L))
