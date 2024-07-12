@@ -55,13 +55,12 @@ mergeInteractionSet <- function(interactionSet1, interactionSet2, fill = NA) {
 #' @noRd
 #'
 #' @examples
-#' .checkPaths("ExamplePaths" = c("input1", "input2"))
+#' path <- system.file("extdata", "liver_18_10M_500000.tsv", package = "HiCParser")
+#' .checkPaths("ExamplePaths" = path)
 .checkPaths <- function(...){
     args <- list(...)
     path <- args[[1]]
-    namePath <- names(sapply(match.call(), deparse))[-1]
-
-    print(path)
+    namePath <- names(vapply(match.call(), deparse, FUN.VALUE = "character"))[-1]
     if (is.factor(path)) {
         path <- as.vector(path)
     }
