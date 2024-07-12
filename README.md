@@ -50,6 +50,20 @@ And the development version from
 BiocManager::install("emaigne/HiCParser")
 ```
 
+## Supported formats
+
+So far, `HiCParser` supports:
+
+  - [cool and mcool](https://github.com/open2c/cooler) formats
+  - [hic](https://github.com/aidenlab/hictools) format
+  - [HiC-Pro](https://github.com/nservant/HiC-Pro) format
+  - A tabular format, where
+
+      - the first column is named "chromosome"
+      - the second column is named "position 1" or "position.1"
+      - the third column is named "position 2" or "position.2"
+      - the fourth column is named "*x*.R*y*", and *x* is the id of the condition ("1", or "2", usually), *y* is the id of the replicate ("1", "2", "3", etc.)
+
 ## Example
 
 This is a basic example which shows you how to solve a common problem:
