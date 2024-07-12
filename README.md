@@ -73,7 +73,7 @@ We show here how to parse one hic format file.
 ``` r
 library("HiCParser")
 hicFilePath <- system.file("extdata", "liver_18_10M.hic", package="HiCParser")
-data <- parseHiC(paths = hicFilePath, binSize = 10000000, replicates = 1, conditions = 1)
+data <- parseHiC(paths = hicFilePath, binSize = 100000, replicates = 1, conditions = 1)
 ```
 Note that a hic file can include several matrices, with different bin sizes.
 This is why the bin size should be provided.
@@ -82,7 +82,7 @@ We show here how to parse several files (actually, the same file, several times)
 We suppose here that we have 2 conditions, with 3 replicates for each condition.
 
 ``` r
-data <- parseHiC(paths = rep(hicFilePath, 6), binSize = 10000000, replicates = rep(seq(3), 2), conditions = rep(seq(2), each = 3))
+data <- parseHiC(paths = rep(hicFilePath, 6), binSize = 100000, replicates = rep(seq(3), 2), conditions = rep(seq(2), each = 3))
 ```
 
 ### HiC-Pro format
@@ -120,6 +120,20 @@ The same function is used for the cool/mcool formats.
 mcoolFilePath <- system.file("extdata", "liver_18_10M.mcool", package="HiCParser")
 data <- parseCool(matrixPaths = rep(mcoolFilePath, 6), binSize = 10000000, replicates = rep(seq(3), 2), conditions = rep(seq(2), each = 3))
 ```
+
+### Output
+
+The output is a [GInteractions](https://bioconductor.org/packages/release/bioc/html/InteractionSet.html).
+This object can store one or several samples.
+Please read the [corresponding vignette](https://bioconductor.org/packages/devel/bioc/vignettes/InteractionSet/inst/doc/interactions.html) in order to known more about this format.
+
+``` r
+library("HiCParser")
+hicFilePath <- system.file("extdata", "liver_18_10M.hic", package="HiCParser")
+data <- parseHiC(paths = rep(hicFilePath, 6), binSize = 100000, replicates = rep(seq(3), 2), conditions = rep(seq(2), each = 3))
+data
+```
+
 
 ## Citation
 
