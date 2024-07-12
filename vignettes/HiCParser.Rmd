@@ -217,7 +217,8 @@ paths <- rep(system.file("extdata",
 replicates <- c(1, 2, 3, 1, 2, 3)
 conditions <- c(1, 1, 1, 2, 2, 2)
 
-# Resolution to select
+# hic files can store several resolutions.
+# We will mention the one we need.
 binSize <- 1000000
 
 # Instantiation of data set
@@ -245,7 +246,6 @@ matrixPaths = c(
     'path/to/condition-2.replicate-3.matrix',
 )
 
-
 # For the sake of the example, we will use the same file, several times
 paths <- rep(system.file("extdata",
                          "liver_18_10M_500000.matrix", 
@@ -263,7 +263,6 @@ bedPaths = c(
 )
 
 # Alternatively, if the same bed file is used, we can provide it only once
-
 bedPaths <- system.file("extdata", 
                         "liver_18_10M_500000.bed", 
                         package="HiCParser")
@@ -304,7 +303,7 @@ path <- system.file("extdata", "liver_18_10M_500000.tsv", package = "HiCParser")
 object1 <- parseTabular(path, sep = "\t")
 # Creating an object with a different condition
 object2 <- parseTabular(path, sep = "\t")
-object2@colData[1,"condition"] <- 2
+object2@colData[1, "condition"] <- 2
 ```
 
 The merged object:
