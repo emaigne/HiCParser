@@ -35,9 +35,8 @@ name: R-CMD-check-bioc
 ## "/nocache" in the commit message.
 env:
   has_testthat: 'true'
-  run_covr: 'false'
+  run_covr: 'true'
   run_pkgdown: 'true'
-  has_RUnit: 'false'
   cache-version: 'cache-v1'
   run_docker: 'false'
 
@@ -186,13 +185,6 @@ jobs:
           remotes::install_local(dependencies = TRUE, repos = BiocManager::repositories(), build_vignettes = TRUE, upgrade = TRUE, force = TRUE)
         shell: Rscript {0}
 
-      - name: Install BiocGenerics
-        if:  env.has_RUnit == 'true'
-        run: |
-          ## Install BiocGenerics
-          BiocManager::install("BiocGenerics")
-        shell: Rscript {0}
-
       - name: Install covr
         if: github.ref == 'refs/heads/devel' && env.run_covr == 'true' && runner.os == 'Linux'
         run: |
@@ -230,12 +222,6 @@ jobs:
       - name: Reveal testthat details
         if:  env.has_testthat == 'true'
         run: find . -name testthat.Rout -exec cat '{}' ';'
-
-      - name: Run RUnit tests
-        if:  env.has_RUnit == 'true'
-        run: |
-          BiocGenerics:::testPackage()
-        shell: Rscript {0}
 
       - name: Run BiocCheck
         env:
