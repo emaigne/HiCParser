@@ -7,6 +7,9 @@
 #' The resolution (span of each position in number of bases). Optionally
 #' provided to select the appropriate resolution in \code{.mcool} files.
 #' Defaults to NULL.
+#' @details
+#' To read `.cool` of `.mcool` files, the `rhdf5` package is required.
+#' Please install it before running the function.
 #'
 #' @return
 #' A data.table of interactions.
@@ -86,6 +89,9 @@
 #' The resolution (span of each position in number of bases). Optionally
 #' provided to select the appropriate resolution in \code{.mcool} files.
 #' Defaults to NULL.
+#' @details
+#' To read `.cool` of `.mcool` files, the `rhdf5` package is required.
+#' Please install it before running the function.
 #'
 #' @return
 #' An InteractionSet.
@@ -103,6 +109,7 @@
 #'    replicates <- c(1, 2, 1, 2, 1)
 #'    conditions <- c(1, 1, 2, 2, 3)
 #'    if(FALSE) {
+#'     library(rhdf5)
 #'     object <- parseCool(
 #'       paths,
 #'       replicates = replicates,
@@ -126,6 +133,7 @@
 #'   conditions <- c(1, 1, 2, 2, 3)
 #'   if(FALSE) {
 #'     # Instantiation of data set
+#'     library(rhdf5)
 #'     object <- parseCool(
 #'       paths,
 #'       replicates = replicates,

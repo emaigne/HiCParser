@@ -119,6 +119,9 @@ parseHiCPro <- function(matrixPaths, bedPaths, replicates, conditions) {
     matrixPaths <- .checkPaths("matrixPaths"=matrixPaths)
     bedPaths <- .checkPaths("bedPaths"=bedPaths)
 
+    if(length(bedPaths) == 1) {
+        bedPaths <- rep(bedPaths, length(matrixPaths))
+    }
     if (length(matrixPaths) != length(bedPaths)) {
         stop(
             "'matrixPaths' and 'bedPaths' must have the same length.",
