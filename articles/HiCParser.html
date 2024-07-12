@@ -168,7 +168,7 @@ Cooler <code>.cool</code> or <code>.mcool</code> files. - Juicer
 </h3>
 <p>A tabular file is a tab-separated multi-replicate sparse matrix with
 a header:</p>
-<p>chromosome position 1 position 2 C1.R1 C1.R2 C2.R1 … Y 1500000
+<p>chromosome position 1 position 2 C1.R1 C1.R2 C1.R3 … Y 1500000
 7500000 145 184 72 … …</p>
 <p>The number of interactions between <code>position 1</code> and
 <code>position 2</code> of <code>chromosome</code> are reported in each
@@ -176,7 +176,10 @@ a header:</p>
 of conditions and replicates.</p>
 <p>To load Hi-C data in this format:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">hic.experiment</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/parseTabular.html">parseTabular</a></span><span class="op">(</span><span class="st">'path/to/data.tsv'</span>, sep<span class="op">=</span><span class="st">"\t"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">hic.experiment</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/parseTabular.html">parseTabular</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>,</span>
+<span>                                           <span class="st">"liver_18_10M_500000.tsv"</span>,</span>
+<span>                                           package <span class="op">=</span> <span class="st">"HiCParser"</span><span class="op">)</span>,</span>
+<span>                               sep <span class="op">=</span> <span class="st">"\t"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="cooler-files">Cooler files<a class="anchor" aria-label="anchor" href="#cooler-files"></a>
@@ -192,14 +195,21 @@ of conditions and replicates.</p>
 <span><span class="va">paths</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span>    <span class="st">'path/to/condition-1.replicate-1.cool'</span>,</span>
 <span>    <span class="st">'path/to/condition-1.replicate-2.cool'</span>,</span>
+<span>    <span class="st">'path/to/condition-1.replicate-3.cool'</span>,</span>
 <span>    <span class="st">'path/to/condition-2.replicate-1.cool'</span>,</span>
 <span>    <span class="st">'path/to/condition-2.replicate-2.cool'</span>,</span>
-<span>    <span class="st">'path/to/condition-3.replicate-1.cool'</span></span>
+<span>    <span class="st">'path/to/condition-2.replicate-3.cool'</span></span>
 <span><span class="op">)</span></span>
 <span></span>
+<span><span class="co"># For the sake of the example, we will use the same file, several times</span></span>
+<span><span class="va">paths</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>,</span>
+<span>                         <span class="st">"liver_18_10M_500000.cool"</span>, </span>
+<span>                         package <span class="op">=</span> <span class="st">"HiCParser"</span><span class="op">)</span>,</span>
+<span>             <span class="fl">6</span><span class="op">)</span></span>
+<span></span>
 <span><span class="co"># Replicate and condition of each file. Can be names instead of numbers.</span></span>
-<span><span class="va">replicates</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">1</span><span class="op">)</span></span>
-<span><span class="va">conditions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="va">replicates</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="va">conditions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Instantiation of data set</span></span>
 <span><span class="va">hic.experiment</span> <span class="op">&lt;-</span> <span class="fu">parserCool</span><span class="op">(</span></span>
@@ -217,21 +227,30 @@ of conditions and replicates.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Path to each file</span></span>
 <span><span class="va">paths</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span>    <span class="st">'path/to/condition-1.replicate-1.cool'</span>,</span>
-<span>    <span class="st">'path/to/condition-1.replicate-2.cool'</span>,</span>
-<span>    <span class="st">'path/to/condition-2.replicate-1.cool'</span>,</span>
-<span>    <span class="st">'path/to/condition-2.replicate-2.cool'</span>,</span>
-<span>    <span class="st">'path/to/condition-3.replicate-1.cool'</span></span>
+<span>    <span class="st">'path/to/condition-1.replicate-1.mcool'</span>,</span>
+<span>    <span class="st">'path/to/condition-1.replicate-2.mcool'</span>,</span>
+<span>    <span class="st">'path/to/condition-1.replicate-3.mcool'</span>,</span>
+<span>    <span class="st">'path/to/condition-2.replicate-1.mcool'</span>,</span>
+<span>    <span class="st">'path/to/condition-2.replicate-2.mcool'</span>,</span>
+<span>    <span class="st">'path/to/condition-2.replicate-3.mcool'</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Replicate and condition of each file. Can be names instead of numbers.</span></span>
-<span><span class="va">replicates</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">1</span><span class="op">)</span></span>
-<span><span class="va">conditions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="co"># For the sake of the example, we will use the same file, several times</span></span>
+<span><span class="va">paths</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>,</span>
+<span>                         <span class="st">"liver_18_10M.mcool"</span>, </span>
+<span>                         package <span class="op">=</span> <span class="st">"HiCParser"</span><span class="op">)</span>,</span>
+<span>             <span class="fl">6</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Resolution to select in .mcool files</span></span>
-<span><span class="va">binSize</span> <span class="op">=</span> <span class="fl">500000</span></span>
+<span><span class="co"># Replicate and condition of each file. Can be names instead of numbers.</span></span>
+<span><span class="va">replicates</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="va">conditions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># mcool files can store several resolutions.</span></span>
+<span><span class="co"># We will mention the one we need.</span></span>
+<span><span class="va">binSize</span> <span class="op">=</span> <span class="fl">1000000</span></span>
 <span></span>
 <span><span class="co"># Instantiation of data set</span></span>
+<span><span class="co"># The same function "parserCool" is used for cool and mcool files</span></span>
 <span><span class="va">hic.experiment</span> <span class="op">&lt;-</span> <span class="fu">parserCool</span><span class="op">(</span></span>
 <span>    <span class="va">paths</span>,</span>
 <span>    replicates <span class="op">=</span> <span class="va">replicates</span>,</span>
@@ -255,12 +274,18 @@ of conditions and replicates.</p>
 <span>    <span class="st">'path/to/condition-3.replicate-1.hic'</span></span>
 <span><span class="op">)</span></span>
 <span></span>
+<span><span class="co"># For the sake of the example, we will use the same file, several times</span></span>
+<span><span class="va">paths</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>,</span>
+<span>                         <span class="st">"liver_18_10M.hic"</span>, </span>
+<span>                         package <span class="op">=</span> <span class="st">"HiCParser"</span><span class="op">)</span>,</span>
+<span>             <span class="fl">6</span><span class="op">)</span></span>
+<span></span>
 <span><span class="co"># Replicate and condition of each file. Can be names instead of numbers.</span></span>
-<span><span class="va">replicates</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">1</span><span class="op">)</span></span>
-<span><span class="va">conditions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="va">replicates</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="va">conditions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Resolution to select</span></span>
-<span><span class="va">binSize</span> <span class="op">&lt;-</span> <span class="fl">500000</span></span>
+<span><span class="va">binSize</span> <span class="op">&lt;-</span> <span class="fl">1000000</span></span>
 <span></span>
 <span><span class="co"># Instantiation of data set</span></span>
 <span><span class="va">hic.experiment</span> <span class="op">&lt;-</span> <span class="fu">parserHiC</span><span class="op">(</span></span>
@@ -280,23 +305,38 @@ of conditions and replicates.</p>
 <span><span class="va">matrixPaths</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span>    <span class="st">'path/to/condition-1.replicate-1.matrix'</span>,</span>
 <span>    <span class="st">'path/to/condition-1.replicate-2.matrix'</span>,</span>
+<span>    <span class="st">'path/to/condition-1.replicate-3.matrix'</span>,</span>
 <span>    <span class="st">'path/to/condition-2.replicate-1.matrix'</span>,</span>
 <span>    <span class="st">'path/to/condition-2.replicate-2.matrix'</span>,</span>
-<span>    <span class="st">'path/to/condition-3.replicate-1.matrix'</span></span>
+<span>    <span class="st">'path/to/condition-2.replicate-3.matrix'</span>,</span>
 <span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span><span class="co"># For the sake of the example, we will use the same file, several times</span></span>
+<span><span class="va">paths</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>,</span>
+<span>                         <span class="st">"liver_18_10M_500000.matrix"</span>, </span>
+<span>                         package <span class="op">=</span> <span class="st">"HiCParser"</span><span class="op">)</span>,</span>
+<span>             <span class="fl">6</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Path to each bed file</span></span>
 <span><span class="va">bedPaths</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span>    <span class="st">'path/to/condition-1.replicate-1.bed'</span>,</span>
 <span>    <span class="st">'path/to/condition-1.replicate-2.bed'</span>,</span>
+<span>    <span class="st">'path/to/condition-1.replicate-3.bed'</span>,</span>
 <span>    <span class="st">'path/to/condition-2.replicate-1.bed'</span>,</span>
 <span>    <span class="st">'path/to/condition-2.replicate-2.bed'</span>,</span>
-<span>    <span class="st">'path/to/condition-3.replicate-1.bed'</span></span>
+<span>    <span class="st">'path/to/condition-2.replicate-3.bed'</span></span>
 <span><span class="op">)</span></span>
 <span></span>
+<span><span class="co"># Alternatively, if the same bed file is used, we can provide it only once</span></span>
+<span></span>
+<span><span class="va">bedPaths</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, </span>
+<span>                        <span class="st">"liver_18_10M_500000.bed"</span>, </span>
+<span>                        package<span class="op">=</span><span class="st">"HiCParser"</span><span class="op">)</span></span>
+<span></span>
 <span><span class="co"># Replicate and condition of each file. Can be names instead of numbers.</span></span>
-<span><span class="va">replicates</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">1</span><span class="op">)</span></span>
-<span><span class="va">conditions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="va">replicates</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="va">conditions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Instantiation of data set</span></span>
 <span><span class="va">hic.experiment</span> <span class="op">&lt;-</span> <span class="fu">parserHiCPro</span><span class="op">(</span></span>
@@ -326,7 +366,7 @@ bins of interactions and fill the assays matrix accordingly, returning
 an assays matrix with several columns.</p>
 <p>The object returned by the function is an
 <code>InteractionSet</code>.</p>
-<p>Here is a fictive example:</p>
+<p>Here is a fictitious example:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"liver_18_10M_500000.tsv"</span>, package <span class="op">=</span> <span class="st">"HiCParser"</span><span class="op">)</span></span>
 <span><span class="va">object1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/parseTabular.html">parseTabular</a></span><span class="op">(</span><span class="va">path</span>, sep <span class="op">=</span> <span class="st">"\t"</span><span class="op">)</span></span>
@@ -392,9 +432,9 @@ Cheng, Chang, and Iannone, 2024)</li>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://yihui.org/knitr/" class="external-link">"knitr"</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/knit.html" class="external-link">knit</a></span><span class="op">(</span><span class="st">"HiCParser.Rmd"</span>, tangle <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>Date the vignette was generated.</p>
-<pre><code><span><span class="co">#&gt; [1] "2024-07-12 14:25:50 UTC"</span></span></code></pre>
+<pre><code><span><span class="co">#&gt; [1] "2024-07-12 14:40:32 UTC"</span></span></code></pre>
 <p>Wallclock time spent generating the vignette.</p>
-<pre><code><span><span class="co">#&gt; Time difference of 6.565 secs</span></span></code></pre>
+<pre><code><span><span class="co">#&gt; Time difference of 6.281 secs</span></span></code></pre>
 <p><code>R</code> session information.</p>
 <pre><code><span><span class="co">#&gt; <span style="color: #00BBBB; font-weight: bold;">─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────</span></span></span>
 <span><span class="co">#&gt;  <span style="color: #555555; font-style: italic;">setting </span> <span style="color: #555555; font-style: italic;">value</span></span></span>
