@@ -284,7 +284,8 @@ of conditions and replicates.</p>
 <span><span class="va">replicates</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span></span>
 <span><span class="va">conditions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Resolution to select</span></span>
+<span><span class="co"># hic files can store several resolutions.</span></span>
+<span><span class="co"># We will mention the one we need.</span></span>
 <span><span class="va">binSize</span> <span class="op">&lt;-</span> <span class="fl">1000000</span></span>
 <span></span>
 <span><span class="co"># Instantiation of data set</span></span>
@@ -311,7 +312,6 @@ of conditions and replicates.</p>
 <span>    <span class="st">'path/to/condition-2.replicate-3.matrix'</span>,</span>
 <span><span class="op">)</span></span>
 <span></span>
-<span></span>
 <span><span class="co"># For the sake of the example, we will use the same file, several times</span></span>
 <span><span class="va">paths</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>,</span>
 <span>                         <span class="st">"liver_18_10M_500000.matrix"</span>, </span>
@@ -329,7 +329,6 @@ of conditions and replicates.</p>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Alternatively, if the same bed file is used, we can provide it only once</span></span>
-<span></span>
 <span><span class="va">bedPaths</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, </span>
 <span>                        <span class="st">"liver_18_10M_500000.bed"</span>, </span>
 <span>                        package<span class="op">=</span><span class="st">"HiCParser"</span><span class="op">)</span></span>
@@ -374,7 +373,7 @@ an assays matrix with several columns.</p>
 <span><span class="co"># Creating an object with a different condition</span></span>
 <span><span class="va">object2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/parseTabular.html">parseTabular</a></span><span class="op">(</span><span class="va">path</span>, sep <span class="op">=</span> <span class="st">"\t"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Parsing '/__w/_temp/Library/HiCParser/extdata/liver_18_10M_500000.tsv'.</span></span>
-<span><span class="va">object2</span><span class="op">@</span><span class="va">colData</span><span class="op">[</span><span class="fl">1</span>,<span class="st">"condition"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">2</span></span></code></pre></div>
+<span><span class="va">object2</span><span class="op">@</span><span class="va">colData</span><span class="op">[</span><span class="fl">1</span>, <span class="st">"condition"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">2</span></span></code></pre></div>
 <p>The merged object:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">objectMerged</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mergeInteractionSet.html">mergeInteractionSet</a></span><span class="op">(</span><span class="va">object1</span>, <span class="va">object2</span><span class="op">)</span></span>
@@ -432,9 +431,9 @@ Cheng, Chang, and Iannone, 2024)</li>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://yihui.org/knitr/" class="external-link">"knitr"</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/knit.html" class="external-link">knit</a></span><span class="op">(</span><span class="st">"HiCParser.Rmd"</span>, tangle <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>Date the vignette was generated.</p>
-<pre><code><span><span class="co">#&gt; [1] "2024-07-12 15:06:33 UTC"</span></span></code></pre>
+<pre><code><span><span class="co">#&gt; [1] "2024-07-12 15:28:41 UTC"</span></span></code></pre>
 <p>Wallclock time spent generating the vignette.</p>
-<pre><code><span><span class="co">#&gt; Time difference of 6.473 secs</span></span></code></pre>
+<pre><code><span><span class="co">#&gt; Time difference of 6.471 secs</span></span></code></pre>
 <p><code>R</code> session information.</p>
 <pre><code><span><span class="co">#&gt; <span style="color: #00BBBB; font-weight: bold;">─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────</span></span></span>
 <span><span class="co">#&gt;  <span style="color: #555555; font-style: italic;">setting </span> <span style="color: #555555; font-style: italic;">value</span></span></span>
