@@ -27,7 +27,7 @@ dependencies](https://bioconductor.org/shields/dependencies/release/HiCParser.sv
 coverage](https://codecov.io/gh/emaigne/HiCParser/branch/devel/graph/badge.svg)](https://app.codecov.io/gh/emaigne/HiCParser?branch=devel)
 <!-- badges: end -->
 
-The goal of `HiCParser` is to parse Hi-C data in several fromats to import them in R, in InteractionSet objects.
+The goal of `HiCParser` is to parse Hi-C data (`HiCParser` supports serveral formats), and import them in R, as an `InteractionSet` object.
 
 ## Installation instructions
 
