@@ -25,3 +25,16 @@ test_that("Parser for .cool data works as expected", {
     expect_s4_class(S4Vectors::mcols(object), "DataFrame")
     expect_true(is.numeric(SummarizedExperiment::assay(object)))
 })
+
+test_that("Parser for .cool data returns expected errors", {
+    paths <-
+        system.file("extdata", "liver_18_10M_500000.cool", package = "HiCParser")
+    expect_error(
+        parseCool(
+            paths,
+            replicates = c(1, 2),
+            conditions = c(1, 2)
+        ),
+        "'conditions/replicates' and 'paths' must have the same length"
+    )
+})

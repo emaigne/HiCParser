@@ -39,3 +39,34 @@ test_that("mergeInteractionSet works as expected", {
         which(objectMerged@interactions@anchor1>objectMerged@interactions@anchor2),
         vector("integer", 0))
 })
+
+test_that(".checkReplicatesConditions works as expected", {
+    expect_error(.checkReplicatesConditions(c(1,2,3), c(1,2,3)),
+                 NA)
+    expect_error(.checkReplicatesConditions(c(1,2,3), NULL),
+                 "'conditions' must be a vector of conditions")
+    expect_error(.checkReplicatesConditions(NULL, c(1,2,3)),
+                 "'replicates' must be a vector of replicates.")
+    expect_error(.checkReplicatesConditions(c(1,NA,3), c(1,2,3)),
+                 "'replicates' and 'conditions' can't containe NA values")
+    expect_error(.checkReplicatesConditions(c(1,2,3), c(1,3)),
+                 "'conditions' and 'replicates' must have the same length")
+
+    expect_identical(
+        .checkReplicatesConditions(factor(c(1,2,3)), factor(c(2,2,3))),
+        list("replicates"=c("1","2","3"), "conditions"=c("2","2","3")))
+
+})
+
+test_that(".checkPaths works as expected", {
+    path <- system.file("extdata", "liver_18_10M_500000.tsv", package = "HiCParser")
+    tmp <- expect_error(.checkPaths(path=factor(path)),
+                 NA)
+    expect_identical(tmp, path)
+    expect_error(.checkPaths("matrixPaths"=c(path, NA)),
+                 "matrixPaths can't contain NA values.")
+    expect_error(.checkPaths("matrixPaths"=c(2, 1)),
+                 "matrixPaths must be a non empty vector of characters.")
+    expect_error(.checkPaths("matrixPaths"="dont_exists"),
+                 "'dont_exists' does not exist.")
+})
