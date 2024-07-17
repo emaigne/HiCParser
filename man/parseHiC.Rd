@@ -4,7 +4,7 @@
 \alias{parseHiC}
 \title{Parser for data in hic format}
 \usage{
-parseHiC(paths, binSize, replicates, conditions)
+parseHiC(paths, binSize, conditions, replicates)
 }
 \arguments{
 \item{paths}{A vector of paths to \code{.hic} files.}
@@ -12,9 +12,9 @@ parseHiC(paths, binSize, replicates, conditions)
 \item{binSize}{The resolution (span of each position in number of bases) to select within
 the \code{.hic} files.}
 
-\item{replicates}{A vector of replicate names repeated along the conditions.}
-
 \item{conditions}{A vector of condition names repeated along the replicates.}
+
+\item{replicates}{A vector of replicate names repeated along the conditions.}
 }
 \value{
 An InteractionSet.
@@ -26,23 +26,24 @@ object.
 \examples{
 #Path to each file
 paths <- c(
-    "path/to/condition-1.replicate-1.hic",
-    "path/to/condition-1.replicate-2.hic",
-    "path/to/condition-2.replicate-1.hic",
-    "path/to/condition-2.replicate-2.hic",
-    "path/to/condition-3.replicate-1.hic"
+    'path/to/condition-1.replicate-1.hic',
+    'path/to/condition-1.replicate-2.hic',
+    'path/to/condition-1.replicate-3.hic',
+    'path/to/condition-2.replicate-1.hic',
+    'path/to/condition-2.replicate-2.hic',
+    'path/to/condition-2.replicate-3.hic'
 )
 # Replicate and condition of each file. Can be names instead of numbers.
-replicates <- c(1, 2, 1, 2, 1)
-conditions <- c(1, 1, 2, 2, 3)
+conditions <- c(1, 1, 1, 2, 2, 2)
+replicates <- c(1, 2, 3, 1, 2, 3)
 # Resolution to select
 binSize <- 500000
 if(FALSE){
 # Instantiation of data set
 hic.experiment <- parseHiC(
     paths,
-    replicates = replicates,
     conditions = conditions,
+    replicates = replicates,
     binSize = binSize
 )
 }

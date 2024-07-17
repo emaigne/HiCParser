@@ -4,16 +4,16 @@
 \alias{parseHiCPro}
 \title{Parser for HiCPro data}
 \usage{
-parseHiCPro(matrixPaths, bedPaths, replicates, conditions)
+parseHiCPro(matrixPaths, bedPaths, conditions, replicates)
 }
 \arguments{
 \item{matrixPaths}{A vector of paths to HiC-Pro matrix files.}
 
 \item{bedPaths}{A vector of paths to HiC-Pro bed files.}
 
-\item{replicates}{A vector of replicate names repeated along the conditions.}
-
 \item{conditions}{A vector of condition names repeated along the replicates.}
+
+\item{replicates}{A vector of replicate names repeated along the conditions.}
 }
 \value{
 An InteractionSet.
@@ -25,34 +25,36 @@ returns an InteractionSet object.
 \examples{
 # Path to each matrix file
 matrixPaths <- c(
-    "path/to/condition-1.replicate-1.matrix",
-    "path/to/condition-1.replicate-2.matrix",
-    "path/to/condition-2.replicate-1.matrix",
-    "path/to/condition-2.replicate-2.matrix",
-    "path/to/condition-3.replicate-1.matrix"
+    'path/to/condition-1.replicate-1.matrix',
+    'path/to/condition-1.replicate-2.matrix',
+    'path/to/condition-1.replicate-3.matrix',
+    'path/to/condition-2.replicate-1.matrix',
+    'path/to/condition-2.replicate-2.matrix',
+    'path/to/condition-2.replicate-3.matrix'
 )
 
 # Path to each bed file
 bedPaths <- c(
-    "path/to/condition-1.replicate-1.bed",
-    "path/to/condition-1.replicate-2.bed",
-    "path/to/condition-2.replicate-1.bed",
-    "path/to/condition-2.replicate-2.bed",
-    "path/to/condition-3.replicate-1.bed"
+    'path/to/condition-1.replicate-1.bed',
+    'path/to/condition-1.replicate-2.bed',
+    'path/to/condition-1.replicate-3.bed',
+    'path/to/condition-2.replicate-1.bed',
+    'path/to/condition-2.replicate-2.bed',
+    'path/to/condition-2.replicate-3.bed'
 )
 
-# Replicate and condition of each file. Can be names instead of numbers.
-replicates <- c(1, 2, 1, 2, 1)
-conditions <- c(1, 1, 2, 2, 3)
+# Condition and replicate of each file. Can be names instead of numbers.
+conditions <- c(1, 1, 1, 2, 2, 2)
+replicates <- c(1, 2, 3, 1, 2, 3)
 
 if(FALSE){
-# Instantiation of data set
-hic.experiment <- parseHiCPro(
-    matrixPaths = matrixPaths,
-    bedPaths = bedPaths,
-    replicates = replicates,
-    conditions = conditions
-)
+  # Instantiation of data set
+  hic.experiment <- parseHiCPro(
+      matrixPaths = matrixPaths,
+      bedPaths = bedPaths,
+      conditions = conditions,
+      replicates = replicates
+  )
 }
 
 }

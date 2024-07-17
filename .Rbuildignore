@@ -3,3 +3,5 @@
 ^dev$
 ^\.github$
 ^codecov\.yml$
+^doc$
+^Meta$

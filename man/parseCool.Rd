@@ -4,7 +4,7 @@
 \alias{parseCool}
 \title{Parser for data in cool format}
 \usage{
-parseCool(paths, binSize = NA, replicates, conditions)
+parseCool(paths, binSize = NA, conditions, replicates)
 }
 \arguments{
 \item{paths}{A vector of paths to \code{.cool} or \code{.mcool} files.}
@@ -13,9 +13,9 @@ parseCool(paths, binSize = NA, replicates, conditions)
 provided to select the appropriate resolution in \code{.mcool} files.
 Defaults to NULL.}
 
-\item{replicates}{A vector of replicate names repeated along the conditions.}
-
 \item{conditions}{A vector of condition names repeated along the replicates.}
+
+\item{replicates}{A vector of replicate names repeated along the conditions.}
 }
 \value{
 An InteractionSet.
@@ -29,24 +29,25 @@ To read \code{.cool} of \code{.mcool} files, the \code{rhdf5} package is require
 Please install it before running the function.
 }
 \examples{
-    #EXAMPLE FOR .cool FORMAT
-   # Path to each file
-   pathsCool = c(
-      'path/to/condition-1.replicate-1.cool',
-      'path/to/condition-1.replicate-2.cool',
-      'path/to/condition-2.replicate-1.cool',
-      'path/to/condition-2.replicate-2.cool',
-      'path/to/condition-3.replicate-1.cool'
-    )
-    # Replicate and condition of each file. Can be names instead of numbers.
-   replicates <- c(1, 2, 1, 2, 1)
-   conditions <- c(1, 1, 2, 2, 3)
-   if(FALSE) {
+  #EXAMPLE FOR .cool FORMAT
+  # Path to each file
+  pathsCool = c(
+    'path/to/condition-1.replicate-1.cool',
+    'path/to/condition-1.replicate-2.cool',
+    'path/to/condition-1.replicate-3.cool',
+    'path/to/condition-2.replicate-1.cool',
+    'path/to/condition-2.replicate-2.cool',
+    'path/to/condition-2.replicate-3.cool'
+  )
+  # Condition and replicate of each file. Can be names instead of numbers.
+  conditions <- c(1, 1, 1, 2, 2, 2)
+  replicates <- c(1, 2, 3, 1, 2, 3)
+  if(FALSE) {
     library(rhdf5)
     object <- parseCool(
       paths,
-      replicates = replicates,
-      conditions = conditions
+      conditions = conditions,
+      replicates = replicates
     )
   }
 
@@ -54,23 +55,24 @@ Please install it before running the function.
   # Resolution
   binSize = 500000
   # Path to each file
-    paths = c(
-      'path/to/condition-1.replicate-1.mcool',
-      'path/to/condition-1.replicate-2.mcool',
-      'path/to/condition-2.replicate-1.mcool',
-      'path/to/condition-2.replicate-2.mcool',
-      'path/to/condition-3.replicate-1.mcool'
-    )
-  # Replicates and conditions for each file
-  replicates <- c(1, 2, 1, 2, 1)
-  conditions <- c(1, 1, 2, 2, 3)
+  paths = c(
+    'path/to/condition-1.replicate-1.mcool',
+    'path/to/condition-1.replicate-2.mcool',
+    'path/to/condition-1.replicate-3.mcool',
+    'path/to/condition-2.replicate-1.mcool',
+    'path/to/condition-2.replicate-2.mcool',
+    'path/to/condition-2.replicate-3.mcool'
+  )
+  # Condition and replicate of each file. Can be names instead of numbers.
+  conditions <- c(1, 1, 1, 2, 2, 2)
+  replicates <- c(1, 2, 3, 1, 2, 3)
   if(FALSE) {
     # Instantiation of data set
     library(rhdf5)
     object <- parseCool(
       paths,
-      replicates = replicates,
       conditions = conditions,
+      replicates = replicates,
       binSize = binSize
     )
   }
