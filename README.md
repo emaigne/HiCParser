@@ -76,9 +76,9 @@ We show here how to parse one hic format file.
 library("HiCParser")
 hicFilePath <- system.file("extdata", "liver_18_10M.hic", package="HiCParser")
 data <- parseHiC(paths = hicFilePath, 
-                 binSize = 100000, 
-                 replicates = 1, 
-                 conditions = 1)
+                 binSize = 100000,
+                 conditions = 1, 
+                 replicates = 1)
 ```
 Note that a hic file can include several matrices, with different bin sizes.
 This is why the bin size should be provided.
@@ -90,8 +90,8 @@ for each condition.
 ``` r
 data <- parseHiC(paths = rep(hicFilePath, 6), 
                  binSize = 100000, 
-                 replicates = rep(seq(3), 2), 
-                 conditions = rep(seq(2), each = 3))
+                 conditions = rep(seq(2), each = 3),
+                 replicates = rep(seq(3), 2))
 ```
 
 ### HiC-Pro format
@@ -107,8 +107,8 @@ bedFilePath <- system.file("extdata",
                            package="HiCParser")
 data <- parseHiCPro(matrixPaths = rep(matrixFilePath, 6), 
                     bedPaths = bedFilePath, 
-                    replicates = rep(seq(3), 2), 
-                    conditions = rep(seq(2), each = 3))
+                    conditions = rep(seq(2), each = 3),
+                    replicates = rep(seq(3), 2))
 ```
 
 ### cool and mcool formats
@@ -129,8 +129,8 @@ coolFilePath <- system.file("extdata",
                             "liver_18_10M_500000.cool", 
                             package="HiCParser")
 data <- parseCool(paths = rep(coolFilePath, 6), 
-                  replicates = rep(seq(3), 2), 
-                  conditions = rep(seq(2), each = 3))
+                  conditions = rep(seq(2), each = 3),
+                  replicates = rep(seq(3), 2))
 ```
 
 The mcool format may include several bin sizes.
@@ -143,8 +143,8 @@ mcoolFilePath <- system.file("extdata",
                              package="HiCParser")
 data <- parseCool(paths = rep(mcoolFilePath, 6), 
                   binSize = 10000000, 
-                  replicates = rep(seq(3), 2), 
-                  conditions = rep(seq(2), each = 3))
+                  conditions = rep(seq(2), each = 3),
+                  replicates = rep(seq(3), 2))
 ```
 
 ### Output
@@ -158,8 +158,8 @@ library("HiCParser")
 hicFilePath <- system.file("extdata", "liver_18_10M.hic", package="HiCParser")
 data <- parseHiC(paths = rep(hicFilePath, 6), 
                  binSize = 100000, 
-                 replicates = rep(seq(3), 2), 
-                 conditions = rep(seq(2), each = 3))
+                 conditions = rep(seq(2), each = 3),
+                 replicates = rep(seq(3), 2))
 data
 ```
 
