@@ -86,8 +86,8 @@ mergeInteractionSet <- function(interactionSet1, interactionSet2, fill = NA) {
 #' @noRd
 #'
 #' @examples
-#' .checkReplicatesConditions(c(1, 2, 3), c(2, 3, 3))
-.checkReplicatesConditions <- function(replicates, conditions){
+#' .checkReplicatesConditions(c(1, 1, 1, 2, 2, 2), c(1, 2, 3, 1, 2, 3))
+.checkReplicatesConditions <- function(conditions, replicates){
     if (is.factor(replicates)) {
         replicates <- as.vector(replicates)
     }
@@ -110,5 +110,5 @@ mergeInteractionSet <- function(interactionSet1, interactionSet2, fill = NA) {
             call. = FALSE
         )
     }
-    return(list("replicates"=replicates, "conditions"=conditions))
+    return(list("conditions"=conditions, "replicates"=replicates))
 }
