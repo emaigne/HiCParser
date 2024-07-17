@@ -58,7 +58,7 @@ object.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">parseHiC</span><span class="op">(</span><span class="va">paths</span>, <span class="va">binSize</span>, <span class="va">replicates</span>, <span class="va">conditions</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">parseHiC</span><span class="op">(</span><span class="va">paths</span>, <span class="va">binSize</span>, <span class="va">conditions</span>, <span class="va">replicates</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -74,12 +74,12 @@ object.</p>
 the <code>.hic</code> files.</p></dd>
 
 
-<dt id="arg-replicates">replicates<a class="anchor" aria-label="anchor" href="#arg-replicates"></a></dt>
-<dd><p>A vector of replicate names repeated along the conditions.</p></dd>
-
-
 <dt id="arg-conditions">conditions<a class="anchor" aria-label="anchor" href="#arg-conditions"></a></dt>
 <dd><p>A vector of condition names repeated along the replicates.</p></dd>
+
+
+<dt id="arg-replicates">replicates<a class="anchor" aria-label="anchor" href="#arg-replicates"></a></dt>
+<dd><p>A vector of replicate names repeated along the conditions.</p></dd>
 
 </dl></div>
     <div id="value">
@@ -91,23 +91,24 @@ the <code>.hic</code> files.</p></dd>
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">#Path to each file</span></span></span>
 <span class="r-in"><span><span class="va">paths</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>    <span class="st">"path/to/condition-1.replicate-1.hic"</span>,</span></span>
-<span class="r-in"><span>    <span class="st">"path/to/condition-1.replicate-2.hic"</span>,</span></span>
-<span class="r-in"><span>    <span class="st">"path/to/condition-2.replicate-1.hic"</span>,</span></span>
-<span class="r-in"><span>    <span class="st">"path/to/condition-2.replicate-2.hic"</span>,</span></span>
-<span class="r-in"><span>    <span class="st">"path/to/condition-3.replicate-1.hic"</span></span></span>
+<span class="r-in"><span>    <span class="st">'path/to/condition-1.replicate-1.hic'</span>,</span></span>
+<span class="r-in"><span>    <span class="st">'path/to/condition-1.replicate-2.hic'</span>,</span></span>
+<span class="r-in"><span>    <span class="st">'path/to/condition-1.replicate-3.hic'</span>,</span></span>
+<span class="r-in"><span>    <span class="st">'path/to/condition-2.replicate-1.hic'</span>,</span></span>
+<span class="r-in"><span>    <span class="st">'path/to/condition-2.replicate-2.hic'</span>,</span></span>
+<span class="r-in"><span>    <span class="st">'path/to/condition-2.replicate-3.hic'</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co"># Replicate and condition of each file. Can be names instead of numbers.</span></span></span>
-<span class="r-in"><span><span class="va">replicates</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">1</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">conditions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">conditions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">replicates</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="co"># Resolution to select</span></span></span>
 <span class="r-in"><span><span class="va">binSize</span> <span class="op">&lt;-</span> <span class="fl">500000</span></span></span>
 <span class="r-in"><span><span class="kw">if</span><span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span><span class="op">{</span></span></span>
 <span class="r-in"><span><span class="co"># Instantiation of data set</span></span></span>
 <span class="r-in"><span><span class="va">hic.experiment</span> <span class="op">&lt;-</span> <span class="fu">parseHiC</span><span class="op">(</span></span></span>
 <span class="r-in"><span>    <span class="va">paths</span>,</span></span>
-<span class="r-in"><span>    replicates <span class="op">=</span> <span class="va">replicates</span>,</span></span>
 <span class="r-in"><span>    conditions <span class="op">=</span> <span class="va">conditions</span>,</span></span>
+<span class="r-in"><span>    replicates <span class="op">=</span> <span class="va">replicates</span>,</span></span>
 <span class="r-in"><span>    binSize <span class="op">=</span> <span class="va">binSize</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
