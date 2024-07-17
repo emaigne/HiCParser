@@ -93,6 +93,7 @@ data <- parseHiC(paths = rep(hicFilePath, 6),
                  conditions = rep(seq(2), each = 3),
                  replicates = rep(seq(3), 2))
 ```
+Currently, `HiCParser` supports the hic format up to the version 9.
 
 ### HiC-Pro format
 
