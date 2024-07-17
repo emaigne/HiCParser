@@ -90,31 +90,10 @@ library("HiCParser")
 ```
 
 `HiCParser` can import Hi-C data sets in various different formats:
-- Tabular (`.tsv`, `.csv`, ...) files.
 - Cooler `.cool` or `.mcool` files.
 - Juicer `.hic` files.
 - HiC-Pro `.matrix` and `.bed` files.
-
-## Tabular files
-
-A tabular file is a tab-separated multi-replicate sparse matrix with a header:
-
-chromosome    position 1    position 2    C1.R1    C1.R2    C1.R3    ...
-Y             1500000       7500000       145      184      72       ...
-...
-
-The number of interactions between `position 1` and `position 2` of
-`chromosome` are reported in each `condition.replicate` column. There is no
-limit to the number of conditions and replicates.
-
-To load Hi-C data in this format:
-
-```{r tabFormat, eval = FALSE}
-hic.experiment <- parseTabular(system.file("extdata",
-                                           "liver_18_10M_500000.tsv",
-                                           package = "HiCParser"),
-                               sep = "\t")
-```
+- Tabular (`.tsv`, `.csv`, ...) files.
 
 ## Cooler files
 
@@ -278,6 +257,27 @@ hic.experiment <- parserHiCPro(
     conditions = conditions,
     replicates = replicates
 )
+```
+
+## Tabular files
+
+A tabular file is a tab-separated multi-replicate sparse matrix with a header:
+
+chromosome    position 1    position 2    C1.R1    C1.R2    C1.R3    ...
+Y             1500000       7500000       145      184      72       ...
+...
+
+The number of interactions between `position 1` and `position 2` of
+`chromosome` are reported in each `condition.replicate` column. There is no
+limit to the number of conditions and replicates.
+
+To load Hi-C data in this format:
+
+```{r tabFormat, eval = FALSE}
+hic.experiment <- parseTabular(system.file("extdata",
+                                           "liver_18_10M_500000.tsv",
+                                           package = "HiCParser"),
+                               sep = "\t")
 ```
 
 # InteractionSet format
