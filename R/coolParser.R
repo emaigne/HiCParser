@@ -18,7 +18,7 @@
 #' @noRd
 #' @importFrom data.table setorder
 #' @importFrom GenomicRanges GRanges
-.parseOneCool <- function(path, binSize = NA, replicate, condition) {
+.parseOneCool <- function(path, binSize = NA, condition, replicate) {
     if(!requireNamespace('rhdf5'))
         stop("'rhdf5' package is required. Please install it and retry.")
     message("\nParsing '", path, "'.")
@@ -81,10 +81,10 @@
 #' an InteractionSet object.
 #' @param paths
 #' A vector of paths to \code{.cool} or \code{.mcool} files.
-#' @param replicates
-#' A vector of replicate names repeated along the conditions.
 #' @param conditions
 #' A vector of condition names repeated along the replicates.
+#' @param replicates
+#' A vector of replicate names repeated along the conditions.
 #' @param binSize
 #' The resolution (span of each position in number of bases). Optionally
 #' provided to select the appropriate resolution in \code{.mcool} files.
@@ -96,24 +96,25 @@
 #' @return
 #' An InteractionSet.
 #' @examples
-#'     #EXAMPLE FOR .cool FORMAT
-#'    # Path to each file
-#'    pathsCool = c(
-#'       'path/to/condition-1.replicate-1.cool',
-#'       'path/to/condition-1.replicate-2.cool',
-#'       'path/to/condition-2.replicate-1.cool',
-#'       'path/to/condition-2.replicate-2.cool',
-#'       'path/to/condition-3.replicate-1.cool'
-#'     )
-#'     # Replicate and condition of each file. Can be names instead of numbers.
-#'    replicates <- c(1, 2, 1, 2, 1)
-#'    conditions <- c(1, 1, 2, 2, 3)
-#'    if(FALSE) {
+#'   #EXAMPLE FOR .cool FORMAT
+#'   # Path to each file
+#'   pathsCool = c(
+#'     'path/to/condition-1.replicate-1.cool',
+#'     'path/to/condition-1.replicate-2.cool',
+#'     'path/to/condition-1.replicate-3.cool',
+#'     'path/to/condition-2.replicate-1.cool',
+#'     'path/to/condition-2.replicate-2.cool',
+#'     'path/to/condition-2.replicate-3.cool'
+#'   )
+#'   # Condition and replicate of each file. Can be names instead of numbers.
+#'   conditions <- c(1, 1, 1, 2, 2, 2)
+#'   replicates <- c(1, 2, 3, 1, 2, 3)
+#'   if(FALSE) {
 #'     library(rhdf5)
 #'     object <- parseCool(
 #'       paths,
-#'       replicates = replicates,
-#'       conditions = conditions
+#'       conditions = conditions,
+#'       replicates = replicates
 #'     )
 #'   }
 #'
@@ -121,29 +122,30 @@
 #'   # Resolution
 #'   binSize = 500000
 #'   # Path to each file
-#'     paths = c(
-#'       'path/to/condition-1.replicate-1.mcool',
-#'       'path/to/condition-1.replicate-2.mcool',
-#'       'path/to/condition-2.replicate-1.mcool',
-#'       'path/to/condition-2.replicate-2.mcool',
-#'       'path/to/condition-3.replicate-1.mcool'
-#'     )
-#'   # Replicates and conditions for each file
-#'   replicates <- c(1, 2, 1, 2, 1)
-#'   conditions <- c(1, 1, 2, 2, 3)
+#'   paths = c(
+#'     'path/to/condition-1.replicate-1.mcool',
+#'     'path/to/condition-1.replicate-2.mcool',
+#'     'path/to/condition-1.replicate-3.mcool',
+#'     'path/to/condition-2.replicate-1.mcool',
+#'     'path/to/condition-2.replicate-2.mcool',
+#'     'path/to/condition-2.replicate-3.mcool'
+#'   )
+#'   # Condition and replicate of each file. Can be names instead of numbers.
+#'   conditions <- c(1, 1, 1, 2, 2, 2)
+#'   replicates <- c(1, 2, 3, 1, 2, 3)
 #'   if(FALSE) {
 #'     # Instantiation of data set
 #'     library(rhdf5)
 #'     object <- parseCool(
 #'       paths,
-#'       replicates = replicates,
 #'       conditions = conditions,
+#'       replicates = replicates,
 #'       binSize = binSize
 #'     )
 #'   }
 #' @importFrom pbapply pbmapply
 #' @export
-parseCool <- function(paths, binSize=NA, replicates, conditions) {
+parseCool <- function(paths, binSize=NA, conditions, replicates) {
     if(!requireNamespace('rhdf5'))
         stop("'rhdf5' package is required. Please install it and retry.")
     paths <- .checkPaths("paths" = paths)
