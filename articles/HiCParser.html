@@ -437,9 +437,10 @@ slot of the object:</p>
 </h3>
 <p>A function <code>mergeInteractionSet</code> to merge
 <code>InteractionSet</code> objects, from the same experiment (for
-differents replicates or conditions). It merges the the data containing
-bins of interactions and fill the assays matrix accordingly, returning
-an assays matrix with several columns.</p>
+differents replicates or conditions).</p>
+<p>It merges the the data containing bins of interactions and fill the
+assays matrix accordingly, returning an assays matrix with several
+columns.</p>
 <p>The object returned by the function is an
 <code>InteractionSet</code>.</p>
 <p>Here is a fictitious example:</p>
@@ -450,17 +451,19 @@ an assays matrix with several columns.</p>
 <span><span class="co"># Creating an object with a different condition</span></span>
 <span><span class="va">object2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/parseTabular.html">parseTabular</a></span><span class="op">(</span><span class="va">path</span>, sep <span class="op">=</span> <span class="st">"\t"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Parsing '/__w/_temp/Library/HiCParser/extdata/liver_18_10M_500000.tsv'.</span></span>
-<span><span class="va">object2</span><span class="op">@</span><span class="va">colData</span><span class="op">[</span><span class="fl">1</span>, <span class="st">"condition"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">2</span></span></code></pre></div>
+<span><span class="va">tmp</span> <span class="op">&lt;-</span> <span class="fu">SummarizedExperiment</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">object2</span><span class="op">)</span></span>
+<span><span class="va">tmp</span><span class="op">[</span><span class="fl">1</span>, <span class="st">"condition"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">2</span></span>
+<span><span class="fu">SummarizedExperiment</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">object2</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">tmp</span></span></code></pre></div>
 <p>The merged object:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">objectMerged</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mergeInteractionSet.html">mergeInteractionSet</a></span><span class="op">(</span><span class="va">object1</span>, <span class="va">object2</span><span class="op">)</span></span>
-<span><span class="va">objectMerged</span><span class="op">@</span><span class="va">colData</span></span>
+<span><span class="fu">SummarizedExperiment</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">objectMerged</span><span class="op">)</span></span>
 <span><span class="co">#&gt; DataFrame with 2 rows and 2 columns</span></span>
 <span><span class="co">#&gt;     condition   replicate</span></span>
 <span><span class="co">#&gt;   &lt;character&gt; &lt;character&gt;</span></span>
 <span><span class="co">#&gt; 1           1          R1</span></span>
 <span><span class="co">#&gt; 2           2          R1</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">objectMerged</span><span class="op">@</span><span class="va">assays</span><span class="op">@</span><span class="va">data</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu">SummarizedExperiment</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">assay</a></span><span class="op">(</span><span class="va">objectMerged</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;      [,1] [,2]</span></span>
 <span><span class="co">#&gt; [1,] 2096 2096</span></span>
 <span><span class="co">#&gt; [2,] 1341 1341</span></span>
@@ -508,9 +511,9 @@ Cheng, Chang, and Iannone, 2024)</li>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://yihui.org/knitr/" class="external-link">"knitr"</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/knit.html" class="external-link">knit</a></span><span class="op">(</span><span class="st">"HiCParser.Rmd"</span>, tangle <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>Date the vignette was generated.</p>
-<pre><code><span><span class="co">#&gt; [1] "2024-07-23 13:46:09 UTC"</span></span></code></pre>
+<pre><code><span><span class="co">#&gt; [1] "2024-07-23 13:59:48 UTC"</span></span></code></pre>
 <p>Wallclock time spent generating the vignette.</p>
-<pre><code><span><span class="co">#&gt; Time difference of 7.611 secs</span></span></code></pre>
+<pre><code><span><span class="co">#&gt; Time difference of 7.68 secs</span></span></code></pre>
 <p><code>R</code> session information.</p>
 <pre><code><span><span class="co">#&gt; <span style="color: #00BBBB; font-weight: bold;">─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────</span></span></span>
 <span><span class="co">#&gt;  <span style="color: #555555; font-style: italic;">setting </span> <span style="color: #555555; font-style: italic;">value</span></span></span>
