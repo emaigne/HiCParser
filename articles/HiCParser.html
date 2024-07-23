@@ -83,7 +83,7 @@ Zytnicki</h4>
 MIAT<br><a class="author_email" href="mailto:#"></a><a href="mailto:matthias.zytnicki@inrae.fr" class="email">matthias.zytnicki@inrae.fr</a>
       </address>
                   
-            <h4 data-toc-skip class="date">17 July 2024</h4>
+            <h4 data-toc-skip class="date">23 July 2024</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/emaigne/HiCParser/blob/devel/vignettes/HiCParser.Rmd" class="external-link"><code>vignettes/HiCParser.Rmd</code></a></small>
       <div class="hidden name"><code>HiCParser.Rmd</code></div>
@@ -332,14 +332,14 @@ version 9.</p>
 </h3>
 <p>A tabular file is a tab-separated multi-replicate sparse matrix with
 a header:</p>
-<p>chromosome position 1 position 2 C1.R1 C1.R2 C1.R3 … Y 1500000
-7500000 145 184 72 … …</p>
+<pre><code>chromosome    position 1    position 2    C1.R1    C1.R2    C1.R3    ...
+Y             1500000       7500000       145      184      72       ...</code></pre>
 <p>The number of interactions between <code>position 1</code> and
 <code>position 2</code> of <code>chromosome</code> are reported in each
 <code>condition.replicate</code> column. There is no limit to the number
 of conditions and replicates.</p>
 <p>To load Hi-C data in this format:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">hic.experiment</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/parseTabular.html">parseTabular</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>,</span>
 <span>                                           <span class="st">"liver_18_10M_500000.tsv"</span>,</span>
 <span>                                           package <span class="op">=</span> <span class="st">"HiCParser"</span><span class="op">)</span>,</span>
@@ -349,12 +349,89 @@ of conditions and replicates.</p>
 <div class="section level2">
 <h2 id="interactionset-format">InteractionSet format<a class="anchor" aria-label="anchor" href="#interactionset-format"></a>
 </h2>
-<p>The data is loaded in an object from class <em><a href="https://bioconductor.org/packages/3.19/InteractionSet" class="external-link">InteractionSet</a></em>.
-Please refer to this package for more detail usage of this class.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"liver_18_10M_500000.tsv"</span>, package <span class="op">=</span> <span class="st">"HiCParser"</span><span class="op">)</span></span>
-<span><span class="va">object</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/parseTabular.html">parseTabular</a></span><span class="op">(</span><span class="va">path</span>, sep <span class="op">=</span> <span class="st">"\t"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Parsing '/__w/_temp/Library/HiCParser/extdata/liver_18_10M_500000.tsv'.</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="output-interactionset-format">Output : InteractionSet format<a class="anchor" aria-label="anchor" href="#output-interactionset-format"></a>
+</h2>
+<p>The output is a <em><a href="https://bioconductor.org/packages/3.19/InteractionSet" class="external-link">InteractionSet</a></em>.
+This object can store one or several samples.</p>
+<p>Please read the <a href="https://bioconductor.org/packages/devel/bioc/vignettes/InteractionSet/inst/doc/interactions.html" class="external-link">corresponding
+vignette</a> in order to known more about this format.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/emaigne/HiCParser" class="external-link">"HiCParser"</a></span><span class="op">)</span></span>
+<span><span class="va">hicFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"liver_18_10M.hic"</span>, package<span class="op">=</span><span class="st">"HiCParser"</span><span class="op">)</span></span>
+<span><span class="va">hic.experiment</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/parseHiC.html">parseHiC</a></span><span class="op">(</span>paths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="va">hicFilePath</span>, <span class="fl">6</span><span class="op">)</span>, </span>
+<span>                           binSize <span class="op">=</span> <span class="fl">100000</span>, </span>
+<span>                           conditions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,</span>
+<span>                           replicates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Parsing '/__w/_temp/Library/HiCParser/extdata/liver_18_10M.hic'.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Parsing '/__w/_temp/Library/HiCParser/extdata/liver_18_10M.hic'.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Parsing '/__w/_temp/Library/HiCParser/extdata/liver_18_10M.hic'.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Parsing '/__w/_temp/Library/HiCParser/extdata/liver_18_10M.hic'.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Parsing '/__w/_temp/Library/HiCParser/extdata/liver_18_10M.hic'.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Parsing '/__w/_temp/Library/HiCParser/extdata/liver_18_10M.hic'.</span></span>
+<span><span class="va">hic.experiment</span></span>
+<span><span class="co">#&gt; class: InteractionSet </span></span>
+<span><span class="co">#&gt; dim: 4942 6 </span></span>
+<span><span class="co">#&gt; metadata(0):</span></span>
+<span><span class="co">#&gt; assays(1): ''</span></span>
+<span><span class="co">#&gt; rownames: NULL</span></span>
+<span><span class="co">#&gt; rowData names(1): chromosome</span></span>
+<span><span class="co">#&gt; colnames: NULL</span></span>
+<span><span class="co">#&gt; colData names(2): condition replicate</span></span>
+<span><span class="co">#&gt; type: StrictGInteractions</span></span>
+<span><span class="co">#&gt; regions: 100</span></span></code></pre></div>
+<p>The conditions and replicates are reported in the
+<code>colData</code> slot :</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">SummarizedExperiment</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">hic.experiment</span><span class="op">)</span></span>
+<span><span class="co">#&gt; DataFrame with 6 rows and 2 columns</span></span>
+<span><span class="co">#&gt;   condition replicate</span></span>
+<span><span class="co">#&gt;   &lt;integer&gt; &lt;integer&gt;</span></span>
+<span><span class="co">#&gt; 1         1         1</span></span>
+<span><span class="co">#&gt; 2         1         2</span></span>
+<span><span class="co">#&gt; 3         1         3</span></span>
+<span><span class="co">#&gt; 4         2         1</span></span>
+<span><span class="co">#&gt; 5         2         2</span></span>
+<span><span class="co">#&gt; 6         2         3</span></span></code></pre></div>
+<p>They corresponds to columns of the <code>assays</code> matrix
+(containing interactions values):</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu">SummarizedExperiment</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">assay</a></span><span class="op">(</span><span class="va">hic.experiment</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt;      [,1] [,2] [,3] [,4] [,5] [,6]</span></span>
+<span><span class="co">#&gt; [1,]   92   92   92   92   92   92</span></span>
+<span><span class="co">#&gt; [2,]   67   67   67   67   67   67</span></span>
+<span><span class="co">#&gt; [3,]   47   47   47   47   47   47</span></span>
+<span><span class="co">#&gt; [4,]   55   55   55   55   55   55</span></span>
+<span><span class="co">#&gt; [5,]   29   29   29   29   29   29</span></span>
+<span><span class="co">#&gt; [6,]   13   13   13   13   13   13</span></span></code></pre></div>
+<p>The positions of interactions are in the <code>interactions</code>
+slot of the object:</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">InteractionSet</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/InteractionSet/man/interaction-accessors.html" class="external-link">interactions</a></span><span class="op">(</span><span class="va">hic.experiment</span><span class="op">)</span></span>
+<span><span class="co">#&gt; StrictGInteractions object with 4942 interactions and 1 metadata column:</span></span>
+<span><span class="co">#&gt;          seqnames1          ranges1     seqnames2          ranges2 | chromosome</span></span>
+<span><span class="co">#&gt;              &lt;Rle&gt;        &lt;IRanges&gt;         &lt;Rle&gt;        &lt;IRanges&gt; |      &lt;Rle&gt;</span></span>
+<span><span class="co">#&gt;      [1]        18         1-100000 ---        18         1-100000 |         18</span></span>
+<span><span class="co">#&gt;      [2]        18         1-100000 ---        18    100001-200000 |         18</span></span>
+<span><span class="co">#&gt;      [3]        18         1-100000 ---        18    200001-300000 |         18</span></span>
+<span><span class="co">#&gt;      [4]        18         1-100000 ---        18    300001-400000 |         18</span></span>
+<span><span class="co">#&gt;      [5]        18         1-100000 ---        18    400001-500000 |         18</span></span>
+<span><span class="co">#&gt;      ...       ...              ... ...       ...              ... .        ...</span></span>
+<span><span class="co">#&gt;   [4938]        18  9700001-9800000 ---        18  9800001-9900000 |         18</span></span>
+<span><span class="co">#&gt;   [4939]        18  9700001-9800000 ---        18 9900001-10000000 |         18</span></span>
+<span><span class="co">#&gt;   [4940]        18  9800001-9900000 ---        18  9800001-9900000 |         18</span></span>
+<span><span class="co">#&gt;   [4941]        18  9800001-9900000 ---        18 9900001-10000000 |         18</span></span>
+<span><span class="co">#&gt;   [4942]        18 9900001-10000000 ---        18 9900001-10000000 |         18</span></span>
+<span><span class="co">#&gt;   -------</span></span>
+<span><span class="co">#&gt;   regions: 100 ranges and 1 metadata column</span></span>
+<span><span class="co">#&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="additional-utils-functions">Additional utils functions<a class="anchor" aria-label="anchor" href="#additional-utils-functions"></a>
 </h3>
@@ -366,7 +443,7 @@ an assays matrix with several columns.</p>
 <p>The object returned by the function is an
 <code>InteractionSet</code>.</p>
 <p>Here is a fictitious example:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"liver_18_10M_500000.tsv"</span>, package <span class="op">=</span> <span class="st">"HiCParser"</span><span class="op">)</span></span>
 <span><span class="va">object1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/parseTabular.html">parseTabular</a></span><span class="op">(</span><span class="va">path</span>, sep <span class="op">=</span> <span class="st">"\t"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Parsing '/__w/_temp/Library/HiCParser/extdata/liver_18_10M_500000.tsv'.</span></span>
@@ -375,7 +452,7 @@ an assays matrix with several columns.</p>
 <span><span class="co">#&gt; Parsing '/__w/_temp/Library/HiCParser/extdata/liver_18_10M_500000.tsv'.</span></span>
 <span><span class="va">object2</span><span class="op">@</span><span class="va">colData</span><span class="op">[</span><span class="fl">1</span>, <span class="st">"condition"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">2</span></span></code></pre></div>
 <p>The merged object:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">objectMerged</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mergeInteractionSet.html">mergeInteractionSet</a></span><span class="op">(</span><span class="va">object1</span>, <span class="va">object2</span><span class="op">)</span></span>
 <span><span class="va">objectMerged</span><span class="op">@</span><span class="va">colData</span></span>
 <span><span class="co">#&gt; DataFrame with 2 rows and 2 columns</span></span>
@@ -422,7 +499,7 @@ Cheng, Chang, and Iannone, 2024)</li>
 </ul>
 <p>This package was developed using <em><a href="https://bioconductor.org/packages/3.19/biocthis" class="external-link">biocthis</a></em>.</p>
 <p>Code for creating the vignette</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Create the vignette</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/rstudio/rmarkdown" class="external-link">"rmarkdown"</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="fu"><a href="https://pkgs.rstudio.com/rmarkdown/reference/render.html" class="external-link">render</a></span><span class="op">(</span><span class="st">"HiCParser.Rmd"</span>, <span class="st">"BiocStyle::html_document"</span><span class="op">)</span><span class="op">)</span></span>
@@ -431,9 +508,9 @@ Cheng, Chang, and Iannone, 2024)</li>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://yihui.org/knitr/" class="external-link">"knitr"</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/knit.html" class="external-link">knit</a></span><span class="op">(</span><span class="st">"HiCParser.Rmd"</span>, tangle <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>Date the vignette was generated.</p>
-<pre><code><span><span class="co">#&gt; [1] "2024-07-17 11:30:03 UTC"</span></span></code></pre>
+<pre><code><span><span class="co">#&gt; [1] "2024-07-23 13:34:42 UTC"</span></span></code></pre>
 <p>Wallclock time spent generating the vignette.</p>
-<pre><code><span><span class="co">#&gt; Time difference of 6.345 secs</span></span></code></pre>
+<pre><code><span><span class="co">#&gt; Time difference of 7.659 secs</span></span></code></pre>
 <p><code>R</code> session information.</p>
 <pre><code><span><span class="co">#&gt; <span style="color: #00BBBB; font-weight: bold;">─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────</span></span></span>
 <span><span class="co">#&gt;  <span style="color: #555555; font-style: italic;">setting </span> <span style="color: #555555; font-style: italic;">value</span></span></span>
@@ -445,7 +522,7 @@ Cheng, Chang, and Iannone, 2024)</li>
 <span><span class="co">#&gt;  collate  en_US.UTF-8</span></span>
 <span><span class="co">#&gt;  ctype    en_US.UTF-8</span></span>
 <span><span class="co">#&gt;  tz       UTC</span></span>
-<span><span class="co">#&gt;  date     2024-07-17</span></span>
+<span><span class="co">#&gt;  date     2024-07-23</span></span>
 <span><span class="co">#&gt;  pandoc   3.2 @ /usr/bin/ (via rmarkdown)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB; font-weight: bold;">─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────</span></span></span>
@@ -475,7 +552,7 @@ Cheng, Chang, and Iannone, 2024)</li>
 <span><span class="co">#&gt;  GenomicRanges          1.56.1  <span style="color: #555555;">2024-06-12</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor 3.19 (R 4.4.1)</span></span></span>
 <span><span class="co">#&gt;  glue                   1.7.0   <span style="color: #555555;">2024-01-09</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
 <span><span class="co">#&gt;  gtools                 3.9.5   <span style="color: #555555;">2023-11-20</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
-<span><span class="co">#&gt;  HiCParser            * 0.1.0   <span style="color: #555555;">2024-07-17</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor</span></span></span>
+<span><span class="co">#&gt;  HiCParser            * 0.1.0   <span style="color: #555555;">2024-07-23</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor</span></span></span>
 <span><span class="co">#&gt;  htmltools              0.5.8.1 <span style="color: #555555;">2024-04-04</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
 <span><span class="co">#&gt;  htmlwidgets            1.6.4   <span style="color: #555555;">2023-12-06</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
 <span><span class="co">#&gt;  httr                   1.4.7   <span style="color: #555555;">2023-08-15</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
@@ -496,7 +573,7 @@ Cheng, Chang, and Iannone, 2024)</li>
 <span><span class="co">#&gt;  plyr                   1.8.9   <span style="color: #555555;">2023-10-02</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
 <span><span class="co">#&gt;  R6                     2.5.1   <span style="color: #555555;">2021-08-19</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
 <span><span class="co">#&gt;  ragg                   1.3.2   <span style="color: #555555;">2024-05-15</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
-<span><span class="co">#&gt;  Rcpp                   1.0.12  <span style="color: #555555;">2024-01-09</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
+<span><span class="co">#&gt;  Rcpp                   1.0.13  <span style="color: #555555;">2024-07-17</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
 <span><span class="co">#&gt;  RefManageR           * 1.4.0   <span style="color: #555555;">2022-09-30</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
 <span><span class="co">#&gt;  rlang                  1.1.4   <span style="color: #555555;">2024-06-04</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
 <span><span class="co">#&gt;  rmarkdown              2.27    <span style="color: #555555;">2024-05-17</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
@@ -512,7 +589,7 @@ Cheng, Chang, and Iannone, 2024)</li>
 <span><span class="co">#&gt;  textshaping            0.4.0   <span style="color: #555555;">2024-05-24</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
 <span><span class="co">#&gt;  timechange             0.3.0   <span style="color: #555555;">2024-01-18</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
 <span><span class="co">#&gt;  UCSC.utils             1.0.0   <span style="color: #555555;">2024-04-30</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor 3.19 (R 4.4.1)</span></span></span>
-<span><span class="co">#&gt;  xfun                   0.45    <span style="color: #555555;">2024-06-16</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
+<span><span class="co">#&gt;  xfun                   0.46    <span style="color: #555555;">2024-07-18</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
 <span><span class="co">#&gt;  xml2                   1.3.6   <span style="color: #555555;">2023-12-04</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>
 <span><span class="co">#&gt;  XVector                0.44.0  <span style="color: #555555;">2024-04-30</span> <span style="color: #555555;">[1]</span> <span style="color: #555555;">Bioconductor 3.19 (R 4.4.1)</span></span></span>
 <span><span class="co">#&gt;  yaml                   2.3.9   <span style="color: #555555;">2024-07-05</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM (R 4.4.0)</span></span></span>

@@ -88,6 +88,9 @@
 <p>And the development version from <a href="https://github.com/emaigne/HiCParser" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"emaigne/HiCParser"</span><span class="op">)</span></span></code></pre></div>
+<p>Then load the package :</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/emaigne/HiCParser" class="external-link">"HiCParser"</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="supported-formats">Supported formats<a class="anchor" aria-label="anchor" href="#supported-formats"></a>
@@ -116,16 +119,15 @@
 <h3 id="hic-format">hic format<a class="anchor" aria-label="anchor" href="#hic-format"></a>
 </h3>
 <p>We show here how to parse one hic format file.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/emaigne/HiCParser" class="external-link">"HiCParser"</a></span><span class="op">)</span></span>
-<span><span class="va">hicFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"liver_18_10M.hic"</span>, package<span class="op">=</span><span class="st">"HiCParser"</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">hicFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"liver_18_10M.hic"</span>, package<span class="op">=</span><span class="st">"HiCParser"</span><span class="op">)</span></span>
 <span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/parseHiC.html">parseHiC</a></span><span class="op">(</span>paths <span class="op">=</span> <span class="va">hicFilePath</span>, </span>
 <span>                 binSize <span class="op">=</span> <span class="fl">100000</span>,</span>
 <span>                 conditions <span class="op">=</span> <span class="fl">1</span>, </span>
 <span>                 replicates <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <p>Note that a hic file can include several matrices, with different bin sizes. This is why the bin size should be provided.</p>
 <p>We show here how to parse several files (actually, the same file, several times). We suppose here that we have 2 conditions, with 3 replicates for each condition.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/parseHiC.html">parseHiC</a></span><span class="op">(</span>paths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="va">hicFilePath</span>, <span class="fl">6</span><span class="op">)</span>, </span>
 <span>                 binSize <span class="op">=</span> <span class="fl">100000</span>, </span>
 <span>                 conditions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,</span>
@@ -136,7 +138,7 @@
 <h3 id="hic-pro-format">HiC-Pro format<a class="anchor" aria-label="anchor" href="#hic-pro-format"></a>
 </h3>
 <p>A HiC-Pro file contains a matrix file, and a bed file. A different bed file could be use for each matrix file, but the same can also be used.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">matrixFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"liver_18_10M_500000.matrix"</span>, package<span class="op">=</span><span class="st">"HiCParser"</span><span class="op">)</span></span>
 <span><span class="va">bedFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, </span>
 <span>                           <span class="st">"liver_18_10M_500000.bed"</span>, </span>
@@ -151,7 +153,7 @@
 </h3>
 <p>Please note that the cool and mcool format store data in HDF5 format. The <a href="https://bioconductor.org/packages/release/bioc/html/rhdf5.html" class="external-link">HDF5 package</a> is not included by default, because it requires a substantial time to be compiled, and many users will not need the cool/mcool parser. So, in order to use the cool/mcool parser, you should install the <code>rhdf5</code> package.</p>
 <p>The cool format include only one bin size.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span> <span class="st">"rhdf5"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/installed.packages.html" class="external-link">installed.packages</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"rhdf5"</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
@@ -162,7 +164,7 @@
 <span>                  conditions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,</span>
 <span>                  replicates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>The mcool format may include several bin sizes. It is thus compulsory to mention it. The same function is used for the cool/mcool formats.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mcoolFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, </span>
 <span>                             <span class="st">"liver_18_10M.mcool"</span>, </span>
 <span>                             package<span class="op">=</span><span class="st">"HiCParser"</span><span class="op">)</span></span>
@@ -171,18 +173,96 @@
 <span>                  conditions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,</span>
 <span>                  replicates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
+</div>
+<div class="section level2">
+<h2 id="tabular-files">Tabular files<a class="anchor" aria-label="anchor" href="#tabular-files"></a>
+</h2>
+<p>A tabular file is a tab-separated multi-replicate sparse matrix with a header:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>chromosome    position <span class="dv">1</span>    position <span class="dv">2</span>    C1.R1    C1.R2    C1.R3    ...</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>Y             <span class="dv">1500000</span>       <span class="dv">7500000</span>       <span class="dv">145</span>      <span class="dv">184</span>      <span class="dv">72</span>       ...</span></code></pre></div>
+<p>The number of interactions between <code>position 1</code> and <code>position 2</code> of <code>chromosome</code> are reported in each <code>condition.replicate</code> column. There is no limit to the number of conditions and replicates.</p>
+<p>To load Hi-C data in this format:</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">hic.experiment</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/parseTabular.html">parseTabular</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>,</span>
+<span>                                           <span class="st">"liver_18_10M_500000.tsv"</span>,</span>
+<span>                                           package <span class="op">=</span> <span class="st">"HiCParser"</span><span class="op">)</span>,</span>
+<span>                               sep <span class="op">=</span> <span class="st">"\t"</span><span class="op">)</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="output">Output<a class="anchor" aria-label="anchor" href="#output"></a>
 </h3>
-<p>The output is a <a href="https://bioconductor.org/packages/release/bioc/html/InteractionSet.html" class="external-link">GInteractions</a>. This object can store one or several samples. Please read the <a href="https://bioconductor.org/packages/devel/bioc/vignettes/InteractionSet/inst/doc/interactions.html" class="external-link">corresponding vignette</a> in order to known more about this format.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<p>The output is a <a href="https://bioconductor.org/packages/release/bioc/html/InteractionSet.html" class="external-link">InteractionSet</a>. This object can store one or several samples. Please read the <a href="https://bioconductor.org/packages/devel/bioc/vignettes/InteractionSet/inst/doc/interactions.html" class="external-link">corresponding vignette</a> in order to known more about this format.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/emaigne/HiCParser" class="external-link">"HiCParser"</a></span><span class="op">)</span></span>
 <span><span class="va">hicFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"liver_18_10M.hic"</span>, package<span class="op">=</span><span class="st">"HiCParser"</span><span class="op">)</span></span>
-<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/parseHiC.html">parseHiC</a></span><span class="op">(</span>paths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="va">hicFilePath</span>, <span class="fl">6</span><span class="op">)</span>, </span>
-<span>                 binSize <span class="op">=</span> <span class="fl">100000</span>, </span>
-<span>                 conditions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,</span>
-<span>                 replicates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">data</span></span></code></pre></div>
+<span><span class="va">hic.experiment</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/parseHiC.html">parseHiC</a></span><span class="op">(</span>paths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="va">hicFilePath</span>, <span class="fl">6</span><span class="op">)</span>, </span>
+<span>                           binSize <span class="op">=</span> <span class="fl">100000</span>, </span>
+<span>                           conditions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,</span>
+<span>                           replicates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Parsing '/home/emaigne/R/x86_64-pc-linux-gnu-library/4.3/HiCParser/extdata/liver_18_10M.hic'.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Parsing '/home/emaigne/R/x86_64-pc-linux-gnu-library/4.3/HiCParser/extdata/liver_18_10M.hic'.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Parsing '/home/emaigne/R/x86_64-pc-linux-gnu-library/4.3/HiCParser/extdata/liver_18_10M.hic'.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Parsing '/home/emaigne/R/x86_64-pc-linux-gnu-library/4.3/HiCParser/extdata/liver_18_10M.hic'.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Parsing '/home/emaigne/R/x86_64-pc-linux-gnu-library/4.3/HiCParser/extdata/liver_18_10M.hic'.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Parsing '/home/emaigne/R/x86_64-pc-linux-gnu-library/4.3/HiCParser/extdata/liver_18_10M.hic'.</span></span>
+<span><span class="va">hic.experiment</span></span>
+<span><span class="co">#&gt; class: InteractionSet </span></span>
+<span><span class="co">#&gt; dim: 4942 6 </span></span>
+<span><span class="co">#&gt; metadata(0):</span></span>
+<span><span class="co">#&gt; assays(1): ''</span></span>
+<span><span class="co">#&gt; rownames: NULL</span></span>
+<span><span class="co">#&gt; rowData names(1): chromosome</span></span>
+<span><span class="co">#&gt; colnames: NULL</span></span>
+<span><span class="co">#&gt; colData names(2): condition replicate</span></span>
+<span><span class="co">#&gt; type: StrictGInteractions</span></span>
+<span><span class="co">#&gt; regions: 100</span></span></code></pre></div>
+<p>The conditions and replicates are reported in the <code>colData</code> slot :</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">SummarizedExperiment</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">hic.experiment</span><span class="op">)</span></span>
+<span><span class="co">#&gt; DataFrame with 6 rows and 2 columns</span></span>
+<span><span class="co">#&gt;   condition replicate</span></span>
+<span><span class="co">#&gt;   &lt;integer&gt; &lt;integer&gt;</span></span>
+<span><span class="co">#&gt; 1         1         1</span></span>
+<span><span class="co">#&gt; 2         1         2</span></span>
+<span><span class="co">#&gt; 3         1         3</span></span>
+<span><span class="co">#&gt; 4         2         1</span></span>
+<span><span class="co">#&gt; 5         2         2</span></span>
+<span><span class="co">#&gt; 6         2         3</span></span></code></pre></div>
+<p>They corresponds to columns of the <code>assays</code> matrix (containing interactions values):</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu">SummarizedExperiment</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">assay</a></span><span class="op">(</span><span class="va">hic.experiment</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt;      [,1] [,2] [,3] [,4] [,5] [,6]</span></span>
+<span><span class="co">#&gt; [1,]   92   92   92   92   92   92</span></span>
+<span><span class="co">#&gt; [2,]   67   67   67   67   67   67</span></span>
+<span><span class="co">#&gt; [3,]   47   47   47   47   47   47</span></span>
+<span><span class="co">#&gt; [4,]   55   55   55   55   55   55</span></span>
+<span><span class="co">#&gt; [5,]   29   29   29   29   29   29</span></span>
+<span><span class="co">#&gt; [6,]   13   13   13   13   13   13</span></span></code></pre></div>
+<p>The positions of interactions are in the <code>interactions</code> slot of the object:</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">InteractionSet</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/InteractionSet/man/interaction-accessors.html" class="external-link">interactions</a></span><span class="op">(</span><span class="va">hic.experiment</span><span class="op">)</span></span>
+<span><span class="co">#&gt; StrictGInteractions object with 4942 interactions and 1 metadata column:</span></span>
+<span><span class="co">#&gt;          seqnames1          ranges1     seqnames2          ranges2 | chromosome</span></span>
+<span><span class="co">#&gt;              &lt;Rle&gt;        &lt;IRanges&gt;         &lt;Rle&gt;        &lt;IRanges&gt; |      &lt;Rle&gt;</span></span>
+<span><span class="co">#&gt;      [1]        18         1-100000 ---        18         1-100000 |         18</span></span>
+<span><span class="co">#&gt;      [2]        18         1-100000 ---        18    100001-200000 |         18</span></span>
+<span><span class="co">#&gt;      [3]        18         1-100000 ---        18    200001-300000 |         18</span></span>
+<span><span class="co">#&gt;      [4]        18         1-100000 ---        18    300001-400000 |         18</span></span>
+<span><span class="co">#&gt;      [5]        18         1-100000 ---        18    400001-500000 |         18</span></span>
+<span><span class="co">#&gt;      ...       ...              ... ...       ...              ... .        ...</span></span>
+<span><span class="co">#&gt;   [4938]        18  9700001-9800000 ---        18  9800001-9900000 |         18</span></span>
+<span><span class="co">#&gt;   [4939]        18  9700001-9800000 ---        18 9900001-10000000 |         18</span></span>
+<span><span class="co">#&gt;   [4940]        18  9800001-9900000 ---        18  9800001-9900000 |         18</span></span>
+<span><span class="co">#&gt;   [4941]        18  9800001-9900000 ---        18 9900001-10000000 |         18</span></span>
+<span><span class="co">#&gt;   [4942]        18 9900001-10000000 ---        18 9900001-10000000 |         18</span></span>
+<span><span class="co">#&gt;   -------</span></span>
+<span><span class="co">#&gt;   regions: 100 ranges and 1 metadata column</span></span>
+<span><span class="co">#&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -192,14 +272,14 @@
 <p>To cite the ‘HiCParser’ HiCParser in a publication, use :</p>
 <p>Maigné E, Zytnicki M (2024). <em>A multiple format Hi-C data parser</em>. <a href="doi:10.18129/B9.bioc.HiCParser" class="uri">doi:10.18129/B9.bioc.HiCParser</a> <a href="https://doi.org/10.18129/B9.bioc.HiCParser" class="external-link uri">https://doi.org/10.18129/B9.bioc.HiCParser</a>, <a href="https://github.com/emaigne/HiCParser/HiCParser" class="external-link uri">https://github.com/emaigne/HiCParser/HiCParser</a> - R package version 0.1.0, <a href="http://www.bioconductor.org/packages/HiCParser" class="external-link uri">http://www.bioconductor.org/packages/HiCParser</a>.</p>
 <p>As a BibTeX entry :</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="sc">@</span>Manual{hicparser,</span>
-<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>  title <span class="ot">=</span> {A multiple format Hi<span class="sc">-</span>C data parser},</span>
-<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>  author <span class="ot">=</span> {Elise Maigné and Matthias Zytnicki},</span>
-<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>  year <span class="ot">=</span> {<span class="dv">2024</span>},</span>
-<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>  url <span class="ot">=</span> {http<span class="sc">:</span><span class="er">//</span>www.bioconductor.org<span class="sc">/</span>packages<span class="sc">/</span>HiCParser},</span>
-<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a>  note <span class="ot">=</span> {https<span class="sc">:</span><span class="er">//</span>github.com<span class="sc">/</span>emaigne<span class="sc">/</span>HiCParser<span class="sc">/</span>HiCParser <span class="sc">-</span> R package version <span class="dv">0</span>.<span class="fl">1.0</span>},</span>
-<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a>  doi <span class="ot">=</span> {<span class="fl">10.18129</span><span class="sc">/</span>B9.bioc.HiCParser},</span>
-<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="sc">@</span>Manual{hicparser,</span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>  title <span class="ot">=</span> {A multiple format Hi<span class="sc">-</span>C data parser},</span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a>  author <span class="ot">=</span> {Elise Maigné and Matthias Zytnicki},</span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a>  year <span class="ot">=</span> {<span class="dv">2024</span>},</span>
+<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a>  url <span class="ot">=</span> {http<span class="sc">:</span><span class="er">//</span>www.bioconductor.org<span class="sc">/</span>packages<span class="sc">/</span>HiCParser},</span>
+<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a>  note <span class="ot">=</span> {https<span class="sc">:</span><span class="er">//</span>github.com<span class="sc">/</span>emaigne<span class="sc">/</span>HiCParser<span class="sc">/</span>HiCParser <span class="sc">-</span> R package version <span class="dv">0</span>.<span class="fl">1.0</span>},</span>
+<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a>  doi <span class="ot">=</span> {<span class="fl">10.18129</span><span class="sc">/</span>B9.bioc.HiCParser},</span>
+<span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a>}</span></code></pre></div>
 <p>Please note that the <code>HiCParser</code> was only made possible thanks to many other R and bioinformatics software authors, which are cited either in the vignettes and/or the paper(s) describing this package.</p>
 </div>
 <div class="section level2">
