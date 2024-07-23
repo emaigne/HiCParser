@@ -264,9 +264,10 @@ hic.experiment <- parserHiCPro(
 
 A tabular file is a tab-separated multi-replicate sparse matrix with a header:
 
+```
 chromosome    position 1    position 2    C1.R1    C1.R2    C1.R3    ...
 Y             1500000       7500000       145      184      72       ...
-...
+```
 
 The number of interactions between `position 1` and `position 2` of
 `chromosome` are reported in each `condition.replicate` column. There is no
@@ -283,11 +284,40 @@ hic.experiment <- parseTabular(system.file("extdata",
 
 # InteractionSet format
 
-The data is loaded in an object from class `r Biocpkg("InteractionSet")`. Please refer to this package for more detail usage of this class.
+
+# Output : InteractionSet format
+
+The output is a `r Biocpkg("InteractionSet")`.
+This object can store one or several samples.
+
+Please read the [corresponding vignette](https://bioconductor.org/packages/devel/bioc/vignettes/InteractionSet/inst/doc/interactions.html) in order to known more about this format.
 
 ```{r}
-path <- system.file("extdata", "liver_18_10M_500000.tsv", package = "HiCParser")
-object <- parseTabular(path, sep = "\t")
+library("HiCParser")
+hicFilePath <- system.file("extdata", "liver_18_10M.hic", package="HiCParser")
+hic.experiment <- parseHiC(paths = rep(hicFilePath, 6), 
+                           binSize = 100000, 
+                           conditions = rep(seq(2), each = 3),
+                           replicates = rep(seq(3), 2))
+hic.experiment
+```
+
+The conditions and replicates are reported in the `colData` slot : 
+
+```{r}
+SummarizedExperiment::colData(hic.experiment)
+```
+
+They corresponds to columns of the `assays` matrix (containing interactions values):
+
+```{r}
+head(SummarizedExperiment::assay(hic.experiment))
+```
+
+The positions of interactions are in the `interactions` slot of the object:
+
+```{r}
+InteractionSet::interactions(hic.experiment)
 ```
 
 ## Additional utils functions

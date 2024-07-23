@@ -41,32 +41,63 @@ test_that("mergeInteractionSet works as expected", {
 })
 
 test_that(".checkConditionsReplicates works as expected", {
-    expect_error(.checkConditionsReplicates(c(1,2,3), c(1,2,3)),
-                 NA)
-    expect_error(.checkConditionsReplicates(c(1,2,3), NULL),
+    paths <-
+        system.file("extdata", "liver_18_10M.hic", package = "HiCParser")
+    binSize <- 500000
+    expect_error(object <- parseHiC(rep(paths, 3),
+                                    binSize=binSize,
+                                    conditions=c(1,2,3),
+                                    replicates=NULL),
                  "'replicates' must be a vector of replicates.")
-    expect_error(.checkReplicatesConditions(NULL, c(1,2,3)),
+    expect_error(object <- parseHiC(rep(paths, 3),
+                                    binSize=binSize,
+                                    conditions=NULL,
+                                    replicates=c(1,2,3)),
                  "'conditions' must be a vector of conditions")
-    expect_error(.checkConditionsReplicates(c(1,NA,3), c(1,2,3)),
-                 "'replicates' and 'conditions' can't containe NA values")
-    expect_error(.checkConditionsReplicates(c(1,2,3), c(1,3)),
+    expect_error(object <- parseHiC(rep(paths, 3),
+                                    binSize=binSize,
+                                    conditions=c(1,NA,3),
+                                    replicates=c(1,2,3)),
+                 "'replicates' and 'conditions' can't contain NA values")
+    expect_error(object <- parseHiC(rep(paths, 3),
+                                    binSize=binSize,
+                                    conditions=c(1,2,3),
+                                    replicates=c(1,3)),
                  "'conditions' and 'replicates' must have the same length")
 
-    expect_identical(
-        .checkConditionsReplicates(factor(c(1,2,3)), factor(c(2,2,3))),
-        list("conditions"=c("1","2","3"), "replicates"=c("2","2","3")))
-
+    expect_error(object <- parseHiC(rep(paths, 3),
+                                    binSize=binSize,
+                                    conditions=factor(c(1,2,3)),
+                                    replicates=factor(c(1,2,3))),
+                 NA)
+    expect_identical(SummarizedExperiment::colData(object),
+                     S4Vectors::DataFrame("condition"=c("1", "2", "3"),
+                                          "replicate"=c("1", "2", "3")))
 })
 
 test_that(".checkPaths works as expected", {
-    path <- system.file("extdata", "liver_18_10M_500000.tsv", package = "HiCParser")
-    tmp <- expect_error(.checkPaths(path=factor(path)),
-                 NA)
-    expect_identical(tmp, path)
-    expect_error(.checkPaths("matrixPaths"=c(path, NA)),
-                 "matrixPaths can't contain NA values.")
-    expect_error(.checkPaths("matrixPaths"=c(2, 1)),
-                 "matrixPaths must be a non empty vector of characters.")
-    expect_error(.checkPaths("matrixPaths"="dont_exists"),
+    paths <-
+        system.file("extdata", "liver_18_10M.hic", package = "HiCParser")
+    binSize <- 500000
+
+    expect_error(object <- parseHiC("paths"=c(paths, NA),
+                                    binSize=binSize,
+                                    conditions=c(1,2),
+                                    replicates=c(1,2)),
+                 "paths can't contain NA values.")
+    expect_error(object <- parseHiC("paths"=c(2, 1),
+                                    binSize=binSize,
+                                    conditions=c(1,2),
+                                    replicates=c(1,2)),
+                 "paths must be a non empty vector of characters.")
+    expect_error(object <- parseHiC("paths"=c(2, 1),
+                                    binSize=binSize,
+                                    conditions=c(1,2),
+                                    replicates=c(1,2)),
+                 "paths must be a non empty vector of characters.")
+    expect_error(object <- parseHiC("paths"=c("dont_exists"),
+                                    binSize=binSize,
+                                    conditions=c(1),
+                                    replicates=c(1)),
                  "'dont_exists' does not exist.")
 })

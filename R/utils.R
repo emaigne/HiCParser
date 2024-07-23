@@ -102,7 +102,7 @@ mergeInteractionSet <- function(interactionSet1, interactionSet2, fill = NA) {
         stop("'conditions' must be a vector of conditions.", call. = FALSE)
     }
     if (anyNA(c(replicates, conditions))) {
-        stop("'replicates' and 'conditions' can't containe NA values", call. = FALSE)
+        stop("'replicates' and 'conditions' can't contain NA values", call. = FALSE)
     }
     if (length(conditions) != length(replicates)) {
         stop(
