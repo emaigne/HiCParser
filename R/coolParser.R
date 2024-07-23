@@ -150,7 +150,7 @@ parseCool <- function(paths, binSize=NA, conditions, replicates) {
         stop("'rhdf5' package is required. Please install it and retry.")
     paths <- .checkPaths("paths" = paths)
 
-    repCond <- .checkReplicatesConditions(replicates, conditions)
+    repCond <- .checkConditionsReplicates(conditions, replicates)
     if (min(lengths(repCond)) != length(paths)) {
         stop(
             "'conditions/replicates' and 'paths' ",

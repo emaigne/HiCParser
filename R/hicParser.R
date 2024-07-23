@@ -72,7 +72,7 @@
 #' @export
 parseHiC <- function(paths, binSize, conditions, replicates) {
     paths <- .checkPaths("paths"=paths)
-    repCond <- .checkReplicatesConditions(conditions, replicates)
+    repCond <- .checkConditionsReplicates(conditions, replicates)
     if (min(lengths(repCond)) != length(paths)) {
         stop(
             "'conditions/replicates' and 'paths' ",

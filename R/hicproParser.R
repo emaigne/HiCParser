@@ -131,7 +131,7 @@ parseHiCPro <- function(matrixPaths, bedPaths, conditions, replicates) {
         )
     }
 
-    repCond <- .checkReplicatesConditions(conditions, replicates)
+    repCond <- .checkConditionsReplicates(conditions, replicates)
     if (min(lengths(repCond)) != length(matrixPaths)) {
         stop(
             "'conditions/replicates' and 'matrixPaths/bedPaths' ",

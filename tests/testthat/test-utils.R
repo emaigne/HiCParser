@@ -40,21 +40,21 @@ test_that("mergeInteractionSet works as expected", {
         vector("integer", 0))
 })
 
-test_that(".checkReplicatesConditions works as expected", {
-    expect_error(.checkReplicatesConditions(c(1,2,3), c(1,2,3)),
+test_that(".checkConditionsReplicates works as expected", {
+    expect_error(.checkConditionsReplicates(c(1,2,3), c(1,2,3)),
                  NA)
-    expect_error(.checkReplicatesConditions(c(1,2,3), NULL),
-                 "'conditions' must be a vector of conditions")
-    expect_error(.checkReplicatesConditions(NULL, c(1,2,3)),
+    expect_error(.checkConditionsReplicates(c(1,2,3), NULL),
                  "'replicates' must be a vector of replicates.")
-    expect_error(.checkReplicatesConditions(c(1,NA,3), c(1,2,3)),
+    expect_error(.checkReplicatesConditions(NULL, c(1,2,3)),
+                 "'conditions' must be a vector of conditions")
+    expect_error(.checkConditionsReplicates(c(1,NA,3), c(1,2,3)),
                  "'replicates' and 'conditions' can't containe NA values")
-    expect_error(.checkReplicatesConditions(c(1,2,3), c(1,3)),
+    expect_error(.checkConditionsReplicates(c(1,2,3), c(1,3)),
                  "'conditions' and 'replicates' must have the same length")
 
     expect_identical(
-        .checkReplicatesConditions(factor(c(1,2,3)), factor(c(2,2,3))),
-        list("replicates"=c("1","2","3"), "conditions"=c("2","2","3")))
+        .checkConditionsReplicates(factor(c(1,2,3)), factor(c(2,2,3))),
+        list("conditions"=c("1","2","3"), "replicates"=c("2","2","3")))
 
 })
 

@@ -78,7 +78,7 @@ mergeInteractionSet <- function(interactionSet1, interactionSet2, fill = NA) {
     return(path)
 }
 
-#' Check replicate and conditions
+#' Check conditions and replicate arguments of parsers
 #'
 #' @param ... a vector of replicates or conditions
 #'
@@ -86,8 +86,8 @@ mergeInteractionSet <- function(interactionSet1, interactionSet2, fill = NA) {
 #' @noRd
 #'
 #' @examples
-#' .checkReplicatesConditions(c(1, 1, 1, 2, 2, 2), c(1, 2, 3, 1, 2, 3))
-.checkReplicatesConditions <- function(conditions, replicates){
+#' .checkConditionsReplicates(c(1, 1, 1, 2, 2, 2), c(1, 2, 3, 1, 2, 3))
+.checkConditionsReplicates <- function(conditions, replicates){
     if (is.factor(replicates)) {
         replicates <- as.vector(replicates)
     }
