@@ -308,7 +308,8 @@ The conditions and replicates are reported in the `colData` slot :
 SummarizedExperiment::colData(hic.experiment)
 ```
 
-They corresponds to columns of the `assays` matrix (containing interactions values):
+They corresponds to columns of the `assays` matrix (containing 
+interactions values):
 
 ```{r}
 head(SummarizedExperiment::assay(hic.experiment))
@@ -322,8 +323,11 @@ InteractionSet::interactions(hic.experiment)
 
 ## Additional utils functions
 
-A function `mergeInteractionSet` to merge `InteractionSet` objects, from the same experiment (for differents replicates or conditions).
-It merges the the data containing bins of interactions and fill the assays matrix accordingly, returning an assays matrix with several columns.
+A function `mergeInteractionSet` to merge `InteractionSet` objects, 
+from the same experiment (for differents replicates or conditions).
+
+It merges the the data containing bins of interactions and fill the assays 
+matrix accordingly, returning an assays matrix with several columns.
 
 The object returned by the function is an `InteractionSet`.
 
@@ -334,20 +338,23 @@ path <- system.file("extdata", "liver_18_10M_500000.tsv", package = "HiCParser")
 object1 <- parseTabular(path, sep = "\t")
 # Creating an object with a different condition
 object2 <- parseTabular(path, sep = "\t")
-object2@colData[1, "condition"] <- 2
+tmp <- SummarizedExperiment::colData(object2)
+tmp[1, "condition"] <- 2
+SummarizedExperiment::colData(object2) <- tmp
 ```
 
 The merged object:
 
 ```{r}
 objectMerged <- mergeInteractionSet(object1, object2)
-objectMerged@colData
-head(objectMerged@assays@data[[1]])
+SummarizedExperiment::colData(objectMerged)
+head(SummarizedExperiment::assay(objectMerged))
 ```
 
 # Reproducibility
 
-The `r Biocpkg("HiCParser")` package `r Citep(bib[["HiCParser"]])` was made possible thanks to:
+The `r Biocpkg("HiCParser")` package `r Citep(bib[["HiCParser"]])` was made
+possible thanks to:
 
 * R `r Citep(bib[["R"]])`
 * `r Biocpkg("BiocStyle")` `r Citep(bib[["BiocStyle"]])`
@@ -400,8 +407,10 @@ session_info()
 
 # Bibliography
 
-This vignette was generated using `r Biocpkg("BiocStyle")` `r Citep(bib[["BiocStyle"]])`
-with `r CRANpkg("knitr")` `r Citep(bib[["knitr"]])` and `r CRANpkg("rmarkdown")` `r Citep(bib[["rmarkdown"]])` running behind the scenes.
+This vignette was generated using `r Biocpkg("BiocStyle")` 
+`r Citep(bib[["BiocStyle"]])` with `r CRANpkg("knitr")` 
+`r Citep(bib[["knitr"]])` and `r CRANpkg("rmarkdown")` 
+`r Citep(bib[["rmarkdown"]])` running behind the scenes.
 
 Citations made with `r CRANpkg("RefManageR")` `r Citep(bib[["RefManageR"]])`.
 

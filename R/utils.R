@@ -20,7 +20,9 @@
 #' object1 <- parseTabular(path, sep = "\t")
 #' # Creating an object with a different condition
 #' object2 <- parseTabular(path, sep = "\t")
-#' object2@colData[1,"condition"] <- 2
+#' tmp <- SummarizedExperiment::colData(object2)
+#' tmp[1, "condition"] <- 2
+#' SummarizedExperiment::colData(object2) <- tmp
 #' objectMerged <- mergeInteractionSet(object1, object2)
 #'
 #' @export
