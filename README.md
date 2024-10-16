@@ -88,11 +88,13 @@ So far, `HiCParser` supports:
 We show here how to parse one hic format file.
 
 ``` r
-hicFilePath <- system.file("extdata", "liver_18_10M.hic", package="HiCParser")
-data <- parseHiC(paths = hicFilePath, 
-                 binSize = 100000,
-                 conditions = 1, 
-                 replicates = 1)
+hicFilePath <- system.file("extdata", "liver_18_10M.hic", package = "HiCParser")
+data <- parseHiC(
+    paths = hicFilePath,
+    binSize = 100000,
+    conditions = 1,
+    replicates = 1
+)
 ```
 
 Note that a hic file can include several matrices, with different bin
@@ -103,10 +105,12 @@ several times). We suppose here that we have 2 conditions, with 3
 replicates for each condition.
 
 ``` r
-data <- parseHiC(paths = rep(hicFilePath, 6), 
-                 binSize = 100000, 
-                 conditions = rep(seq(2), each = 3),
-                 replicates = rep(seq(3), 2))
+data <- parseHiC(
+    paths = rep(hicFilePath, 6),
+    binSize = 100000,
+    conditions = rep(seq(2), each = 3),
+    replicates = rep(seq(3), 2)
+)
 ```
 
 Currently, `HiCParser` supports the hic format up to the version 9.
@@ -117,14 +121,17 @@ A HiC-Pro file contains a matrix file, and a bed file. A different bed
 file could be use for each matrix file, but the same can also be used.
 
 ``` r
-matrixFilePath <- system.file("extdata", "liver_18_10M_500000.matrix", package="HiCParser")
-bedFilePath <- system.file("extdata", 
-                           "liver_18_10M_500000.bed", 
-                           package="HiCParser")
-data <- parseHiCPro(matrixPaths = rep(matrixFilePath, 6), 
-                    bedPaths = bedFilePath, 
-                    conditions = rep(seq(2), each = 3),
-                    replicates = rep(seq(3), 2))
+matrixFilePath <- system.file("extdata", "liver_18_10M_500000.matrix", package = "HiCParser")
+bedFilePath <- system.file("extdata",
+    "liver_18_10M_500000.bed",
+    package = "HiCParser"
+)
+data <- parseHiCPro(
+    matrixPaths = rep(matrixFilePath, 6),
+    bedPaths = bedFilePath,
+    conditions = rep(seq(2), each = 3),
+    replicates = rep(seq(3), 2)
+)
 ```
 
 ### cool and mcool formats
@@ -140,28 +147,34 @@ package.
 The cool format include only one bin size.
 
 ``` r
-if (! "rhdf5" %in% installed.packages()) {
+if (!"rhdf5" %in% installed.packages()) {
     install.packages("rhdf5")
 }
 coolFilePath <- system.file("extdata",
-                            "liver_18_10M_500000.cool", 
-                            package="HiCParser")
-data <- parseCool(paths = rep(coolFilePath, 6), 
-                  conditions = rep(seq(2), each = 3),
-                  replicates = rep(seq(3), 2))
+    "liver_18_10M_500000.cool",
+    package = "HiCParser"
+)
+data <- parseCool(
+    paths = rep(coolFilePath, 6),
+    conditions = rep(seq(2), each = 3),
+    replicates = rep(seq(3), 2)
+)
 ```
 
 The mcool format may include several bin sizes. It is thus compulsory to
 mention it. The same function is used for the cool/mcool formats.
 
 ``` r
-mcoolFilePath <- system.file("extdata", 
-                             "liver_18_10M.mcool", 
-                             package="HiCParser")
-data <- parseCool(paths = rep(mcoolFilePath, 6), 
-                  binSize = 10000000, 
-                  conditions = rep(seq(2), each = 3),
-                  replicates = rep(seq(3), 2))
+mcoolFilePath <- system.file("extdata",
+    "liver_18_10M.mcool",
+    package = "HiCParser"
+)
+data <- parseCool(
+    paths = rep(mcoolFilePath, 6),
+    binSize = 10000000,
+    conditions = rep(seq(2), each = 3),
+    replicates = rep(seq(3), 2)
+)
 ```
 
 ## Tabular files
@@ -179,10 +192,13 @@ no limit to the number of conditions and replicates.
 To load Hi-C data in this format:
 
 ``` r
-hic.experiment <- parseTabular(system.file("extdata",
-                                           "liver_18_10M_500000.tsv",
-                                           package = "HiCParser"),
-                               sep = "\t")
+hic.experiment <- parseTabular(
+    system.file("extdata",
+        "liver_18_10M_500000.tsv",
+        package = "HiCParser"
+    ),
+    sep = "\t"
+)
 ```
 
 ### Output
@@ -196,23 +212,25 @@ in order to known more about this format.
 
 ``` r
 library("HiCParser")
-hicFilePath <- system.file("extdata", "liver_18_10M.hic", package="HiCParser")
-hic.experiment <- parseHiC(paths = rep(hicFilePath, 6), 
-                           binSize = 100000, 
-                           conditions = rep(seq(2), each = 3),
-                           replicates = rep(seq(3), 2))
+hicFilePath <- system.file("extdata", "liver_18_10M.hic", package = "HiCParser")
+hic.experiment <- parseHiC(
+    paths = rep(hicFilePath, 6),
+    binSize = 100000,
+    conditions = rep(seq(2), each = 3),
+    replicates = rep(seq(3), 2)
+)
 #> 
-#> Parsing '/home/emaigne/R/x86_64-pc-linux-gnu-library/4.3/HiCParser/extdata/liver_18_10M.hic'.
+#> Parsing '/tmp/RtmpYKSmNY/temp_libpath1584b6bdf2480/HiCParser/extdata/liver_18_10M.hic'.
 #> 
-#> Parsing '/home/emaigne/R/x86_64-pc-linux-gnu-library/4.3/HiCParser/extdata/liver_18_10M.hic'.
+#> Parsing '/tmp/RtmpYKSmNY/temp_libpath1584b6bdf2480/HiCParser/extdata/liver_18_10M.hic'.
 #> 
-#> Parsing '/home/emaigne/R/x86_64-pc-linux-gnu-library/4.3/HiCParser/extdata/liver_18_10M.hic'.
+#> Parsing '/tmp/RtmpYKSmNY/temp_libpath1584b6bdf2480/HiCParser/extdata/liver_18_10M.hic'.
 #> 
-#> Parsing '/home/emaigne/R/x86_64-pc-linux-gnu-library/4.3/HiCParser/extdata/liver_18_10M.hic'.
+#> Parsing '/tmp/RtmpYKSmNY/temp_libpath1584b6bdf2480/HiCParser/extdata/liver_18_10M.hic'.
 #> 
-#> Parsing '/home/emaigne/R/x86_64-pc-linux-gnu-library/4.3/HiCParser/extdata/liver_18_10M.hic'.
+#> Parsing '/tmp/RtmpYKSmNY/temp_libpath1584b6bdf2480/HiCParser/extdata/liver_18_10M.hic'.
 #> 
-#> Parsing '/home/emaigne/R/x86_64-pc-linux-gnu-library/4.3/HiCParser/extdata/liver_18_10M.hic'.
+#> Parsing '/tmp/RtmpYKSmNY/temp_libpath1584b6bdf2480/HiCParser/extdata/liver_18_10M.hic'.
 hic.experiment
 #> class: InteractionSet 
 #> dim: 4942 6 

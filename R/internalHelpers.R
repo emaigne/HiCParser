@@ -123,7 +123,8 @@
 #' @importFrom InteractionSet InteractionSet
 #' @importFrom GenomicRanges match
 #' @importFrom SummarizedExperiment assay colData
-.fillInteractionSet <- function(interactionSet,
+.fillInteractionSet <- function(
+    interactionSet,
     interactionSetUnion,
     fill = NA) {
     over <- GenomicRanges::match(interactionSet, interactionSetUnion)

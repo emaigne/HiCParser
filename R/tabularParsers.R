@@ -159,7 +159,8 @@
         replicates <- gsub("^.+?\\.(.+)$", "\\1", colnames(assays))
     }
 
-    interactionSet <- .createInteractionSet(assays, gi, allRegions, conditions, replicates)
+    interactionSet <-
+        .createInteractionSet(assays, gi, allRegions, conditions, replicates)
     return(interactionSet)
 }
 
@@ -184,7 +185,9 @@
 #' An InteractionSet object.
 #'
 #' @examples
-#' path <- system.file("extdata", "liver_18_10M_500000.tsv", package = "HiCParser")
+#' path <- system.file("extdata", "liver_18_10M_500000.tsv",
+#'     package = "HiCParser"
+#' )
 #' object <- parseTabular(path, sep = "\t")
 #'
 #' @usage
@@ -193,7 +196,7 @@
 #' @importFrom data.table fread
 #' @export
 parseTabular <- function(path, sep = "\t") {
-    path <- .checkPaths("path"=path)
+    path <- .checkPaths("path" = path)
     if (length(path) > 1) {
         stop("'path' must be 1-lengths character vector.", call. = FALSE)
     }

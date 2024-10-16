@@ -16,7 +16,9 @@
 #' @importFrom InteractionSet interactions
 #' @importFrom BiocGenerics cbind
 #' @examples
-#' path <- system.file("extdata", "liver_18_10M_500000.tsv", package = "HiCParser")
+#' path <- system.file("extdata", "liver_18_10M_500000.tsv",
+#'     package = "HiCParser"
+#' )
 #' object1 <- parseTabular(path, sep = "\t")
 #' # Creating an object with a different condition
 #' object2 <- parseTabular(path, sep = "\t")
@@ -57,20 +59,25 @@ mergeInteractionSet <- function(interactionSet1, interactionSet2, fill = NA) {
 #' @noRd
 #'
 #' @examples
-#' path <- system.file("extdata", "liver_18_10M_500000.tsv", package = "HiCParser")
+#' path <-
+#'     system.file("extdata", "liver_18_10M_500000.tsv", package = "HiCParser")
 #' .checkPaths("ExamplePaths" = path)
-.checkPaths <- function(...){
+.checkPaths <- function(...) {
     args <- list(...)
     path <- args[[1]]
-    namePath <- names(vapply(match.call(), deparse, FUN.VALUE = "character"))[-1]
+    namePath <-
+        names(vapply(match.call(), deparse, FUN.VALUE = "character"))[-1]
     if (is.factor(path)) {
         path <- as.vector(path)
     }
     if (anyNA(path)) {
-        stop(namePath," can't contain NA values.", call. = FALSE)
+        stop(namePath, " can't contain NA values.", call. = FALSE)
     }
     if (!is.character(path)) {
-        stop(namePath," must be a non empty vector of characters.", call. = FALSE)
+        stop(
+            namePath, " must be a non empty vector of characters.",
+            call. = FALSE
+        )
     }
     for (p in path) {
         if (!file.exists(p)) {
@@ -89,7 +96,7 @@ mergeInteractionSet <- function(interactionSet1, interactionSet2, fill = NA) {
 #'
 #' @examples
 #' .checkConditionsReplicates(c(1, 1, 1, 2, 2, 2), c(1, 2, 3, 1, 2, 3))
-.checkConditionsReplicates <- function(conditions, replicates){
+.checkConditionsReplicates <- function(conditions, replicates) {
     if (is.factor(replicates)) {
         replicates <- as.vector(replicates)
     }
@@ -104,7 +111,10 @@ mergeInteractionSet <- function(interactionSet1, interactionSet2, fill = NA) {
         stop("'conditions' must be a vector of conditions.", call. = FALSE)
     }
     if (anyNA(c(replicates, conditions))) {
-        stop("'replicates' and 'conditions' can't contain NA values", call. = FALSE)
+        stop(
+            "'replicates' and 'conditions' can't contain NA values",
+            call. = FALSE
+        )
     }
     if (length(conditions) != length(replicates)) {
         stop(
@@ -112,5 +122,5 @@ mergeInteractionSet <- function(interactionSet1, interactionSet2, fill = NA) {
             call. = FALSE
         )
     }
-    return(list("conditions"=conditions, "replicates"=replicates))
+    return(list("conditions" = conditions, "replicates" = replicates))
 }

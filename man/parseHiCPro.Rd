@@ -48,13 +48,13 @@ conditions <- c(1, 1, 1, 2, 2, 2)
 replicates <- c(1, 2, 3, 1, 2, 3)
 
 if(FALSE){
-  # Instantiation of data set
-  hic.experiment <- parseHiCPro(
-      matrixPaths = matrixPaths,
-      bedPaths = bedPaths,
-      conditions = conditions,
-      replicates = replicates
-  )
+    # Instantiation of data set
+    hic.experiment <- parseHiCPro(
+        matrixPaths = matrixPaths,
+        bedPaths = bedPaths,
+        conditions = conditions,
+        replicates = replicates
+    )
 }
 
 }

@@ -20,7 +20,8 @@ The merged \code{\link{InteractionSet}}.
 Merge two different \code{\link{InteractionSet}}.
 }
 \examples{
-path <- system.file("extdata", "liver_18_10M_500000.tsv", package = "HiCParser")
+path <- system.file("extdata", "liver_18_10M_500000.tsv",
+  package = "HiCParser")
 object1 <- parseTabular(path, sep = "\t")
 # Creating an object with a different condition
 object2 <- parseTabular(path, sep = "\t")

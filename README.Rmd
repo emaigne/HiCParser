@@ -6,10 +6,10 @@ output: github_document
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  fig.path = "man/figures/README-",
-  out.width = "100%"
+    collapse = TRUE,
+    comment = "#>",
+    fig.path = "man/figures/README-",
+    out.width = "100%"
 )
 ```
 
@@ -94,11 +94,13 @@ So far, `HiCParser` supports:
 We show here how to parse one hic format file.
 
 ```{r, eval = FALSE}
-hicFilePath <- system.file("extdata", "liver_18_10M.hic", package="HiCParser")
-data <- parseHiC(paths = hicFilePath, 
-                 binSize = 100000,
-                 conditions = 1, 
-                 replicates = 1)
+hicFilePath <- system.file("extdata", "liver_18_10M.hic", package = "HiCParser")
+data <- parseHiC(
+    paths = hicFilePath,
+    binSize = 100000,
+    conditions = 1,
+    replicates = 1
+)
 ```
 Note that a hic file can include several matrices, with different bin sizes.
 This is why the bin size should be provided.
@@ -108,10 +110,12 @@ several times). We suppose here that we have 2 conditions, with 3 replicates
 for each condition.
 
 ```{r, eval = FALSE}
-data <- parseHiC(paths = rep(hicFilePath, 6), 
-                 binSize = 100000, 
-                 conditions = rep(seq(2), each = 3),
-                 replicates = rep(seq(3), 2))
+data <- parseHiC(
+    paths = rep(hicFilePath, 6),
+    binSize = 100000,
+    conditions = rep(seq(2), each = 3),
+    replicates = rep(seq(3), 2)
+)
 ```
 Currently, `HiCParser` supports the hic format up to the version 9.
 
@@ -122,14 +126,17 @@ A different bed file could be use for each matrix file,
 but the same can also be used.
 
 ```{r, eval = FALSE}
-matrixFilePath <- system.file("extdata", "liver_18_10M_500000.matrix", package="HiCParser")
-bedFilePath <- system.file("extdata", 
-                           "liver_18_10M_500000.bed", 
-                           package="HiCParser")
-data <- parseHiCPro(matrixPaths = rep(matrixFilePath, 6), 
-                    bedPaths = bedFilePath, 
-                    conditions = rep(seq(2), each = 3),
-                    replicates = rep(seq(3), 2))
+matrixFilePath <- system.file("extdata", "liver_18_10M_500000.matrix", package = "HiCParser")
+bedFilePath <- system.file("extdata",
+    "liver_18_10M_500000.bed",
+    package = "HiCParser"
+)
+data <- parseHiCPro(
+    matrixPaths = rep(matrixFilePath, 6),
+    bedPaths = bedFilePath,
+    conditions = rep(seq(2), each = 3),
+    replicates = rep(seq(3), 2)
+)
 ```
 
 ### cool and mcool formats
@@ -138,20 +145,24 @@ Please note that the cool and mcool format store data in HDF5 format.
 The [HDF5 package](https://bioconductor.org/packages/release/bioc/html/rhdf5.html) 
 is not included by default, because it requires a substantial time to be 
 compiled, and many users will not need the cool/mcool parser.
-So, in order to use the cool/mcool parser, you should install the `rhdf5` package.
+So, in order to use the cool/mcool parser, you should install the `rhdf5` 
+package.
 
 The cool format include only one bin size.
 
 ```{r, eval = FALSE}
-if (! "rhdf5" %in% installed.packages()) {
+if (!"rhdf5" %in% installed.packages()) {
     install.packages("rhdf5")
 }
 coolFilePath <- system.file("extdata",
-                            "liver_18_10M_500000.cool", 
-                            package="HiCParser")
-data <- parseCool(paths = rep(coolFilePath, 6), 
-                  conditions = rep(seq(2), each = 3),
-                  replicates = rep(seq(3), 2))
+    "liver_18_10M_500000.cool",
+    package = "HiCParser"
+)
+data <- parseCool(
+    paths = rep(coolFilePath, 6),
+    conditions = rep(seq(2), each = 3),
+    replicates = rep(seq(3), 2)
+)
 ```
 
 The mcool format may include several bin sizes.
@@ -159,13 +170,16 @@ It is thus compulsory to mention it.
 The same function is used for the cool/mcool formats.
 
 ```{r, eval = FALSE}
-mcoolFilePath <- system.file("extdata", 
-                             "liver_18_10M.mcool", 
-                             package="HiCParser")
-data <- parseCool(paths = rep(mcoolFilePath, 6), 
-                  binSize = 10000000, 
-                  conditions = rep(seq(2), each = 3),
-                  replicates = rep(seq(3), 2))
+mcoolFilePath <- system.file("extdata",
+    "liver_18_10M.mcool",
+    package = "HiCParser"
+)
+data <- parseCool(
+    paths = rep(mcoolFilePath, 6),
+    binSize = 10000000,
+    conditions = rep(seq(2), each = 3),
+    replicates = rep(seq(3), 2)
+)
 ```
 
 ## Tabular files
@@ -184,10 +198,13 @@ limit to the number of conditions and replicates.
 To load Hi-C data in this format:
 
 ```{r tabFormat, eval = FALSE}
-hic.experiment <- parseTabular(system.file("extdata",
-                                           "liver_18_10M_500000.tsv",
-                                           package = "HiCParser"),
-                               sep = "\t")
+hic.experiment <- parseTabular(
+    system.file("extdata",
+        "liver_18_10M_500000.tsv",
+        package = "HiCParser"
+    ),
+    sep = "\t"
+)
 ```
 
 ### Output
@@ -198,11 +215,13 @@ Please read the [corresponding vignette](https://bioconductor.org/packages/devel
 
 ```{r}
 library("HiCParser")
-hicFilePath <- system.file("extdata", "liver_18_10M.hic", package="HiCParser")
-hic.experiment <- parseHiC(paths = rep(hicFilePath, 6), 
-                           binSize = 100000, 
-                           conditions = rep(seq(2), each = 3),
-                           replicates = rep(seq(3), 2))
+hicFilePath <- system.file("extdata", "liver_18_10M.hic", package = "HiCParser")
+hic.experiment <- parseHiC(
+    paths = rep(hicFilePath, 6),
+    binSize = 100000,
+    conditions = rep(seq(2), each = 3),
+    replicates = rep(seq(3), 2)
+)
 hic.experiment
 ```
 

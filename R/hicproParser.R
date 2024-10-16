@@ -55,7 +55,8 @@
         mode = "strict"
     )
     assay <- as.matrix(interactions$interaction, ncol = 1)
-    interactionSet <- .createInteractionSet(assay, gi, allRegions, condition, replicate)
+    interactionSet <-
+        .createInteractionSet(assay, gi, allRegions, condition, replicate)
 
     return(interactionSet)
 }
@@ -80,36 +81,36 @@
 #' @examples
 #' # Path to each matrix file
 #' matrixPaths <- c(
-#'     'path/to/condition-1.replicate-1.matrix',
-#'     'path/to/condition-1.replicate-2.matrix',
-#'     'path/to/condition-1.replicate-3.matrix',
-#'     'path/to/condition-2.replicate-1.matrix',
-#'     'path/to/condition-2.replicate-2.matrix',
-#'     'path/to/condition-2.replicate-3.matrix'
+#'     "path/to/condition-1.replicate-1.matrix",
+#'     "path/to/condition-1.replicate-2.matrix",
+#'     "path/to/condition-1.replicate-3.matrix",
+#'     "path/to/condition-2.replicate-1.matrix",
+#'     "path/to/condition-2.replicate-2.matrix",
+#'     "path/to/condition-2.replicate-3.matrix"
 #' )
 #'
 #' # Path to each bed file
 #' bedPaths <- c(
-#'     'path/to/condition-1.replicate-1.bed',
-#'     'path/to/condition-1.replicate-2.bed',
-#'     'path/to/condition-1.replicate-3.bed',
-#'     'path/to/condition-2.replicate-1.bed',
-#'     'path/to/condition-2.replicate-2.bed',
-#'     'path/to/condition-2.replicate-3.bed'
+#'     "path/to/condition-1.replicate-1.bed",
+#'     "path/to/condition-1.replicate-2.bed",
+#'     "path/to/condition-1.replicate-3.bed",
+#'     "path/to/condition-2.replicate-1.bed",
+#'     "path/to/condition-2.replicate-2.bed",
+#'     "path/to/condition-2.replicate-3.bed"
 #' )
 #'
 #' # Condition and replicate of each file. Can be names instead of numbers.
 #' conditions <- c(1, 1, 1, 2, 2, 2)
 #' replicates <- c(1, 2, 3, 1, 2, 3)
 #'
-#' if(FALSE){
-#'   # Instantiation of data set
-#'   hic.experiment <- parseHiCPro(
-#'       matrixPaths = matrixPaths,
-#'       bedPaths = bedPaths,
-#'       conditions = conditions,
-#'       replicates = replicates
-#'   )
+#' if (FALSE) {
+#'     # Instantiation of data set
+#'     hic.experiment <- parseHiCPro(
+#'         matrixPaths = matrixPaths,
+#'         bedPaths = bedPaths,
+#'         conditions = conditions,
+#'         replicates = replicates
+#'     )
 #' }
 #'
 #' @usage
@@ -118,10 +119,10 @@
 #' @importFrom pbapply pbmapply
 #' @export
 parseHiCPro <- function(matrixPaths, bedPaths, conditions, replicates) {
-    matrixPaths <- .checkPaths("matrixPaths"=matrixPaths)
-    bedPaths <- .checkPaths("bedPaths"=bedPaths)
+    matrixPaths <- .checkPaths("matrixPaths" = matrixPaths)
+    bedPaths <- .checkPaths("bedPaths" = bedPaths)
 
-    if(length(bedPaths) == 1) {
+    if (length(bedPaths) == 1) {
         bedPaths <- rep(bedPaths, length(matrixPaths))
     }
     if (length(matrixPaths) != length(bedPaths)) {

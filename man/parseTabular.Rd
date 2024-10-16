@@ -26,7 +26,8 @@ tabulations. The header must be
 replaced by condition names and \code{y} replaced by replicate names.
 }
 \examples{
-path <- system.file("extdata", "liver_18_10M_500000.tsv", package = "HiCParser")
+path <- system.file("extdata", "liver_18_10M_500000.tsv",
+  package = "HiCParser")
 object <- parseTabular(path, sep = "\t")
 
 }

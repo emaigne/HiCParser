@@ -42,28 +42,28 @@
 #' An InteractionSet.
 #'
 #' @examples
-#' #Path to each file
+#' # Path to each file
 #' paths <- c(
-#'     'path/to/condition-1.replicate-1.hic',
-#'     'path/to/condition-1.replicate-2.hic',
-#'     'path/to/condition-1.replicate-3.hic',
-#'     'path/to/condition-2.replicate-1.hic',
-#'     'path/to/condition-2.replicate-2.hic',
-#'     'path/to/condition-2.replicate-3.hic'
+#'     "path/to/condition-1.replicate-1.hic",
+#'     "path/to/condition-1.replicate-2.hic",
+#'     "path/to/condition-1.replicate-3.hic",
+#'     "path/to/condition-2.replicate-1.hic",
+#'     "path/to/condition-2.replicate-2.hic",
+#'     "path/to/condition-2.replicate-3.hic"
 #' )
 #' # Replicate and condition of each file. Can be names instead of numbers.
 #' conditions <- c(1, 1, 1, 2, 2, 2)
 #' replicates <- c(1, 2, 3, 1, 2, 3)
 #' # Resolution to select
 #' binSize <- 500000
-#' if(FALSE){
-#' # Instantiation of data set
-#' hic.experiment <- parseHiC(
-#'     paths,
-#'     conditions = conditions,
-#'     replicates = replicates,
-#'     binSize = binSize
-#' )
+#' if (FALSE) {
+#'     # Instantiation of data set
+#'     hic.experiment <- parseHiC(
+#'         paths,
+#'         conditions = conditions,
+#'         replicates = replicates,
+#'         binSize = binSize
+#'     )
 #' }
 #' @usage
 #' parseHiC(paths, binSize, conditions, replicates)
@@ -71,7 +71,7 @@
 #' @importFrom pbapply pbmapply
 #' @export
 parseHiC <- function(paths, binSize, conditions, replicates) {
-    paths <- .checkPaths("paths"=paths)
+    paths <- .checkPaths("paths" = paths)
     repCond <- .checkConditionsReplicates(conditions, replicates)
     if (min(lengths(repCond)) != length(paths)) {
         stop(

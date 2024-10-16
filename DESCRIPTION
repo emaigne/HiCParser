@@ -6,8 +6,10 @@ Version: 0.99.1
 URL: https://github.com/emaigne/HiCParser
 BugReports: https://github.com/emaigne/HiCParser/issues
 Authors@R: c(
-    person("Zytnicki", "Matthias", email = "matthias.zytnicki@inrae.fr", role = c("aut")),
-    person("Maigné", "Élise", email = "elise.maigne@inrae.fr", role = c("aut", "cre")))
+    person("Zytnicki", "Matthias", email = "matthias.zytnicki@inrae.fr", 
+      role = c("aut")),
+    person("Maigné", "Élise", email = "elise.maigne@inrae.fr", 
+      role = c("aut", "cre")))
 Description: 
     This package is a parser to import HiC data into R.
     It accepts several type of data: tabular files, Cooler `.cool` or 
