@@ -1,6 +1,6 @@
 pandoc: '3.2'
-pkgdown: 2.1.0
+pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
   HiCParser: HiCParser.html
-last_built: 2024-09-02T09:11Z
+last_built: 2024-10-16T07:58Z
