@@ -120,18 +120,22 @@
 </h3>
 <p>We show here how to parse one hic format file.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">hicFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"liver_18_10M.hic"</span>, package<span class="op">=</span><span class="st">"HiCParser"</span><span class="op">)</span></span>
-<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/parseHiC.html">parseHiC</a></span><span class="op">(</span>paths <span class="op">=</span> <span class="va">hicFilePath</span>, </span>
-<span>                 binSize <span class="op">=</span> <span class="fl">100000</span>,</span>
-<span>                 conditions <span class="op">=</span> <span class="fl">1</span>, </span>
-<span>                 replicates <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">hicFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"hicsample_21.hic"</span>, package <span class="op">=</span> <span class="st">"HiCParser"</span><span class="op">)</span></span>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/parseHiC.html">parseHiC</a></span><span class="op">(</span></span>
+<span>    paths <span class="op">=</span> <span class="va">hicFilePath</span>,</span>
+<span>    binSize <span class="op">=</span> <span class="fl">5000000</span>,</span>
+<span>    conditions <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>    replicates <span class="op">=</span> <span class="fl">1</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p>Note that a hic file can include several matrices, with different bin sizes. This is why the bin size should be provided.</p>
 <p>We show here how to parse several files (actually, the same file, several times). We suppose here that we have 2 conditions, with 3 replicates for each condition.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/parseHiC.html">parseHiC</a></span><span class="op">(</span>paths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="va">hicFilePath</span>, <span class="fl">6</span><span class="op">)</span>, </span>
-<span>                 binSize <span class="op">=</span> <span class="fl">100000</span>, </span>
-<span>                 conditions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,</span>
-<span>                 replicates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/parseHiC.html">parseHiC</a></span><span class="op">(</span></span>
+<span>    paths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="va">hicFilePath</span>, <span class="fl">6</span><span class="op">)</span>,</span>
+<span>    binSize <span class="op">=</span> <span class="fl">5000000</span>,</span>
+<span>    conditions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,</span>
+<span>    replicates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p>Currently, <code>HiCParser</code> supports the hic format up to the version 9.</p>
 </div>
 <div class="section level3">
@@ -139,14 +143,16 @@
 </h3>
 <p>A HiC-Pro file contains a matrix file, and a bed file. A different bed file could be use for each matrix file, but the same can also be used.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">matrixFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"liver_18_10M_500000.matrix"</span>, package<span class="op">=</span><span class="st">"HiCParser"</span><span class="op">)</span></span>
-<span><span class="va">bedFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, </span>
-<span>                           <span class="st">"liver_18_10M_500000.bed"</span>, </span>
-<span>                           package<span class="op">=</span><span class="st">"HiCParser"</span><span class="op">)</span></span>
-<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/parseHiCPro.html">parseHiCPro</a></span><span class="op">(</span>matrixPaths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="va">matrixFilePath</span>, <span class="fl">6</span><span class="op">)</span>, </span>
-<span>                    bedPaths <span class="op">=</span> <span class="va">bedFilePath</span>, </span>
-<span>                    conditions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,</span>
-<span>                    replicates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">matrixFilePath</span> <span class="op">&lt;-</span> </span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"hicsample_21.matrix"</span>, package <span class="op">=</span> <span class="st">"HiCParser"</span><span class="op">)</span></span>
+<span><span class="va">bedFilePath</span> <span class="op">&lt;-</span> </span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"hicsample_21.bed"</span>, package <span class="op">=</span> <span class="st">"HiCParser"</span><span class="op">)</span></span>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/parseHiCPro.html">parseHiCPro</a></span><span class="op">(</span></span>
+<span>    matrixPaths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="va">matrixFilePath</span>, <span class="fl">6</span><span class="op">)</span>,</span>
+<span>    bedPaths <span class="op">=</span> <span class="va">bedFilePath</span>,</span>
+<span>    conditions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,</span>
+<span>    replicates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="cool-and-mcool-formats">cool and mcool formats<a class="anchor" aria-label="anchor" href="#cool-and-mcool-formats"></a>
@@ -154,24 +160,30 @@
 <p>Please note that the cool and mcool format store data in HDF5 format. The <a href="https://bioconductor.org/packages/release/bioc/html/rhdf5.html" class="external-link">HDF5 package</a> is not included by default, because it requires a substantial time to be compiled, and many users will not need the cool/mcool parser. So, in order to use the cool/mcool parser, you should install the <code>rhdf5</code> package.</p>
 <p>The cool format include only one bin size.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span> <span class="st">"rhdf5"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/installed.packages.html" class="external-link">installed.packages</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="st">"rhdf5"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/installed.packages.html" class="external-link">installed.packages</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"rhdf5"</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span><span class="va">coolFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>,</span>
-<span>                            <span class="st">"liver_18_10M_500000.cool"</span>, </span>
-<span>                            package<span class="op">=</span><span class="st">"HiCParser"</span><span class="op">)</span></span>
-<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/parseCool.html">parseCool</a></span><span class="op">(</span>paths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="va">coolFilePath</span>, <span class="fl">6</span><span class="op">)</span>, </span>
-<span>                  conditions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,</span>
-<span>                  replicates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span>    <span class="st">"hicsample_21.cool"</span>,</span>
+<span>    package <span class="op">=</span> <span class="st">"HiCParser"</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/parseCool.html">parseCool</a></span><span class="op">(</span></span>
+<span>    paths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="va">coolFilePath</span>, <span class="fl">6</span><span class="op">)</span>,</span>
+<span>    conditions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,</span>
+<span>    replicates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p>The mcool format may include several bin sizes. It is thus compulsory to mention it. The same function is used for the cool/mcool formats.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">mcoolFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, </span>
-<span>                             <span class="st">"liver_18_10M.mcool"</span>, </span>
-<span>                             package<span class="op">=</span><span class="st">"HiCParser"</span><span class="op">)</span></span>
-<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/parseCool.html">parseCool</a></span><span class="op">(</span>paths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="va">mcoolFilePath</span>, <span class="fl">6</span><span class="op">)</span>, </span>
-<span>                  binSize <span class="op">=</span> <span class="fl">10000000</span>, </span>
-<span>                  conditions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,</span>
-<span>                  replicates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">mcoolFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>,</span>
+<span>    <span class="st">"hicsample_21.mcool"</span>,</span>
+<span>    package <span class="op">=</span> <span class="st">"HiCParser"</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/parseCool.html">parseCool</a></span><span class="op">(</span></span>
+<span>    paths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="va">mcoolFilePath</span>, <span class="fl">6</span><span class="op">)</span>,</span>
+<span>    binSize <span class="op">=</span> <span class="fl">5000000</span>,</span>
+<span>    conditions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,</span>
+<span>    replicates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -183,36 +195,41 @@
 <p>The number of interactions between <code>position 1</code> and <code>position 2</code> of <code>chromosome</code> are reported in each <code>condition.replicate</code> column. There is no limit to the number of conditions and replicates.</p>
 <p>To load Hi-C data in this format:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">hic.experiment</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/parseTabular.html">parseTabular</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>,</span>
-<span>                                           <span class="st">"liver_18_10M_500000.tsv"</span>,</span>
-<span>                                           package <span class="op">=</span> <span class="st">"HiCParser"</span><span class="op">)</span>,</span>
-<span>                               sep <span class="op">=</span> <span class="st">"\t"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">hic.experiment</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/parseTabular.html">parseTabular</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>,</span>
+<span>        <span class="st">"hicsample_21.tsv"</span>,</span>
+<span>        package <span class="op">=</span> <span class="st">"HiCParser"</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    sep <span class="op">=</span> <span class="st">"\t"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="output">Output<a class="anchor" aria-label="anchor" href="#output"></a>
 </h3>
 <p>The output is a <a href="https://bioconductor.org/packages/release/bioc/html/InteractionSet.html" class="external-link">InteractionSet</a>. This object can store one or several samples. Please read the <a href="https://bioconductor.org/packages/devel/bioc/vignettes/InteractionSet/inst/doc/interactions.html" class="external-link">corresponding vignette</a> in order to known more about this format.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/emaigne/HiCParser" class="external-link">"HiCParser"</a></span><span class="op">)</span></span>
-<span><span class="va">hicFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"liver_18_10M.hic"</span>, package<span class="op">=</span><span class="st">"HiCParser"</span><span class="op">)</span></span>
-<span><span class="va">hic.experiment</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/parseHiC.html">parseHiC</a></span><span class="op">(</span>paths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="va">hicFilePath</span>, <span class="fl">6</span><span class="op">)</span>, </span>
-<span>                           binSize <span class="op">=</span> <span class="fl">100000</span>, </span>
-<span>                           conditions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,</span>
-<span>                           replicates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">hicFilePath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"hicsample_21.hic"</span>, package <span class="op">=</span> <span class="st">"HiCParser"</span><span class="op">)</span></span>
+<span><span class="va">hic.experiment</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/parseHiC.html">parseHiC</a></span><span class="op">(</span></span>
+<span>    paths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="va">hicFilePath</span>, <span class="fl">6</span><span class="op">)</span>,</span>
+<span>    binSize <span class="op">=</span> <span class="fl">5000000</span>,</span>
+<span>    conditions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,</span>
+<span>    replicates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span>, <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Parsing '/home/emaigne/R/x86_64-pc-linux-gnu-library/4.3/HiCParser/extdata/liver_18_10M.hic'.</span></span>
+<span><span class="co">#&gt; Parsing '/tmp/RtmpHFfOT6/temp_libpathc52a1c587e54/HiCParser/extdata/hicsample_21.hic'.</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Parsing '/home/emaigne/R/x86_64-pc-linux-gnu-library/4.3/HiCParser/extdata/liver_18_10M.hic'.</span></span>
+<span><span class="co">#&gt; Parsing '/tmp/RtmpHFfOT6/temp_libpathc52a1c587e54/HiCParser/extdata/hicsample_21.hic'.</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Parsing '/home/emaigne/R/x86_64-pc-linux-gnu-library/4.3/HiCParser/extdata/liver_18_10M.hic'.</span></span>
+<span><span class="co">#&gt; Parsing '/tmp/RtmpHFfOT6/temp_libpathc52a1c587e54/HiCParser/extdata/hicsample_21.hic'.</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Parsing '/home/emaigne/R/x86_64-pc-linux-gnu-library/4.3/HiCParser/extdata/liver_18_10M.hic'.</span></span>
+<span><span class="co">#&gt; Parsing '/tmp/RtmpHFfOT6/temp_libpathc52a1c587e54/HiCParser/extdata/hicsample_21.hic'.</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Parsing '/home/emaigne/R/x86_64-pc-linux-gnu-library/4.3/HiCParser/extdata/liver_18_10M.hic'.</span></span>
+<span><span class="co">#&gt; Parsing '/tmp/RtmpHFfOT6/temp_libpathc52a1c587e54/HiCParser/extdata/hicsample_21.hic'.</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Parsing '/home/emaigne/R/x86_64-pc-linux-gnu-library/4.3/HiCParser/extdata/liver_18_10M.hic'.</span></span>
+<span><span class="co">#&gt; Parsing '/tmp/RtmpHFfOT6/temp_libpathc52a1c587e54/HiCParser/extdata/hicsample_21.hic'.</span></span>
 <span><span class="va">hic.experiment</span></span>
 <span><span class="co">#&gt; class: InteractionSet </span></span>
-<span><span class="co">#&gt; dim: 4942 6 </span></span>
+<span><span class="co">#&gt; dim: 44 6 </span></span>
 <span><span class="co">#&gt; metadata(0):</span></span>
 <span><span class="co">#&gt; assays(1): ''</span></span>
 <span><span class="co">#&gt; rownames: NULL</span></span>
@@ -220,7 +237,7 @@
 <span><span class="co">#&gt; colnames: NULL</span></span>
 <span><span class="co">#&gt; colData names(2): condition replicate</span></span>
 <span><span class="co">#&gt; type: StrictGInteractions</span></span>
-<span><span class="co">#&gt; regions: 100</span></span></code></pre></div>
+<span><span class="co">#&gt; regions: 9</span></span></code></pre></div>
 <p>The conditions and replicates are reported in the <code>colData</code> slot :</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">SummarizedExperiment</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">hic.experiment</span><span class="op">)</span></span>
@@ -237,31 +254,31 @@
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu">SummarizedExperiment</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">assay</a></span><span class="op">(</span><span class="va">hic.experiment</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;      [,1] [,2] [,3] [,4] [,5] [,6]</span></span>
-<span><span class="co">#&gt; [1,]   92   92   92   92   92   92</span></span>
-<span><span class="co">#&gt; [2,]   67   67   67   67   67   67</span></span>
-<span><span class="co">#&gt; [3,]   47   47   47   47   47   47</span></span>
-<span><span class="co">#&gt; [4,]   55   55   55   55   55   55</span></span>
-<span><span class="co">#&gt; [5,]   29   29   29   29   29   29</span></span>
-<span><span class="co">#&gt; [6,]   13   13   13   13   13   13</span></span></code></pre></div>
+<span><span class="co">#&gt; [1,]   79   79   79   79   79   79</span></span>
+<span><span class="co">#&gt; [2,]   22   22   22   22   22   22</span></span>
+<span><span class="co">#&gt; [3,]    3    3    3    3    3    3</span></span>
+<span><span class="co">#&gt; [4,]    1    1    1    1    1    1</span></span>
+<span><span class="co">#&gt; [5,]    1    1    1    1    1    1</span></span>
+<span><span class="co">#&gt; [6,]    2    2    2    2    2    2</span></span></code></pre></div>
 <p>The positions of interactions are in the <code>interactions</code> slot of the object:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">InteractionSet</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/InteractionSet/man/interaction-accessors.html" class="external-link">interactions</a></span><span class="op">(</span><span class="va">hic.experiment</span><span class="op">)</span></span>
-<span><span class="co">#&gt; StrictGInteractions object with 4942 interactions and 1 metadata column:</span></span>
-<span><span class="co">#&gt;          seqnames1          ranges1     seqnames2          ranges2 | chromosome</span></span>
-<span><span class="co">#&gt;              &lt;Rle&gt;        &lt;IRanges&gt;         &lt;Rle&gt;        &lt;IRanges&gt; |      &lt;Rle&gt;</span></span>
-<span><span class="co">#&gt;      [1]        18         1-100000 ---        18         1-100000 |         18</span></span>
-<span><span class="co">#&gt;      [2]        18         1-100000 ---        18    100001-200000 |         18</span></span>
-<span><span class="co">#&gt;      [3]        18         1-100000 ---        18    200001-300000 |         18</span></span>
-<span><span class="co">#&gt;      [4]        18         1-100000 ---        18    300001-400000 |         18</span></span>
-<span><span class="co">#&gt;      [5]        18         1-100000 ---        18    400001-500000 |         18</span></span>
-<span><span class="co">#&gt;      ...       ...              ... ...       ...              ... .        ...</span></span>
-<span><span class="co">#&gt;   [4938]        18  9700001-9800000 ---        18  9800001-9900000 |         18</span></span>
-<span><span class="co">#&gt;   [4939]        18  9700001-9800000 ---        18 9900001-10000000 |         18</span></span>
-<span><span class="co">#&gt;   [4940]        18  9800001-9900000 ---        18  9800001-9900000 |         18</span></span>
-<span><span class="co">#&gt;   [4941]        18  9800001-9900000 ---        18 9900001-10000000 |         18</span></span>
-<span><span class="co">#&gt;   [4942]        18 9900001-10000000 ---        18 9900001-10000000 |         18</span></span>
+<span><span class="co">#&gt; StrictGInteractions object with 44 interactions and 1 metadata column:</span></span>
+<span><span class="co">#&gt;        seqnames1           ranges1     seqnames2           ranges2 | chromosome</span></span>
+<span><span class="co">#&gt;            &lt;Rle&gt;         &lt;IRanges&gt;         &lt;Rle&gt;         &lt;IRanges&gt; |      &lt;Rle&gt;</span></span>
+<span><span class="co">#&gt;    [1]        21  5000001-10000000 ---        21  5000001-10000000 |         21</span></span>
+<span><span class="co">#&gt;    [2]        21  5000001-10000000 ---        21 10000001-15000000 |         21</span></span>
+<span><span class="co">#&gt;    [3]        21  5000001-10000000 ---        21 15000001-20000000 |         21</span></span>
+<span><span class="co">#&gt;    [4]        21  5000001-10000000 ---        21 20000001-25000000 |         21</span></span>
+<span><span class="co">#&gt;    [5]        21  5000001-10000000 ---        21 25000001-30000000 |         21</span></span>
+<span><span class="co">#&gt;    ...       ...               ... ...       ...               ... .        ...</span></span>
+<span><span class="co">#&gt;   [40]        21 35000001-40000000 ---        21 40000001-45000000 |         21</span></span>
+<span><span class="co">#&gt;   [41]        21 35000001-40000000 ---        21 45000001-50000000 |         21</span></span>
+<span><span class="co">#&gt;   [42]        21 40000001-45000000 ---        21 40000001-45000000 |         21</span></span>
+<span><span class="co">#&gt;   [43]        21 40000001-45000000 ---        21 45000001-50000000 |         21</span></span>
+<span><span class="co">#&gt;   [44]        21 45000001-50000000 ---        21 45000001-50000000 |         21</span></span>
 <span><span class="co">#&gt;   -------</span></span>
-<span><span class="co">#&gt;   regions: 100 ranges and 1 metadata column</span></span>
+<span><span class="co">#&gt;   regions: 9 ranges and 1 metadata column</span></span>
 <span><span class="co">#&gt;   seqinfo: 1 sequence from an unspecified genome; no seqlengths</span></span></code></pre></div>
 </div>
 </div>
