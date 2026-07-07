@@ -21,6 +21,7 @@ Useful links:
 
 Authors:
 \itemize{
+  \item Maigné Élise \email{elise.maigne@inrae.fr}
   \item Zytnicki Matthias \email{matthias.zytnicki@inrae.fr}
 }
 

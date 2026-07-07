@@ -6,6 +6,6 @@
     ),
     year = format(Sys.Date(), "%Y"),
     url = "http://www.bioconductor.org/packages/HiCParser",
-    note = "https://github.com/emaigne/HiCParser/HiCParser - R package version 0.99.0",
+    note = "https://emaigne.github.io/HiCParser/ - R package version 1.5.0",
     doi = '10.18129/B9.bioc.HiCParser'
 )
